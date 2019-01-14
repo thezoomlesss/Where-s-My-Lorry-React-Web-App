@@ -1,0 +1,54 @@
+var express = require('express');
+var router = express.Router();
+var mysql = require('mysql');
+var conn_detail = require(".././conn.json")
+
+var connection = mysql.createConnection({
+    // properties
+    'host': conn_detail.host,
+    'user': conn_detail.user,
+    'password': conn_detail.password,
+    'database': conn_detail.database,
+    'connectionLimit': 100,
+    'port': 3306,
+    'debug': false,
+    'multipleStatements': true
+});
+
+connection.connect(function (error) {
+    // callback
+    if (!!error) {
+        console.log('Error when connecting from checkUser');
+
+        console.log(error);
+    } else {
+        console.log('Db connected from checkUser!');
+    }
+});
+/* POST login details. */
+router.post('/', function (req, res, next) {
+
+    // parameters being passed in
+    var loginEmail = req.query.email;
+    var loginPass = req.query.pass;
+
+    // console.log("loginEmail: " + loginEmail);
+    // console.log("loginPass: " + loginPass);
+    connection.query('SELECT companyID FROM Company WHERE login_email = \'' + loginEmail + '\' AND login_pass = \'' + loginPass + '\';', function (error, results, fields) {
+        if (error) {
+            res.status(200).send('Error when retrieving login from db');
+            throw error;
+        }
+        if (results.length > 0) {
+            if (results) {
+                res.status(200).send("companyID:" + results[0].companyID);
+            }
+        } else {
+            res.status(200).send("No match");
+        }
+    });
+
+   
+});
+
+module.exports = router;
