@@ -4,7 +4,7 @@
 ## Prerequisites
 A **Process Manager** is needed in order to easily run this project, unless you use multiple (so far 2) instances of your cmd/terminal.
 
-Use the following command to install **PM2**, which is the author's choice for a process manager. 
+###### Use the following command to install **PM2**, which is the author's choice for a process manager. 
 
 > `npm install pm2 -g |`
 
@@ -14,10 +14,10 @@ Testing was performed with **Forever**, but inconvenient bugs appeared so it was
 ## Structure
 Understanding the structure of this project is **essential** in order to ensure that it will work fully. The communication between the **Front-End (Website)** and the **Database** is made through a secondary **Node app** that acts as a server for the **Front-End**.
 
-Path to **Back-End**:
+###### Path to **Back-End** (running on port 3001):
 - root folder
 
-Path to **Front-End**:
+###### Path to **Front-End** (running on port 3000):
 - root/client
 
 Both node apps will need their **dependencies** installed and processes **started seperately**.
@@ -36,14 +36,24 @@ Use the following commands to start the processes. You will be able to identify 
 
     pm2 start npm --name "Frontend"  -- start 
     
-To check the active processes use:
+###### To check the active processes use:
 
 	pm2 list
     
-To see the active website, navigate to:
+###### To see the active website, navigate to:
 
-	http://yourIP/3000
+	http://yourIP:3000
     
-## Example Website
+###### The Backend is restricted to the local IP. If you are using a server, remove this code from the page file present in the following path:
 
-	http://159.69.217.98:3000/
+	root/routes
+    
+Remove/Comment out this piece of code
+![Code](https://i.imgur.com/FSWMrgJ.png)
+
+Visit this page in order to view it:
+
+	http://ServerIP:3001/nameOfPage
+
+## Example Website
+[Example Website](http://159.69.217.98:3000/)
