@@ -10,7 +10,7 @@ export default class Footer extends Component {
     }
     render() {
     return (
-        <div className="Test">
+        <div className="test">
         From Footer
         {this.state.vehicles.map(vehicle=> 
           <li key={vehicle.vehicleID}>{vehicle.vehicleID + " " +vehicle.number_plate + " " + vehicle.latitude + " " + vehicle.longitude}</li>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Header, Footer, Navbar, Login} from './components';
+import {Header, Footer, Navbar, Login, VehicleList} from './components';
 
 
 class App extends Component {
@@ -14,7 +14,10 @@ class App extends Component {
     return (
       <div className="App">
         {/* <Navbar /> */}
-        <Login />
+        {/* <Login /> */}
+        {/* <Header /> */}
+        {/* <Footer/> */}
+        <VehicleList/>
       </div>
     );
   }
