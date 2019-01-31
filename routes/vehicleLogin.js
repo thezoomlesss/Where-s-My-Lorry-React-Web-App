@@ -36,22 +36,25 @@ router.get('/', function(req, res, next) {
 
     
     if(company_id && plate_num && pass){
-        connection.query('SELECT lp.plateID, co.companyID, cr.credentialID FROM License_Plate lp JOIN Vehicle v USING (plateID) JOIN Company co USING (companyID) JOIN Credential cr USING (credentialID) WHERE lp.number_plate = \''+ plate_num+'\' AND co.companyID = \''+ company_id+'\' AND cr.pass = \''+ pass+'\';', function (error, results, fields) {
+        connection.query('SELECT lp.plateID,  co.companyID, cr.credentialID, co.cName, st.state_value FROM License_Plate lp JOIN Vehicle v USING (plateID) JOIN Company co USING (companyID) JOIN Credential cr USING (credentialID) JOIN State st USING (stateID) WHERE lp.number_plate = \''+ plate_num+'\' AND co.companyID = \''+ company_id+'\' AND cr.pass = \''+ pass+'\';', function (error, results, fields) {
             
             if (error) {
-                res.status(200).send('Error when retrieving login from db');
+                res.status(404).send('Error when retrieving login from db');
                 throw error;
             }
+            
             if (results.length > 0) {
                 if (results) {
-                    res.status(200).send("CONFIRMED");
+                    // Passing the name of the company and the status
+                    var detailResults = JSON.parse(JSON.stringify(results[0]));
+                    res.status(200).send("200 "+detailResults.cName + " " + detailResults.state_value);
                 }
             } else {
-                res.status(200).send("No match");
+                res.status(204).send("No match");
             }
         });
     }else{
-        res.status(200).send("No parameters passed");
+        res.status(400).send("No parameters passed");
     }
 
 
