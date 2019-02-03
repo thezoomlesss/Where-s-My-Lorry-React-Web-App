@@ -30,6 +30,7 @@ connection.connect(function(error){
 router.put('/', function(req, res, next) {
 
     // parameters being passed in
+    var companyID = req.query.companyID;
     var vehNumberPlate = req.query.plate;
     var pass = req.query.pass;
     var vehLat = req.query.lat;
@@ -42,12 +43,13 @@ router.put('/', function(req, res, next) {
             JOIN Vehicle v USING (plateID)
             JOIN Location lc USING (locationID)
             JOIN Credential c USING (credentialID)
-            WHERE lp.number_plate = ? AND c.pass = ?
+            JOIN Company com USING (companyID)
+            WHERE lp.number_plate = ? AND c.pass = ? AND com.companyID = ?
         ) as locID);`;
 
-    let data = [vehLat, vehLong, vehNumberPlate, pass];
+    let data = [vehLat, vehLong, vehNumberPlate, pass, companyID];
     
-    if(vehNumberPlate && pass && vehLat && vehLong){
+    if(companyID && vehNumberPlate && pass && vehLat && vehLong ){
         connection.query(sql, data, function (error, results, fields) {
             
             if (error) {
@@ -56,7 +58,7 @@ router.put('/', function(req, res, next) {
             }
             
             
-            res.status(200).send("200 It worked");
+            res.status(200).send("200 Success");
             
         });
     }else{
