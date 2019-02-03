@@ -1,5 +1,5 @@
-# IMFS - An Intuitive Fleet Management System
->**IMFS** is an **Automated Optical Recognition System**, made for **managing a fleet of vehicles**, that implements a low cost solution that is both easy to use and understand, while not losing precious functionalities that could be found in a system made by an industry leading company.
+# IFMS - An Intuitive Fleet Management System
+>**IFMS** is an **Automated Optical Recognition System**, made for **managing a fleet of vehicles**, that implements a low cost solution that is both easy to use and understand, while not losing precious functionalities that could be found in a system made by an industry leading company.
 
 ## Prerequisites
 A **Process Manager** is needed in order to easily run this project, unless you use multiple (so far 2) instances of your cmd/terminal.
