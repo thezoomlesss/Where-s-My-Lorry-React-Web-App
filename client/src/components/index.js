@@ -3,7 +3,8 @@ import Footer from './Footer';
 import Navbar from './Navbar';
 import Login from './Login';
 import VehicleList from './VehicleList';
+import GoogleApiWrapper from './MapView';
 
 export{
-    Header, Footer, Navbar, Login, VehicleList
+    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper
 }

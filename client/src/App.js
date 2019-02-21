@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Header, Footer, Navbar, Login, VehicleList} from './components';
+import {Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper} from './components';
 
 
 class App extends Component {
@@ -17,7 +17,8 @@ class App extends Component {
         {/* <Login /> */}
         {/* <Header /> */}
         {/* <Footer/> */}
-        <VehicleList/>
+        {/* <VehicleList/> */}
+        <GoogleApiWrapper />
       </div>
     );
   }
