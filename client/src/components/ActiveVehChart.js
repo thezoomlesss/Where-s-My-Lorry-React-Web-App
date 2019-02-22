@@ -3,30 +3,6 @@ import './../css/App.css';
 import { Doughnut, Chart } from 'react-chartjs-2';
 
 
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const getState = () => ({
-    labels: [
-        'Not Active',
-        'Active'
-    ],
-    datasets: [{
-        data: [5, 12],
-        backgroundColor: [
-            '#D9D9D9',
-            '#1B9CD6'
-        ],
-        hoverBackgroundColor: [
-            '#D9D9D9',
-            '#FF6384'
-            
-        ]
-    }],
-    text: '12/18'
-});
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 var originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
 Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
@@ -52,34 +28,87 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
 export default class ActiveVehChart extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            vehicleState : null
+        };
+        this.getState = this.getState.bind(this);
     }
+    getState = () => ({
+        
+        labels: [
+            'Not Active',
+            'Active'
+        ],
+        datasets: [{
+            data: [5, 12],
+            backgroundColor: [
+                '#D9D9D9',
+                '#1B9CD6'
+            ],
+            hoverBackgroundColor: [
+                '#D9D9D9',
+                '#FF6384'
+                
+            ]
+        }],
+        text: '12/18'
+    });
 
     componentDidMount() {
-        // fetch('/vehiclesPosition?cid=1')
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         // console.log(data[0]);
-        //         // console.log(data[0]['vehicleID']);
-        //         this.setState({ vehiclePos: data });
-        //     }).then(function () {
+        fetch('/getActiveVehicles/count?cid=1')
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data[0]);
+                // console.log(data[0]['vehicleID']);
+                // this.setState({ vehiclePos: data });
+                this.setState({vehicleState : 
+                    {
+                        labels: [
+                            'Not Active',
+                            'Active'
+                        ],
+                        datasets: [{
+                            // active & not active
+                            data: [ data[1]['count_state'], data[0]['count_state'] ],
+                            backgroundColor: [
+                                '#D9D9D9',
+                                '#1B9CD6'
+                            ],
+                            hoverBackgroundColor: [
+                                '#D9D9D9',
+                                '#FF6384'
+                                
+                            ]
+                        }],
+                        // available / total
+                        text: data[0]['count_state'] + '/' + (data[0]['count_state'] + data[1]['count_state']) 
+                    }
+                });
+            }).then(function () {
 
-        //     });
+            });
     }
-
+    componentDidUpdate(){
+        
+    }
     render() {
-        return (
-            <div>
-                <div style={{width:'600px'}}>
-                    <Doughnut
-                        data={getState}
-                        options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                        }}
-                    />
+        if(!this.state.vehicleState){return null}
+        else {
+            return (
+                <div>
+                    <div style={{width:'600px'}}>
+                        <Doughnut
+                            data={this.state.vehicleState}
+                            options={{
+                                responsive: true,
+                                maintainAspectRatio: true,
+                            }}
+                        />
+                        {/* {this.state.vehiclePos ? <Doughnut data={this.state.vehicleState} options={{responsive: true, maintainAspectRatio: true}} /> : null} */}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        
     }
 }

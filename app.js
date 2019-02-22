@@ -11,6 +11,7 @@ var checkUser = require('./routes/checkUser');
 var vehicleLogin = require('./routes/vehicleLogin.js');
 var setVehicleLocation = require('./routes/setVehicleLocation.js');
 var vehiclesPosition = require('./routes/vehiclesPosition.js');
+var getActiveVehicles = require('./routes/getActiveVehicles.js');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/checkUser', checkUser);
 app.use('/vehicleLogin', vehicleLogin);
 app.use('/setVehicleLocation', setVehicleLocation);
 app.use('/vehiclesPosition', vehiclesPosition);
+app.use('/getActiveVehicles', getActiveVehicles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
