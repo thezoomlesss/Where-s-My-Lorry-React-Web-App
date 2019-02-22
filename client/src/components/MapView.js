@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import './../App.css';
+import './../css/App.css';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 export class MapContainer extends Component {
     fetchVehicleLocation() {
         // console.log("Fetching...");
+        // if the state hasn't been set before (no previous fetch executed and succeeded)
         if (this.state.vehiclePos != null) {
-
+            // Not the second fetch either
             if (this.state.previousVehiclePos != null) {
+                // Calculating the length of both json objects
                 var count = Object.keys(this.state.vehiclePos).length;
                 var previousCount = Object.keys(this.state.previousVehiclePos).length;
                 if (count == previousCount) {
-                    console.log("Equal" + count);
+                    // console.log("Equal " + count);
+                    for(var i=0; i < count; i++){
+                        if(this.state.vehiclePos[i]['latitude'] != this.state.previousVehiclePos[i]['latitude'] || 
+                            this.state.vehiclePos[i]['longitude'] != this.state.previousVehiclePos[i]['longitude'])
+                            {
+                               console.log("YES, DIFFERENT"); 
+                            }
+                    }
                 } else {
-                    console.log("Not Equal" + count);
+                    console.log("Not Equal " + count);
                 }
             }
 
@@ -60,7 +69,7 @@ export class MapContainer extends Component {
         this.fetchVehicleLocation();
         this.interval = setInterval(() => {
             this.fetchVehicleLocation();
-        }, 10000);
+        }, 5000);
     }
     render() {
         const { vehiclePos } = this.state;

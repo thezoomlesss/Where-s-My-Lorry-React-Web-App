@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './../App.css';
+import './../css/App.css';
 
 export default class Footer extends Component {
     state= {vehicles: []}

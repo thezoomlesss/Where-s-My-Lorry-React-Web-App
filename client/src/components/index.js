@@ -4,7 +4,8 @@ import Navbar from './Navbar';
 import Login from './Login';
 import VehicleList from './VehicleList';
 import GoogleApiWrapper from './MapView';
+import ActiveVehChart from './ActiveVehChart.js';
 
 export{
-    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper
+    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart
 }
