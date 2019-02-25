@@ -5,7 +5,8 @@ import Login from './Login';
 import VehicleList from './VehicleList';
 import GoogleApiWrapper from './MapView';
 import ActiveVehChart from './ActiveVehChart.js';
+import SimpleTable from './SimpleTable.js';
 
 export{
-    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart
+    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable
 }

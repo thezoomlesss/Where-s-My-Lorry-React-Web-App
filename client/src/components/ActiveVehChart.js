@@ -31,29 +31,7 @@ export default class ActiveVehChart extends Component {
         this.state = {
             vehicleState : null
         };
-        this.getState = this.getState.bind(this);
     }
-    getState = () => ({
-        
-        labels: [
-            'Not Active',
-            'Active'
-        ],
-        datasets: [{
-            data: [5, 12],
-            backgroundColor: [
-                '#D9D9D9',
-                '#1B9CD6'
-            ],
-            hoverBackgroundColor: [
-                '#D9D9D9',
-                '#FF6384'
-                
-            ]
-        }],
-        text: '12/18'
-    });
-
     componentDidMount() {
         fetch('/getActiveVehicles/count?cid=1')
             .then(res => res.json())
@@ -76,7 +54,7 @@ export default class ActiveVehChart extends Component {
                             ],
                             hoverBackgroundColor: [
                                 '#D9D9D9',
-                                '#FF6384'
+                                '#27b8f9'
                                 
                             ]
                         }],

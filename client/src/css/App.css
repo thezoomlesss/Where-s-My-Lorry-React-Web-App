@@ -70,8 +70,7 @@ div.table-title {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
- 
-th {
+div.VehicleList > table > thead > tr > th {
   color:#D5DDE5;;
   background:#1b1e24;
   border-bottom:4px solid #9ea7af;
@@ -84,16 +83,16 @@ th {
   vertical-align:middle;
 }
 
-th:first-child {
+div.VehicleList > table > thead > tr > th:first-child {
   border-top-left-radius:3px;
 }
  
-th:last-child {
+div.VehicleList > table > thead > tr > th:last-child {
   border-top-right-radius:3px;
   border-right:none;
 }
   
-tr {
+div.VehicleList > table > tbody > tr {
   border-top: 1px solid #C1C3D1;
   border-bottom: 1px solid #C1C3D1;
   color:#666B85;
@@ -102,37 +101,37 @@ tr {
   text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
  
-tr:hover td {
+div.VehicleList > table > tbody > tr:hover td {
   background:#4E5066;
   color:#FFFFFF;
   border-top: 1px solid #22262e;
 }
  
-tr:first-child {
+div.VehicleList > table > tbody > tr:first-child {
   border-top:none;
 }
 
-tr:last-child {
+div.VehicleList > table > tbody > tr:last-child {
   border-bottom:none;
 }
  
-tr:nth-child(odd) td {
+div.VehicleList > table > tbody > tr:nth-child(odd) td {
   background:#EBEBEB;
 }
  
-tr:nth-child(odd):hover td {
+div.VehicleList > table > tbody > tr:nth-child(odd):hover td {
   background:#4E5066;
 }
 
-tr:last-child td:first-child {
+div.VehicleList > table > tbody > tr:last-child td:first-child {
   border-bottom-left-radius:3px;
 }
  
-tr:last-child td:last-child {
+div.VehicleList > table > tbody > tr:last-child td:last-child {
   border-bottom-right-radius:3px;
 }
  
-td {
+div.VehicleList > table > tbody > tr > td {
   background:#FFFFFF;
   padding:20px;
   text-align:left;
@@ -143,7 +142,7 @@ td {
   border-right: 1px solid #C1C3D1;
 }
 
-td:last-child {
+div.VehicleList > table > tbody > tr > td:last-child {
   border-right: 0px;
 }
 
@@ -159,15 +158,15 @@ th.text-right {
   text-align: right;
 }
 
-td.text-left {
+div.VehicleList > table > tbody > tr > td.text-left {
   text-align: left;
 }
 
-td.text-center {
+div.VehicleList > table > tbody > tr > td.text-center {
   text-align: center;
 }
 
-td.text-right {
+div.VehicleList > table > tbody > tr > td.text-right {
   text-align: right;
 }
 
@@ -184,4 +183,7 @@ table.table-fill > thead, table.table-fill > tbody.table-hover tr {
 }
 table.table-fill > thead {
   width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+#root > div > div.App > div > main > div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.SimpleTable-root-144 > table > tbody > tr:hover{
+  background: #eeeeee;
 }

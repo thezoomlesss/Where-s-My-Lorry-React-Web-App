@@ -18,38 +18,38 @@ export default class VehicleList extends Component {
             <div className="VehicleList">
 
 
-                <div class="table-title">
+                <div className="table-title">
                     <h3>Vehicles in your fleet</h3>
                 </div>
-                <table class="table-fill">
+                <table className="table-fill">
                     <thead>
                         <tr>
-                            <th class="text-left">Car ID</th>
-                            <th class="text-left">Number Plate</th>
+                            <th className="text-left">Car ID</th>
+                            <th className="text-left">Number Plate</th>
                         </tr>
                     </thead>
-                    <tbody class="table-hover">
+                    <tbody className="table-hover">
 
-                    {this.state.vehicles.map(vehicle =>
+                        {this.state.vehicles.map(vehicle =>
                             <tr>
-                                <td class="text-left">{vehicle.vehicleID}</td>
-                                <td class="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
+                                <td className="text-left">{vehicle.vehicleID}</td>
+                                <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>
                         )}
 
 
-{this.state.vehicles.map(vehicle =>
+                        {this.state.vehicles.map(vehicle =>
                             <tr>
-                                <td class="text-left">{vehicle.vehicleID}</td>
-                                <td class="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
+                                <td className="text-left">{vehicle.vehicleID}</td>
+                                <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>
                         )}
 
 
-{this.state.vehicles.map(vehicle =>
+                        {this.state.vehicles.map(vehicle =>
                             <tr>
-                                <td class="text-left">{vehicle.vehicleID}</td>
-                                <td class="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
+                                <td className="text-left">{vehicle.vehicleID}</td>
+                                <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>
                         )}
 

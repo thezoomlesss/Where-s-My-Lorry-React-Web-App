@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './../css/App.css';
+import './../css/bootstrap.css';
+import { Header, Footer, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable } from './';
 
 
 import PropTypes from 'prop-types';
@@ -26,7 +28,7 @@ import MailIcon from '@material-ui/icons/Mail';
 const drawerWidth = 240;
 
 function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
+  return <ListItem button component="a" {...props} />;
 }
 
 const styles = theme => ({
@@ -92,9 +94,22 @@ const styles = theme => ({
 });
 
 class Navbar extends Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicleTableData: null,
+      open: false
+    };
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
+    this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    
+  }
+
+  componentDidMount(){
+    fetch('/vehicles')
+    .then(res => res.json())
+    .then(vehicles => this.setState({ vehicleTableData : vehicles }));
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -108,7 +123,7 @@ class Navbar extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root + " Navbar-top-div"}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -156,8 +171,8 @@ class Navbar extends Component {
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemLink href="http://www.google.com">
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text} />
                 </ListItemLink>
               </ListItem>
             ))}
@@ -174,7 +189,7 @@ class Navbar extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography paragraph>
+          {/* <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
             elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
@@ -197,7 +212,35 @@ class Navbar extends Component {
             sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
             viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
             ultrices sagittis orci a.
-          </Typography>
+          </Typography> */}
+
+          <SimpleTable
+            data={this.state.vehicleTableData}
+            header={[
+              {
+                name: "First name",
+                prop: "firstName"
+              },
+              {
+                name: "Last name",
+                prop: "lastName"
+              },
+              {
+                name: "Username",
+                prop: "username"
+              },
+              {
+                name: "Email",
+                prop: "email"
+              }
+            ]} />
+          <ActiveVehChart />
+          {/* <Navbar />  */}
+          <Login />
+          <Header />
+          <Footer />
+          <VehicleList />
+          <GoogleApiWrapper />
         </main>
       </div>
     );
@@ -214,7 +257,7 @@ Navbar.propTypes = {
 export default withStyles(styles, { withTheme: true })(Navbar);
 
 // export default class Navbar extends Component {
-   
+
 //     render() {
 //     return (
 //         <div className="Header">
