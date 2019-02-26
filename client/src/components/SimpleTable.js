@@ -36,19 +36,17 @@ const rows = [
 // function SimpleTable(props) {
 //export default ({ data, header }) =>
 export default class SimpleTable extends Component {
-  constructor(props){
-    super(props);
-  }
+  
 
   render() {
     return (
-      <Paper >
+      <Paper className="paper">
         <Table>
           <TableHead>
             <TableRow>
               {this.props.header.map((head, i) =>
                 <TableCell key={`thc-${i}`}>
-                  {head.name}
+                  {head.prop}
                 </TableCell>
               )}
             </TableRow>

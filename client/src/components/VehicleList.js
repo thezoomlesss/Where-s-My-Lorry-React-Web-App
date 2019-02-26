@@ -31,7 +31,7 @@ export default class VehicleList extends Component {
                     <tbody className="table-hover">
 
                         {this.state.vehicles.map(vehicle =>
-                            <tr>
+                            <tr key={vehicle.vehicleID}>
                                 <td className="text-left">{vehicle.vehicleID}</td>
                                 <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>
@@ -39,7 +39,7 @@ export default class VehicleList extends Component {
 
 
                         {this.state.vehicles.map(vehicle =>
-                            <tr>
+                            <tr key={vehicle.vehicleID}>
                                 <td className="text-left">{vehicle.vehicleID}</td>
                                 <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>
@@ -47,7 +47,7 @@ export default class VehicleList extends Component {
 
 
                         {this.state.vehicles.map(vehicle =>
-                            <tr>
+                            <tr key={vehicle.vehicleID}>
                                 <td className="text-left">{vehicle.vehicleID}</td>
                                 <td className="text-left">{[vehicle.number_plate.slice(0, 2), ' - ', vehicle.number_plate.slice(2, 4), ' - ', vehicle.number_plate.slice(4)].join('')}</td>
                             </tr>

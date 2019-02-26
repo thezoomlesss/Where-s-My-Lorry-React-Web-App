@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './../css/App.css';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
+import Paper from '@material-ui/core/Paper';
+
 export class MapContainer extends Component {
     fetchVehicleLocation() {
         // console.log("Fetching...");
@@ -12,22 +14,21 @@ export class MapContainer extends Component {
                 // Calculating the length of both json objects
                 var count = Object.keys(this.state.vehiclePos).length;
                 var previousCount = Object.keys(this.state.previousVehiclePos).length;
-                if (count == previousCount) {
+                if (count === previousCount) {
                     // console.log("Equal " + count);
-                    for(var i=0; i < count; i++){
-                        if(this.state.vehiclePos[i]['latitude'] != this.state.previousVehiclePos[i]['latitude'] || 
-                            this.state.vehiclePos[i]['longitude'] != this.state.previousVehiclePos[i]['longitude'])
-                            {
-                               console.log("YES, DIFFERENT"); 
-                            }
+                    for (var i = 0; i < count; i++) {
+                        if (this.state.vehiclePos[i]['latitude'] !== this.state.previousVehiclePos[i]['latitude'] ||
+                            this.state.vehiclePos[i]['longitude'] !== this.state.previousVehiclePos[i]['longitude']) {
+                            //    console.log("YES, DIFFERENT"); 
+                        }
                     }
                 } else {
-                    console.log("Not Equal " + count);
+                    // console.log("Not Equal " + count);
                 }
             }
 
-
-            this.state.previousVehiclePos = this.state.vehiclePos;
+            // this.setState({ vehiclePos: data });
+            // this.state.previousVehiclePos = this.state.vehiclePos;
             // console.log(this.state.previousVehiclePos);
         }
 
@@ -50,11 +51,12 @@ export class MapContainer extends Component {
         },
         zoom: 11
     };
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             vehiclePos: null,
-            previousVehiclePos: null
+            previousVehiclePos: null,
+            MapViewHeight: 0
         };
         this.onMarkerClick = this.onMarkerClick.bind(this);
     }
@@ -67,36 +69,36 @@ export class MapContainer extends Component {
     }
     componentDidMount() {
         this.fetchVehicleLocation();
-        this.interval = setInterval(() => {
-            this.fetchVehicleLocation();
-        }, 5000);
+        // this.interval = setInterval(() => {
+        //     this.fetchVehicleLocation();
+        // }, 5000);
     }
     render() {
-        const { vehiclePos } = this.state;
+        // const { vehiclePos } = this.state;
         return (
-            <div>
-                {console.log(vehiclePos)}
-
-
-                <Map google={this.props.google} zoom={2}>
-                    {this.state && this.state.vehiclePos && this.state.vehiclePos.map(item =>
-                        <Marker
-                            onClick={this.onMarkerClick}
-                            title={item.vehicleID}
-                            position={{ lat: item.latitude, lng: item.longitude }}
-                        />
-                        // <li key={item.vehicleID}>{item.latitude}</li>
-                    )}
-                    {/* <Marker onClick={this.onMarkerClick}
+            <Paper className="paper">
+                <div className="MapContainer" >
+                    {/* {console.log(vehiclePos)} */}
+                    <Map google={this.props.google} zoom={12} center={{ lat: 50.5202338, lng: 16.9446649 }} >
+                        {this.state && this.state.vehiclePos && this.state.vehiclePos.map(item =>
+                            <Marker key={item.vehicleID}
+                                onClick={this.onMarkerClick}
+                                title={item.vehicleID}
+                                position={{ lat: item.latitude, lng: item.longitude }}
+                            />
+                            // <li key={item.vehicleID}>{item.latitude}</li>
+                        )}
+                        {/* <Marker onClick={this.onMarkerClick}
                         name={'Current location'} /> */}
 
-                    <InfoWindow onClose={this.onInfoWindowClose}>
-                        <div>
-                            {/* <h1>{this.state.selectedPlace.name}</h1> */}
-                        </div>
-                    </InfoWindow>
-                </Map>
-            </div>
+                        <InfoWindow onClose={this.onInfoWindowClose}>
+                            <div>
+                                {/* <h1>{this.state.selectedPlace.name}</h1> */}
+                            </div>
+                        </InfoWindow>
+                    </Map>
+                </div>
+            </Paper>
         );
     }
 }

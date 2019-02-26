@@ -187,3 +187,50 @@ table.table-fill > thead {
 #root > div > div.App > div > main > div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.SimpleTable-root-144 > table > tbody > tr:hover{
   background: #eeeeee;
 }
+
+.paper{
+  margin-bottom: 15px;
+}
+.chartContainer{
+  display: inline-block;
+  width: 31%;
+}
+div.chartContainer:nth-child(3){
+  margin-left: 3.5%;
+  margin-right: 3.5%;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+h6.MuiTypography-root-69.MuiTypography-h6-86.MuiTypography-colorInherit-98.MuiTypography-noWrap-95.NameHolder{
+  position: absolute;
+  right: 24px;
+  font-size: 1rem;
+  font-family: Roboto-light;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+.nameSpan:hover{
+  color:#000000;
+}
+.MapContainer{
+  position: relative;
+  display: block;
+  height: 1000px;
+
+}

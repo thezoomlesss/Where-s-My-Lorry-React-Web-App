@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { Header, Footer, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable } from './';
-
+import {  Login, GoogleApiWrapper, ActiveVehChart, SimpleTable } from './';
+// VehicleList, Header, Footer,
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -51,7 +51,7 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginLeft: 12,
+    marginLeft: 5,
     marginRight: 36,
   },
   hide: {
@@ -98,17 +98,19 @@ class Navbar extends Component {
     super(props);
     this.state = {
       vehicleTableData: null,
-      open: false
+      open: false,
+      selectedIndex: 0
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-    
+    this.goToPage = this.goToPage.bind(this);
+
   }
 
-  componentDidMount(){
+  componentDidMount() {
     fetch('/vehicles')
-    .then(res => res.json())
-    .then(vehicles => this.setState({ vehicleTableData : vehicles }));
+      .then(res => res.json())
+      .then(vehicles => this.setState({ vehicleTableData: vehicles }));
   }
 
   handleDrawerOpen = () => {
@@ -118,7 +120,12 @@ class Navbar extends Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
-
+  goToPage = () => {
+    alert("Test");
+  };
+  handleListItemClick = (event, index) => {
+    this.setState({ selectedIndex: index });
+  };
   render() {
     const { classes, theme } = this.props;
 
@@ -143,7 +150,10 @@ class Navbar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Mini variant drawer
+              Hi Ewa
+            </Typography>
+            <Typography className="NameHolder" variant="h6" color="inherit" noWrap>
+              Hi, <span className="nameSpan">Hamouda</span>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -169,12 +179,15 @@ class Navbar extends Component {
           <Divider />
           <List>
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemLink href="http://www.google.com">
+              <ListItemLink
+                button
+                key={text}
+                selected={this.state.selectedIndex === index}
+                onClick={event => this.handleListItemClick(event, index)}
+              >
                   <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                   <ListItemText primary={text} />
-                </ListItemLink>
-              </ListItem>
+              </ListItemLink>
             ))}
           </List>
           <Divider />
@@ -189,58 +202,50 @@ class Navbar extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          {/* <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
-            elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-            hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing.
-            Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis
-            viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo.
-            Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
-            at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-            ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-            sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-            In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-            viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography> */}
+          
 
+          <ActiveVehChart />
+          <ActiveVehChart />
+          <ActiveVehChart />
           <SimpleTable
             data={this.state.vehicleTableData}
             header={[
               {
-                name: "First name",
-                prop: "firstName"
+                name: "id",
+                prop: "Identifier"
               },
               {
-                name: "Last name",
-                prop: "lastName"
+                name: "numberPlate",
+                prop: "Number Plate"
               },
               {
-                name: "Username",
-                prop: "username"
+                name: "latitude",
+                prop: "Position X"
               },
               {
-                name: "Email",
-                prop: "email"
+                name: "longitude",
+                prop: "Position Y"
               }
             ]} />
-          <ActiveVehChart />
+
           {/* <Navbar />  */}
           <Login />
-          <Header />
-          <Footer />
-          <VehicleList />
+          {/* <Header />
+          <Footer /> */}
+          {/* <VehicleList /> */}
+          
           <GoogleApiWrapper />
+
+          {/* Footer */}
+          <footer className={"FOOOOTERBOI"}>
+            <Typography variant="h6" align="center" gutterBottom>
+              Footer
+            </Typography>
+            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+              Something here to give the footer a purpose!
+            </Typography>
+          </footer>
+          {/* End footer */}
         </main>
       </div>
     );
@@ -267,3 +272,4 @@ export default withStyles(styles, { withTheme: true })(Navbar);
 //     }
 
 // }
+
