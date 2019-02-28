@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import {  Login, GoogleApiWrapper, ActiveVehChart, SimpleTable } from './';
+import { Login, GoogleApiWrapper, ActiveVehChart, SimpleTable, SignIn } from './';
 // VehicleList, Header, Footer,
-
+import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,10 +23,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Paper from '@material-ui/core/Paper';
 
 
 const drawerWidth = 240;
-
+const MyLink = props => <Link to="/open-collective" {...props} />
+// Paths to appear in the URL and in the navigation menu
+const paths = ["home", "test1", "test2", "test3"];
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
@@ -52,7 +55,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: 5,
-    marginRight: 36,
+    marginRight: 42,
   },
   hide: {
     display: 'none',
@@ -103,7 +106,6 @@ class Navbar extends Component {
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-    this.goToPage = this.goToPage.bind(this);
 
   }
 
@@ -120,9 +122,6 @@ class Navbar extends Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
-  goToPage = () => {
-    alert("Test");
-  };
   handleListItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
   };
@@ -131,6 +130,7 @@ class Navbar extends Component {
 
     return (
       <div className={classes.root + " Navbar-top-div"}>
+        {/* <BrowserRouter> */}
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -150,13 +150,16 @@ class Navbar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Hi Ewa
+              Hi Test
             </Typography>
             <Typography className="NameHolder" variant="h6" color="inherit" noWrap>
-              Hi, <span className="nameSpan">Hamouda</span>
+              Hi, <span className="nameSpan">John Smith</span>
             </Typography>
           </Toolbar>
         </AppBar>
+
+        {/* <BrowserRouter>
+      <div> */}
         <Drawer
           variant="permanent"
           className={classNames(classes.drawer, {
@@ -178,16 +181,18 @@ class Navbar extends Component {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItemLink
+            {paths.map((text, index) => (
+              <ListItem
                 button
+                // component={MyLink}
+                component={Link} to={"/" + text}
                 key={text}
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}
               >
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-              </ListItemLink>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
             ))}
           </List>
           <Divider />
@@ -202,9 +207,75 @@ class Navbar extends Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          
-
-          <ActiveVehChart />
+          <Switch>
+            {/* <Route exact path="/home" render={props=><Login/>} /> */}
+            <Route exact path="/home" render={props =>
+              <div>
+                <ActiveVehChart />
+                <ActiveVehChart />
+                <ActiveVehChart />
+                <SimpleTable
+                  data={this.state.vehicleTableData}
+                  header={[
+                    {
+                      name: "id",
+                      prop: "Identifier"
+                    },
+                    {
+                      name: "numberPlate",
+                      prop: "Number Plate"
+                    },
+                    {
+                      name: "latitude",
+                      prop: "Position X"
+                    },
+                    {
+                      name: "longitude",
+                      prop: "Position Y"
+                    },
+                    {
+                      name: "date",
+                      prop: "Last Updated"
+                    }
+                  ]} />
+              </div>
+            } />
+            <Route exact path="/" render={props =>
+              <div>
+                <ActiveVehChart />
+                <ActiveVehChart />
+                <ActiveVehChart />
+                <SimpleTable
+                  data={this.state.vehicleTableData}
+                  header={[
+                    {
+                      name: "id",
+                      prop: "Identifier"
+                    },
+                    {
+                      name: "numberPlate",
+                      prop: "Number Plate"
+                    },
+                    {
+                      name: "latitude",
+                      prop: "Position X"
+                    },
+                    {
+                      name: "longitude",
+                      prop: "Position Y"
+                    },
+                    {
+                      name: "date",
+                      prop: "Last Updated"
+                    }
+                  ]} />
+              </div>
+            } />
+            <Route exact path="/test1" render={props => <SignIn />} />
+            <Route exact path="/test2" render={props => <GoogleApiWrapper />} />
+          </Switch>
+          {/* </BrowserRouter> */}
+          {/* <ActiveVehChart />
           <ActiveVehChart />
           <ActiveVehChart />
           <SimpleTable
@@ -225,26 +296,24 @@ class Navbar extends Component {
               {
                 name: "longitude",
                 prop: "Position Y"
+              },
+              {
+                name: "date",
+                prop: "Last Updated"
               }
             ]} />
-
-          {/* <Navbar />  */}
           <Login />
-          {/* <Header />
-          <Footer /> */}
-          {/* <VehicleList /> */}
-          
           <GoogleApiWrapper />
-
-          {/* Footer */}
-          <footer className={"FOOOOTERBOI"}>
-            <Typography variant="h6" align="center" gutterBottom>
-              Footer
+          <Paper>
+            <footer className={"FOOOOTERBOI"}>
+              <Typography variant="h6" align="center" gutterBottom>
+                Footer
             </Typography>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-              Something here to give the footer a purpose!
+              <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                Something here to give the footer a purpose!
             </Typography>
-          </footer>
+            </footer>
+          </Paper> */}
           {/* End footer */}
         </main>
       </div>
@@ -272,4 +341,5 @@ export default withStyles(styles, { withTheme: true })(Navbar);
 //     }
 
 // }
+
 

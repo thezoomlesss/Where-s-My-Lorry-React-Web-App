@@ -195,7 +195,7 @@ table.table-fill > thead {
   display: inline-block;
   width: 31%;
 }
-div.chartContainer:nth-child(3){
+div.chartContainer:nth-child(2){
   margin-left: 3.5%;
   margin-right: 3.5%;
 }
@@ -233,4 +233,7 @@ h6.MuiTypography-root-69.MuiTypography-h6-86.MuiTypography-colorInherit-98.MuiTy
   display: block;
   height: 1000px;
 
+}
+a{
+  text-decoration: none;
 }

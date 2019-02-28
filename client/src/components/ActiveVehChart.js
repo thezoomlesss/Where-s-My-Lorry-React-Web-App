@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 import './../css/App.css';
 import { Doughnut, Chart } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
+import { withRouter } from 'react-router-dom';
 
+import AnimatedWrapper from "./../css/AnimatedWrapper.js";
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 var originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
+const vWidth = window.innerWidth;
+const vHeight =  window.innerHeight; 
+var scale = 1.4;
+
+// Depending on the height of the viewPort, we decide what scale we should use for our numbers inside the chart
+if(vHeight > 700){
+    scale = 1.8;
+}else{
+    scale = 1.7;
+}
+console.log("scale: "+ scale);
 Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
     draw: function () {
         originalDoughnutDraw.apply(this, arguments);
-
         var chart = this.chart.chart;
         var ctx = chart.ctx;
         var width = chart.width;
@@ -21,12 +33,12 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
 
         var text = chart.config.data.text,
             textX = Math.round((width - ctx.measureText(text).width) / 2),
-            textY = height / 1.8; //original value 2
+            textY = height / scale; //original value 2
 
         ctx.fillText(text, textX, textY);
     }
 });
-export default class ActiveVehChart extends Component {
+class ActiveVehChart extends Component {
     constructor() {
         super();
         this.state = {
@@ -75,6 +87,7 @@ export default class ActiveVehChart extends Component {
         if (!this.state.vehicleState) { return null }
         else {
             return (
+                
                 <div className="chartContainer">
                     <Paper className="paper" >
                         <Doughnut
@@ -105,3 +118,6 @@ export default class ActiveVehChart extends Component {
 
     }
 }
+
+// const Home = AnimatedWrapper();
+export default ActiveVehChart;
