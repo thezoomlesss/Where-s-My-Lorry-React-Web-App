@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -44,51 +44,78 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-function test_func(){
-  alert("test");
-}
-function SignIn(props) {
-  const { classes } = props;
-  
+class SignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.setState({
+      email: null,
+      pass: null
+    });
 
-  
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email"  autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={test_func}
-            className={classes.submit}
-          >
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPassChange = this.onPassChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onEmailChange(event) {
+    this.setState({
+      email: event.target.value
+    }, () => {
+      console.log("Email: "+this.state.email);
+    });
+  }
+  onPassChange(event) {
+    this.setState({
+      pass: event.target.value
+    }, () => {
+      console.log("Pass: "+ this.state.pass);
+    });
+  }
+
+  onSubmit(event){
+    event.preventDefault();
+    if(this.state && this.state.email && this.state.pass) alert("Email: "+ this.state.email + "   Pass: "+ this.state.pass);
+  }
+
+  render() {
+    return (
+      <main className={this.props.classes.main}>
+        <CssBaseline />
+        <Paper className={this.props.classes.paper}>
+          <Avatar className={this.props.classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign in
+        </Typography>
+          <form className={this.props.classes.form}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" onChange={this.onEmailChange} autoFocus />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input name="password" type="password" id="password"  onChange={this.onPassChange} autoComplete="current-password" />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={this.props.classes.submit}
+              onClick={this.onSubmit}
+            >
+              Sign in
           </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+          </form>
+        </Paper>
+      </main>
+    );
+  }
 }
 
 SignIn.propTypes = {
