@@ -13,6 +13,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect, Route } from "react-router-dom";
+import Cookies from 'universal-cookie';
+
+var secret = require("./../secret.json");
+var jwt = require('jsonwebtoken');
+const cookies = new Cookies();
 
 const styles = theme => ({
   main: {
@@ -90,8 +95,13 @@ class SignIn extends Component {
     });
     if (this.state && this.state.email && this.state.pass) {
       var resMessage, resStatus;
+      // add jti  company id
       fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
-        .then(res => res.status === 200 ? (this.props.auth.authenticate(), this.props.history.push('/home')) : console.log("204 NOOOO")).then(
+        .then(res => res.status === 200 ? (
+            this.props.auth.authenticate(),
+            cookies.set('loginToken', jwt.sign({ }, secret.key, { expiresIn: '24h' }) , { path: '/' }) ,
+            this.props.history.push('/home')) 
+            : console.log("204 NOOOO")).then(
           );
         
         // resMessage = res.text().then( res => resStatus = res.status))

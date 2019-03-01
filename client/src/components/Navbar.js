@@ -271,7 +271,6 @@ class Navbar extends Component {
                   ]} />
               </div>
             } />
-            <Route exact path="/test1" render={props => <SignIn />} />
             <Route exact path="/test2" render={props => <GoogleApiWrapper />} />
           </Switch>
           {/* </BrowserRouter> */}
