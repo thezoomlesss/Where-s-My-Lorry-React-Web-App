@@ -7,7 +7,31 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 
 // import Button from 'react-bootstrap/Button';
-
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    //setTimeout(cb, 100) // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    //setTimeout(cb, 100) // fake async
+  }
+}
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? <Component {...props} />
+      : <Redirect to='/login' />
+  )} />
+)
+const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === false
+      ? <Component {...props} />
+      : <Redirect to='/home' />
+  )} />
+)
 class App extends Component {
   state = { users: [] }
   componentDidMount() {
@@ -20,22 +44,26 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <Switch>
-           <Route exact path="/" component={Navbar} />
+           {/* <Route exact path="/" component={Navbar} />
            <Route path="/home" component={Navbar} />
            <Route path="/test1" component={Navbar} />
-           <Route path="/test2" component={Navbar} />
-           <Route exact path="/login" component={SignIn} />
+           <Route path="/test2" component={Navbar} /> */}
+           {/* <PrivateRoute path='/' component={Navbar} /> */}
+
+           <PrivateRoute path='/home' component={Navbar} />
+           <PrivateRoute path='/test1' component={Navbar} />
+           <PrivateRoute path='/test2' component={Navbar} />
+           <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={fakeAuth} />} />
+          
+
+           {/* <Route path='/home' component={Navbar} />
+           <Route path='/test1' component={Navbar} />
+           <Route path='/test2' component={Navbar} />
+           <Route exact path="/login" component={(props) => <SignIn {...props} auth={fakeAuth} />} /> */}
+          
           </Switch>
         </BrowserRouter>
-        {/* <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={SignIn} />
-            <Route exact path="/home" component={Navbar} />
-            <Route exact path="/home/home" component={Navbar} />
-            <Route exact path="/home/test1" component={Navbar} />
-            <Route exact path="/home/test2" component={Navbar} />
-          </Switch>
-        </BrowserRouter> */}
+        
       </div>
     );
   }

@@ -218,7 +218,7 @@ div.chartContainer:nth-child(2){
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-h6.MuiTypography-root-69.MuiTypography-h6-86.MuiTypography-colorInherit-98.MuiTypography-noWrap-95.NameHolder{
+.NameHolder{
   position: absolute;
   right: 24px;
   font-size: 1rem;

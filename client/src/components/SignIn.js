@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Redirect, Route } from "react-router-dom";
 
 const styles = theme => ({
   main: {
@@ -47,34 +48,55 @@ const styles = theme => ({
 class SignIn extends Component {
   constructor(props) {
     super(props);
+    
+    
     this.setState({
       email: null,
-      pass: null
+      pass: null,
+      emailError: false,
+      passError: false,
     });
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPassChange = this.onPassChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
 
+    console.log(this.props.auth);
+  }
+  componentDidMount() {
+    this.setState({
+      emailError: false,
+      passError: false
+    });
+  }
   onEmailChange(event) {
     this.setState({
       email: event.target.value
     }, () => {
-      console.log("Email: "+this.state.email);
     });
   }
   onPassChange(event) {
     this.setState({
       pass: event.target.value
     }, () => {
-      console.log("Pass: "+ this.state.pass);
     });
   }
 
-  onSubmit(event){
+  onSubmit(event) {
     event.preventDefault();
-    if(this.state && this.state.email && this.state.pass) alert("Email: "+ this.state.email + "   Pass: "+ this.state.pass);
+    this.setState({
+      emailError: true,
+      passError: true
+    });
+    if (this.state && this.state.email && this.state.pass) {
+      var resMessage, resStatus;
+      fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
+        .then(res => res.status === 200 ? (this.props.auth.authenticate(), this.props.history.push('/home')) : console.log("204 NOOOO")).then(
+          );
+        
+        // resMessage = res.text().then( res => resStatus = res.status))
+      // .then( resMessage => console.log(resMessage+ ' ' ));
+    }
   }
 
   render() {
@@ -91,11 +113,13 @@ class SignIn extends Component {
           <form className={this.props.classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" onChange={this.onEmailChange} autoFocus />
+              {/* error={this.state.emailError} */}
+              <Input id="email" name="email" autoComplete="email" required onChange={this.onEmailChange} autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password"  onChange={this.onPassChange} autoComplete="current-password" />
+              {/* error={this.state.passError} */}
+              <Input name="password" type="password" id="password" required onChange={this.onPassChange} autoComplete="current-password" />
             </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

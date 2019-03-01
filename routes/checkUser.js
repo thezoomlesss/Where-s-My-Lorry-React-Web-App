@@ -44,7 +44,7 @@ router.post('/', function (req, res, next) {
                 res.status(200).send("companyID:" + results[0].companyID);
             }
         } else {
-            res.status(200).send("No match");
+            res.status(204).send("No match");
         }
     });
 
