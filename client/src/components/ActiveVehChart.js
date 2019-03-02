@@ -2,23 +2,20 @@ import React, { Component } from 'react';
 import './../css/App.css';
 import { Doughnut, Chart } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
-import { withRouter } from 'react-router-dom';
-
-import AnimatedWrapper from "./../css/AnimatedWrapper.js";
+import Grow from '@material-ui/core/Grow';
 
 // some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 var originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
-const vWidth = window.innerWidth;
-const vHeight =  window.innerHeight; 
+const vHeight = window.innerHeight;
 var scale = 1.4;
 
 // Depending on the height of the viewPort, we decide what scale we should use for our numbers inside the chart
-if(vHeight > 700){
+if (vHeight > 700) {
     scale = 1.8;
-}else{
+} else {
     scale = 1.7;
 }
-console.log("scale: "+ scale);
+console.log("scale: " + scale);
 Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
     draw: function () {
         originalDoughnutDraw.apply(this, arguments);
@@ -87,29 +84,33 @@ class ActiveVehChart extends Component {
         if (!this.state.vehicleState) { return null }
         else {
             return (
-                
-                <div className="chartContainer">
-                    <Paper className="paper" >
-                        <Doughnut
-                            data={this.state.vehicleState}
-                            options={{
-                                responsive: true,
-                                maintainAspectRatio: true,
-                                layout: {
-                                    padding: {
-                                        left: 20,
-                                        right: 20,
-                                        top: 20,
-                                        bottom: 20
-                                    }
-                                },
-                                legend: {
-                                    reverse: true
-                                }
 
-                            }}
-                        />
-                    </Paper>
+                <div className="chartContainer">
+                    <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
+                        {/* <Slide direction="up" in="true" mountOnEnter unmountOnExit {...(true ? { timeout: 1000 } : {})}> */}
+                        <Paper className="paper" >
+                            <Doughnut
+                                data={this.state.vehicleState}
+                                options={{
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    layout: {
+                                        padding: {
+                                            left: 20,
+                                            right: 20,
+                                            top: 20,
+                                            bottom: 20
+                                        }
+                                    },
+                                    legend: {
+                                        reverse: true
+                                    }
+
+                                }}
+                            />
+                        </Paper>
+                        {/* </Slide> */}
+                    </Grow>
                     {/* {this.state.vehiclePos ? <Doughnut data={this.state.vehicleState} options={{responsive: true, maintainAspectRatio: true}} /> : null} */}
 
                 </div>

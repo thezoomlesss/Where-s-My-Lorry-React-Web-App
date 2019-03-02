@@ -3,6 +3,7 @@ import './../css/App.css';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 import Paper from '@material-ui/core/Paper';
+import Fade from '@material-ui/core/Fade';
 
 export class MapContainer extends Component {
     fetchVehicleLocation() {
@@ -76,29 +77,31 @@ export class MapContainer extends Component {
     render() {
         // const { vehiclePos } = this.state;
         return (
-            <Paper className="paper">
-                <div className="MapContainer" >
-                    {/* {console.log(vehiclePos)} */}
-                    <Map google={this.props.google} zoom={12} center={{ lat: 50.5202338, lng: 16.9446649 }} >
-                        {this.state && this.state.vehiclePos && this.state.vehiclePos.map(item =>
-                            <Marker key={item.vehicleID}
-                                onClick={this.onMarkerClick}
-                                title={item.vehicleID}
-                                position={{ lat: item.latitude, lng: item.longitude }}
-                            />
-                            // <li key={item.vehicleID}>{item.latitude}</li>
-                        )}
-                        {/* <Marker onClick={this.onMarkerClick}
+            <Fade in="true" {...(true ? { timeout: 1700 } : {})}>
+                <Paper className="paper">
+                    <div className="MapContainer" >
+                        {/* {console.log(vehiclePos)} */}
+                        <Map google={this.props.google} zoom={12} center={{ lat: 50.5202338, lng: 16.9446649 }} >
+                            {this.state && this.state.vehiclePos && this.state.vehiclePos.map(item =>
+                                <Marker key={item.vehicleID}
+                                    onClick={this.onMarkerClick}
+                                    title={item.vehicleID}
+                                    position={{ lat: item.latitude, lng: item.longitude }}
+                                />
+                                // <li key={item.vehicleID}>{item.latitude}</li>
+                            )}
+                            {/* <Marker onClick={this.onMarkerClick}
                         name={'Current location'} /> */}
 
-                        <InfoWindow onClose={this.onInfoWindowClose}>
-                            <div>
-                                {/* <h1>{this.state.selectedPlace.name}</h1> */}
-                            </div>
-                        </InfoWindow>
-                    </Map>
-                </div>
-            </Paper>
+                            <InfoWindow onClose={this.onInfoWindowClose}>
+                                <div>
+                                    {/* <h1>{this.state.selectedPlace.name}</h1> */}
+                                </div>
+                            </InfoWindow>
+                        </Map>
+                    </div>
+                </Paper>
+            </Fade>
         );
     }
 }

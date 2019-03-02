@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './css/App.css';
 import './css/bootstrap.css';
-import { Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SignIn } from './components';
-import { BrowserRouter, Link, Switch, Route, Redirect } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Navbar,  SignIn } from './components';
+import { BrowserRouter,  Switch, Route, Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -11,7 +10,7 @@ var secret = require("./secret.json");
 var jwt = require('jsonwebtoken');
 var cookieLoginToken;
 // import Button from 'react-bootstrap/Button';
-const fakeAuth = {
+const Auth = {
   isAuthenticated: false,
   authenticate(cb) {
     this.isAuthenticated = true
@@ -31,20 +30,20 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       if (err) {
         console.log("err token");
         console.log(cookieLoginToken);
-        fakeAuth.signout();
+        Auth.signout();
       } else {
         console.log("Access granted!");
-        fakeAuth.authenticate(); 
+        Auth.authenticate(); 
       }
     }) ):(console.log("Undefined Cookie")),
-    fakeAuth.isAuthenticated === true
+    Auth.isAuthenticated === true
       ? <Component {...props} />
       : <Redirect to='/login' />
   )} />
 )
 const PublicRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    fakeAuth.isAuthenticated === false
+    Auth.isAuthenticated === false
       ? <Component {...props} />
       : <Redirect to='/home' />
   )} />
@@ -70,7 +69,7 @@ class App extends Component {
            <PrivateRoute path='/home' component={Navbar} />
            <PrivateRoute path='/test1' component={Navbar} />
            <PrivateRoute path='/test2' component={Navbar} />
-           <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={fakeAuth} />} />
+           <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
           
 
            {/* <Route path='/home' component={Navbar} />

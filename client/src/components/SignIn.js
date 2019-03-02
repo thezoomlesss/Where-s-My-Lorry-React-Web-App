@@ -98,7 +98,7 @@ class SignIn extends Component {
       // add jti  company id
       fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
         .then(res => res.status === 200 ? (
-            this.props.auth.authenticate(),
+            // this.props.auth.authenticate(),
             cookies.set('loginToken', jwt.sign({ }, secret.key, { expiresIn: '24h' }) , { path: '/' }) ,
             this.props.history.push('/home')) 
             : console.log("204 NOOOO")).then(
