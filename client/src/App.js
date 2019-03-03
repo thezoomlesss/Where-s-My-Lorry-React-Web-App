@@ -70,7 +70,8 @@ class App extends Component {
            <PrivateRoute path='/test1' component={Navbar} />
            <PrivateRoute path='/test2' component={Navbar} />
            <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
-          
+           <Route exact path='/' render={ (props) => (
+           <Redirect to='/home'/>) } />
 
            {/* <Route path='/home' component={Navbar} />
            <Route path='/test1' component={Navbar} />
