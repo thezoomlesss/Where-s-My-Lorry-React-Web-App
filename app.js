@@ -12,6 +12,8 @@ var vehicleLogin = require('./routes/vehicleLogin.js');
 var setVehicleLocation = require('./routes/setVehicleLocation.js');
 var vehiclesPosition = require('./routes/vehiclesPosition.js');
 var getActiveVehicles = require('./routes/getActiveVehicles.js');
+var getVehicleOrigin = require('./routes/getVehicleOrigin.js');
+var getVehicleBrand = require('./routes/getVehicleBrand.js');
 
 var app = express();
 
@@ -33,6 +35,8 @@ app.use('/vehicleLogin', vehicleLogin);
 app.use('/setVehicleLocation', setVehicleLocation);
 app.use('/vehiclesPosition', vehiclesPosition);
 app.use('/getActiveVehicles', getActiveVehicles);
+app.use('/getVehicleOrigin', getVehicleOrigin);
+app.use('/getVehicleBrand', getVehicleBrand);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

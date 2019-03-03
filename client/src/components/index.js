@@ -7,8 +7,9 @@ import GoogleApiWrapper from './MapView';
 import ActiveVehChart from './ActiveVehChart.js';
 import SimpleTable from './SimpleTable.js';
 import SignIn from './SignIn.js';
-import ChartByCountry from './ChartByCountry.js';
+import ChartVehicleBrand from './ChartVehicleBrand.js';
+import ChartVehicleOrigin from './ChartVehicleOrigin.js';
 
 export{
-    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable, SignIn
+    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin
 }

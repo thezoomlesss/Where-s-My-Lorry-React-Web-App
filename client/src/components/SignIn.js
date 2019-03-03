@@ -18,6 +18,7 @@ import Cookies from 'universal-cookie';
 var secret = require("./../secret.json");
 var jwt = require('jsonwebtoken');
 const cookies = new Cookies();
+var cookieLoginToken; // used for checking existing cookies
 
 const styles = theme => ({
   main: {
@@ -53,8 +54,8 @@ const styles = theme => ({
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    
-    
+
+
     this.setState({
       email: null,
       pass: null,
@@ -67,12 +68,39 @@ class SignIn extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     console.log(this.props.auth);
+    var proops = this.props;
+    cookieLoginToken = cookies.get('loginToken');
+    if(proops.auth !== undefined){
+      if( cookieLoginToken !== undefined && cookieLoginToken !== null){
+        jwt.verify(cookieLoginToken, secret.key, function (err, data) {
+          if (err) {
+            // error with checking the token
+            console.log("Should Sign out");
+            proops.auth.signout();
+          } else {
+            console.log("Should Redirect to home");
+            proops.auth.authenticate();
+            proops.history.push('/home');
+          }
+        })
+      }else{
+        console.log("Cookie undefined");
+      }
+    }
   }
   componentDidMount() {
     this.setState({
       emailError: false,
       passError: false
     });
+    
+    
+
+//  (console.log("Undefined Cookie");
+//       this.props.auth.isAuthenticated === true
+//         ? <Redirect to='/home' />
+//         : 0)
+
   }
   onEmailChange(event) {
     this.setState({
@@ -98,13 +126,13 @@ class SignIn extends Component {
       // add jti  company id
       fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
         .then(res => res.status === 200 ? (
-            // this.props.auth.authenticate(),
-            cookies.set('loginToken', jwt.sign({ }, secret.key, { expiresIn: '24h' }) , { path: '/' }) ,
-            this.props.history.push('/home')) 
-            : console.log("204 NOOOO")).then(
+          // this.props.auth.authenticate(),
+          cookies.set('loginToken', jwt.sign({}, secret.key, { expiresIn: '24h' }), { path: '/' }),
+          this.props.history.push('/home'))
+          : console.log("204 NOOOO")).then(
           );
-        
-        // resMessage = res.text().then( res => resStatus = res.status))
+
+      // resMessage = res.text().then( res => resStatus = res.status))
       // .then( resMessage => console.log(resMessage+ ' ' ));
     }
   }

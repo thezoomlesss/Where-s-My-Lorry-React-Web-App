@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { Login, GoogleApiWrapper, ActiveVehChart, SimpleTable, SignIn } from './';
+import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer } from './';
 // VehicleList, Header, Footer,
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -23,7 +23,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import Paper from '@material-ui/core/Paper';
 
 
 const drawerWidth = 240;
@@ -101,6 +100,8 @@ class Navbar extends Component {
     super(props);
     this.state = {
       vehicleTableData: null,
+      vehicleChartBrand: null,
+      vehicleChartOrigin: null,
       open: false,
       selectedIndex: 0
     };
@@ -110,9 +111,15 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
-    fetch('/vehicles')
+    fetch('/vehicles?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleTableData: vehicles }));
+    fetch('/getVehicleOrigin?cid=1')
+      .then(res => res.json())
+      .then(vehicles => this.setState({ vehicleChartOrigin: vehicles }));
+    fetch('/getVehicleBrand?cid=1')
+      .then(res => res.json())
+      .then(vehicles => this.setState({ vehicleChartBrand: vehicles }));
   }
 
   handleDrawerOpen = () => {
@@ -238,6 +245,12 @@ class Navbar extends Component {
                       prop: "Last Updated"
                     }
                   ]} />
+
+                
+                {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}
+                {/* <ChartVehicleBy  size="half-page-paper" pos="paper1" /> */}
+                {this.state.vehicleChartBrand ? <ChartVehicleBrand vehData={this.state.vehicleChartBrand} labelName="Number of Vehicles by Brand" size="half-page-paper" pos="paper2" /> : console.log()}
+                <Footer />
               </div>
             } />
             <Route exact path="/" render={props =>
@@ -269,9 +282,16 @@ class Navbar extends Component {
                       prop: "Last Updated"
                     }
                   ]} />
+                {/* <ChartVehicleBy /> */}
+                <Footer />
               </div>
             } />
-            <Route exact path="/test2" render={props => <GoogleApiWrapper />} />
+            <Route exact path="/test2" render={props =>
+              <div>
+                <GoogleApiWrapper />
+                <Footer />
+              </div>
+            } />
           </Switch>
           {/* </BrowserRouter> */}
           {/* <ActiveVehChart />
@@ -303,17 +323,7 @@ class Navbar extends Component {
             ]} />
           <Login />
           <GoogleApiWrapper />
-          <Paper>
-            <footer className={"FOOOOTERBOI"}>
-              <Typography variant="h6" align="center" gutterBottom>
-                Footer
-            </Typography>
-              <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                Something here to give the footer a purpose!
-            </Typography>
-            </footer>
-          </Paper> */}
-          {/* End footer */}
+           */}
         </main>
       </div>
     );

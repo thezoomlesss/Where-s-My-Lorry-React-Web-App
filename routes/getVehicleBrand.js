@@ -15,28 +15,33 @@ var connection = mysql.createConnection({
     'multipleStatements': true
 });
 
-connection.connect(function(error){
+connection.connect(function (error) {
     // callback
-    if(!!error){
-        console.log('Error when connecting from vehicles');
-        
+    if (!!error) {
+        console.log('Error when connecting from getVehicleBrand.js');
+
         console.log(error);
-    }else{
-        console.log('Db connected from vehicles!');   
+    } else {
+        console.log('Db connected from getVehicleBrand.js!');
     }
 });
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    
+
+
+/* GET countries and count of each country for the vehicles. */
+router.get('/', function (req, res, next) {
+
+    // parameters being passed in
     var company_id = req.query.cid;
-    if(company_id){
+
+    if (company_id) {
         connection.query(`
-        SELECT v.vehicleID,lp.number_plate,  l.latitude, l.longitude, l.last_date FROM Vehicle AS v 
-        JOIN Company as c Using(companyID)
-        INNER JOIN License_Plate AS lp ON v.plateID = lp.plateID 
-        INNER JOIN Location AS l ON v.locationID = l.locationID 
-        WHERE c.companyID = ${1}
-        GROUP BY v.vehicleID;`, {company_id}, function (error, results, fields) {
+            SELECT b.brand_name, count(b.brand_name) as number FROM Brand b
+            JOIN Vehicle v Using(brandID)
+            JOIN Company Using(companyID)
+            WHERE companyID = ${1}
+            Group By b.brand_name
+            ORDER BY count(b.brand_name) DESC;`, {company_id}, function (error, results, fields) {
+
             if (error) {
                 res.status(404).send(error);
                 throw error;
@@ -56,10 +61,6 @@ router.get('/', function(req, res, next) {
     } else {
         res.status(400).send("No parameters passed");
     }
-        
-    
-  // res.send('respond with a resource');
-     
 });
 
 module.exports = router;
