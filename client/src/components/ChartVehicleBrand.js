@@ -9,13 +9,14 @@ const dataValues = [];
 export default class ChartVehicleBrand extends Component {
     constructor(props) {
         super(props);
-
-        this.props.vehData.forEach(element => {
-            dataLabels.push(element['brand_name']);
-            dataValues.push(element['number']);
-        });
-        // var dataLabels = this.props.vehData[0]['brand_name'];
-        // console.log(dataLabels);
+        if(dataLabels.length == 0 && dataValues.length == 0 ){ 
+            this.props.vehData.forEach(element => {
+                dataLabels.push(element['brand_name']);
+                dataValues.push(element['number']);
+            });
+        }
+        
+        // unique_dataLables = dataLabels.filter((val,id,array) => array.indexOf(val) == id);
         const data = {
             labels: dataLabels,
             datasets: [{

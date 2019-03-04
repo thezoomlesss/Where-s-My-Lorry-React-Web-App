@@ -9,7 +9,11 @@ import SimpleTable from './SimpleTable.js';
 import SignIn from './SignIn.js';
 import ChartVehicleBrand from './ChartVehicleBrand.js';
 import ChartVehicleOrigin from './ChartVehicleOrigin.js';
+import AddVehicle from './AddVehicle.js';
+import PopoverMenu from './PopoverMenu.js';
 
 export{
-    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin
+    Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, 
+    ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin, AddVehicle,
+    PopoverMenu
 }

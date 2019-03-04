@@ -10,12 +10,13 @@ export default class ChartVehicleOrigin extends Component {
     constructor(props) {
         super(props);
 
-        this.props.vehData.forEach(element => {
-            dataLabels.push(element['country_origin']);
-            dataValues.push(element['number']);
-        });
-        // var dataLabels = this.props.vehData[0]['brand_name'];
-        // console.log(dataLabels);
+        if(dataLabels.length == 0 && dataValues.length == 0 ){ 
+            this.props.vehData.forEach(element => {
+                dataLabels.push(element['country_origin']);
+                dataValues.push(element['number']);
+            });
+        }
+        
         const data = {
             labels: dataLabels,
             datasets: [{

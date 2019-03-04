@@ -15,7 +15,7 @@ export default class SimpleTable extends Component {
 
   render() {
     return (
-      <Grow in="true" {...(true ? { timeout: 1700 } : {})}>
+      <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
         <Paper className="paper">
           <Table>
             <TableHead>

@@ -13,11 +13,9 @@ export default class Footer extends Component {
             <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
                 <Paper>
                     <footer className={"FOOOOTERBOI"}>
-                        <Typography variant="h6" align="center" gutterBottom>
-                            Footer
-                        </Typography>
+                        
                         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                            Something here to give the footer a purpose!
+                            <a target="_blank" href="https://github.com/thezoomlesss/IFMS">GitHub Project</a>
                         </Typography>
                     </footer>
                 </Paper>

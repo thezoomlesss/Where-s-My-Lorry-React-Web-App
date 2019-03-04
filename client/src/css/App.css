@@ -218,16 +218,25 @@ div.chartContainer:nth-child(2){
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-.NameHolder{
+.NameMenu{
   position: absolute;
   right: 24px;
   font-size: 1rem;
   font-family: Roboto-light;
   text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
-.nameSpan:hover{
-  color:#000000;
+#root > div > div > header > div > div > button.NameButton{
+  color: #FFFFFF ;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
 }
+#root > div > div > header > div > div > button.NameButton > span.MuiButton-label-105{
+
+  text-shadow: 1px 1px #000000;
+} 
 .MapContainer{
   position: relative;
   display: block;
@@ -246,4 +255,7 @@ a{
 }
 .paper2{
   margin-left: 1%;
+}
+#simple-menu > div.MuiPaper-root-20.MuiMenu-paper-130.MuiPaper-elevation8-30.MuiPaper-rounded-21.MuiPopover-paper-131 > ul > a{
+  text-decoration: none;
 }

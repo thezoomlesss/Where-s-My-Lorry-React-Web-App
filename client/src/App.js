@@ -60,23 +60,9 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <Switch>
-           {/* <Route exact path="/" component={Navbar} />
-           <Route path="/home" component={Navbar} />
-           <Route path="/test1" component={Navbar} />
-           <Route path="/test2" component={Navbar} /> */}
-           {/* <PrivateRoute path='/' component={Navbar} /> */}
-
-           <PrivateRoute path='/home' component={Navbar} />
-           <PrivateRoute path='/test1' component={Navbar} />
-           <PrivateRoute path='/test2' component={Navbar} />
            <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
-           <Route exact path='/' render={ (props) => (
-           <Redirect to='/home'/>) } />
+           <PrivateRoute path='/' component={Navbar} />
 
-           {/* <Route path='/home' component={Navbar} />
-           <Route path='/test1' component={Navbar} />
-           <Route path='/test2' component={Navbar} />
-           <Route exact path="/login" component={(props) => <SignIn {...props} auth={fakeAuth} />} /> */}
           
           </Switch>
         </BrowserRouter>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer } from './';
-// VehicleList, Header, Footer,
+import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -26,13 +25,8 @@ import MailIcon from '@material-ui/icons/Mail';
 
 
 const drawerWidth = 240;
-const MyLink = props => <Link to="/open-collective" {...props} />
 // Paths to appear in the URL and in the navigation menu
 const paths = ["home", "test1", "test2", "test3"];
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -159,9 +153,7 @@ class Navbar extends Component {
             <Typography variant="h6" color="inherit" noWrap>
               Hi Test
             </Typography>
-            <Typography className="NameHolder" variant="h6" color="inherit" noWrap>
-              Hi, <span className="nameSpan">John Smith</span>
-            </Typography>
+            <PopoverMenu />
           </Toolbar>
         </AppBar>
 
@@ -221,6 +213,9 @@ class Navbar extends Component {
                 <ActiveVehChart />
                 <ActiveVehChart />
                 <ActiveVehChart />
+                {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}
+                {/* <ChartVehicleBy  size="half-page-paper" pos="paper1" /> */}
+                {this.state.vehicleChartBrand ? <ChartVehicleBrand vehData={this.state.vehicleChartBrand} labelName="Number of Vehicles by Brand" size="half-page-paper" pos="paper2" /> : console.log()}
                 <SimpleTable
                   data={this.state.vehicleTableData}
                   header={[
@@ -246,10 +241,7 @@ class Navbar extends Component {
                     }
                   ]} />
 
-                
-                {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}
-                {/* <ChartVehicleBy  size="half-page-paper" pos="paper1" /> */}
-                {this.state.vehicleChartBrand ? <ChartVehicleBrand vehData={this.state.vehicleChartBrand} labelName="Number of Vehicles by Brand" size="half-page-paper" pos="paper2" /> : console.log()}
+
                 <Footer />
               </div>
             } />
@@ -286,6 +278,13 @@ class Navbar extends Component {
                 <Footer />
               </div>
             } />
+
+            <Route exact path="/test1" render={props =>
+              <div>
+                <AddVehicle/>
+              </div>
+            } />
+
             <Route exact path="/test2" render={props =>
               <div>
                 <GoogleApiWrapper />
@@ -293,37 +292,8 @@ class Navbar extends Component {
               </div>
             } />
           </Switch>
-          {/* </BrowserRouter> */}
-          {/* <ActiveVehChart />
-          <ActiveVehChart />
-          <ActiveVehChart />
-          <SimpleTable
-            data={this.state.vehicleTableData}
-            header={[
-              {
-                name: "id",
-                prop: "Identifier"
-              },
-              {
-                name: "numberPlate",
-                prop: "Number Plate"
-              },
-              {
-                name: "latitude",
-                prop: "Position X"
-              },
-              {
-                name: "longitude",
-                prop: "Position Y"
-              },
-              {
-                name: "date",
-                prop: "Last Updated"
-              }
-            ]} />
-          <Login />
-          <GoogleApiWrapper />
-           */}
+
+
         </main>
       </div>
     );
