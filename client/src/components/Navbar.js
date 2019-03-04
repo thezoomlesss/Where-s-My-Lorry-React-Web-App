@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu } from './';
+import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -241,47 +241,21 @@ class Navbar extends Component {
                     }
                   ]} />
 
-
+                <MonthlyProgress />
                 <Footer />
               </div>
             } />
-            <Route exact path="/" render={props =>
+            <Route exact path="/settings" render={props =>
               <div>
-                <ActiveVehChart />
-                <ActiveVehChart />
-                <ActiveVehChart />
-                <SimpleTable
-                  data={this.state.vehicleTableData}
-                  header={[
-                    {
-                      name: "id",
-                      prop: "Identifier"
-                    },
-                    {
-                      name: "numberPlate",
-                      prop: "Number Plate"
-                    },
-                    {
-                      name: "latitude",
-                      prop: "Position X"
-                    },
-                    {
-                      name: "longitude",
-                      prop: "Position Y"
-                    },
-                    {
-                      name: "date",
-                      prop: "Last Updated"
-                    }
-                  ]} />
-                {/* <ChartVehicleBy /> */}
-                <Footer />
+                <CompanySettings />
               </div>
             } />
+            
 
             <Route exact path="/test1" render={props =>
               <div>
                 <AddVehicle/>
+                <Footer />
               </div>
             } />
 

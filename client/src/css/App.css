@@ -33,7 +33,7 @@
 
 body{
   font-family: Roboto;
-  
+  background-color: #E3F2FD !important;
   text-rendering: optimizeLegibility;
 }
 

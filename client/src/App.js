@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './css/App.css';
 import './css/bootstrap.css';
-import { Navbar,  SignIn } from './components';
-import { BrowserRouter,  Switch, Route, Redirect } from "react-router-dom";
+import { Navbar, SignIn } from './components';
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -22,20 +22,20 @@ const Auth = {
   }
 }
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  
+
   <Route {...rest} render={(props) => (
-    
+
     cookieLoginToken = cookies.get('loginToken'),
-    cookieLoginToken !== undefined && cookieLoginToken !== null ? (jwt.verify(cookieLoginToken,secret.key, function(err, data) {
+    cookieLoginToken !== undefined && cookieLoginToken !== null ? (jwt.verify(cookieLoginToken, secret.key, function (err, data) {
       if (err) {
         console.log("err token");
         console.log(cookieLoginToken);
         Auth.signout();
       } else {
         console.log("Access granted!");
-        Auth.authenticate(); 
+        Auth.authenticate();
       }
-    }) ):(console.log("Undefined Cookie")),
+    })) : (console.log("Undefined Cookie")),
     Auth.isAuthenticated === true
       ? <Component {...props} />
       : <Redirect to='/login' />
@@ -60,13 +60,15 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <Switch>
-           <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
-           <PrivateRoute path='/' component={Navbar} />
+            <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
+            <Route exact path='/' render={(props) => (
+              <Redirect to='/home' />)} />
+            <PrivateRoute path='/' component={Navbar} />
+            
 
-          
           </Switch>
         </BrowserRouter>
-        
+
       </div>
     );
   }

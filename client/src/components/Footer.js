@@ -15,7 +15,7 @@ export default class Footer extends Component {
                     <footer className={"FOOOOTERBOI"}>
                         
                         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                            <a target="_blank" href="https://github.com/thezoomlesss/IFMS">GitHub Project</a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/thezoomlesss/IFMS">GitHub Project</a>
                         </Typography>
                     </footer>
                 </Paper>

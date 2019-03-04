@@ -4,18 +4,22 @@ import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 import { Bar as BarChart } from 'react-chartjs-2';
 
-const dataLabels = [];
-const dataValues = [];
+var dataLabels = [];
+var dataValues = [];
 export default class ChartVehicleBrand extends Component {
     constructor(props) {
         super(props);
-        if(dataLabels.length == 0 && dataValues.length == 0 ){ 
-            this.props.vehData.forEach(element => {
-                dataLabels.push(element['brand_name']);
-                dataValues.push(element['number']);
-            });
+
+        if (dataLabels.length != 0 && dataValues.length != 0) {
+            dataLabels = [];
+            dataValues = [];
         }
-        
+        this.props.vehData.forEach(element => {
+            dataLabels.push(element['brand_name']);
+            dataValues.push(element['number']);
+        });
+
+
         // unique_dataLables = dataLabels.filter((val,id,array) => array.indexOf(val) == id);
         const data = {
             labels: dataLabels,

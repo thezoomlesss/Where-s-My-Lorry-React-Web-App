@@ -14,6 +14,7 @@ var vehiclesPosition = require('./routes/vehiclesPosition.js');
 var getActiveVehicles = require('./routes/getActiveVehicles.js');
 var getVehicleOrigin = require('./routes/getVehicleOrigin.js');
 var getVehicleBrand = require('./routes/getVehicleBrand.js');
+var getYearlyGoal = require('./routes/getYearlyGoal.js');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/vehiclesPosition', vehiclesPosition);
 app.use('/getActiveVehicles', getActiveVehicles);
 app.use('/getVehicleOrigin', getVehicleOrigin);
 app.use('/getVehicleBrand', getVehicleBrand);
+app.use('/getYearlyGoal', getYearlyGoal);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

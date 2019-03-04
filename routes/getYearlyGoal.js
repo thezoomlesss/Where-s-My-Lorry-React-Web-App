@@ -18,29 +18,21 @@ var connection = mysql.createConnection({
 connection.connect(function (error) {
     // callback
     if (!!error) {
-        console.log('Error when connecting from getVehicleBrand.js');
+        console.log('Error when connecting from getYearlyGoal.js');
 
         console.log(error);
     } else {
-        console.log('Db connected from getVehicleBrand.js!');
+        console.log('Db connected from getYearlyGoal.js!');
     }
 });
 
-
-/* GET countries and count of each country for the vehicles. */
 router.get('/', function (req, res, next) {
-
-    // parameters being passed in
     var company_id = req.query.cid;
-
     if (company_id) {
         connection.query(`
-            SELECT b.brand_name, count(b.brand_name) as number FROM Brand b
-            JOIN Vehicle v Using(brandID)
-            JOIN Company Using(companyID)
-            WHERE companyID = ${1}
-            Group By b.brand_name
-            ORDER BY count(b.brand_name) DESC;`, { company_id }, function (error, results, fields) {
+            SELECT s.yearly_goal FROM Settings s
+            JOIN Company c USING(settingsID)
+            WHERE c.companyID=${1}; `, { company_id }, function (error, results, fields) {
 
                 if (error) {
                     res.status(404).send(error);
@@ -51,7 +43,7 @@ router.get('/', function (req, res, next) {
                     if (results) {
                         // Passing the name of the company and the status
                         // var detailResults = JSON.parse(JSON.stringify(results[0]));
-                        res.json(results);
+                        res.json(results[0]);
                     }
                 } else {
                     res.status(204).send("No match");

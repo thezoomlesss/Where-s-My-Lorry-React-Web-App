@@ -87,7 +87,6 @@ class ActiveVehChart extends Component {
 
                 <div className="chartContainer">
                     <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
-                        {/* <Slide direction="up" in="true" mountOnEnter unmountOnExit {...(true ? { timeout: 1000 } : {})}> */}
                         <Paper className="paper" >
                             <Doughnut
                                 data={this.state.vehicleState}
@@ -109,9 +108,7 @@ class ActiveVehChart extends Component {
                                 }}
                             />
                         </Paper>
-                        {/* </Slide> */}
                     </Grow>
-                    {/* {this.state.vehiclePos ? <Doughnut data={this.state.vehicleState} options={{responsive: true, maintainAspectRatio: true}} /> : null} */}
 
                 </div>
             );
