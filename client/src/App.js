@@ -4,6 +4,7 @@ import './css/bootstrap.css';
 import { Navbar, SignIn } from './components';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import { SnackbarProvider } from 'notistack';
 
 const cookies = new Cookies();
 var secret = require("./secret.json");
@@ -58,16 +59,20 @@ class App extends Component {
   render() {
     return (
       <div>
-        <BrowserRouter>
-          <Switch>
-            <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
-            <Route exact path='/' render={(props) => (
-              <Redirect to='/home' />)} />
-            <PrivateRoute path='/' component={Navbar} />
-            
+        <SnackbarProvider
+          maxSnack={5}
+        >
+          <BrowserRouter>
+            <Switch>
+              <PublicRoute exact path="/login" component={(props) => <SignIn {...props} auth={Auth} />} />
+              <Route exact path='/' render={(props) => (
+                <Redirect to='/home' />)} />
+              <PrivateRoute path='/' component={Navbar} />
 
-          </Switch>
-        </BrowserRouter>
+
+            </Switch>
+          </BrowserRouter>
+        </SnackbarProvider>
 
       </div>
     );

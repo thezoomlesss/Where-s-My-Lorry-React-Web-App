@@ -23,8 +23,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
-
-
+import { withSnackbar } from 'notistack';
+import { compose } from 'recompose'
 
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
@@ -120,6 +120,11 @@ class Navbar extends Component {
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
+    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'default' });
+    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'success' });
+    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'error' });
+    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'warning' });
+    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'info' });
   };
 
   handleDrawerClose = () => {
@@ -191,7 +196,7 @@ class Navbar extends Component {
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}
               >
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -242,7 +247,7 @@ class Navbar extends Component {
                       prop: "Last Updated"
                     }
                   ]} />
-                <SimpleSnackbar show="true"/>
+                {/* <SimpleSnackbar show="true"/> */}
                 <MonthlyProgress />
                 <Footer />
               </div>
@@ -283,7 +288,11 @@ Navbar.propTypes = {
 
 
 
-export default withStyles(styles, { withTheme: true })(Navbar);
+export default compose(
+  withSnackbar,
+  withStyles(styles, { withTheme: true })
+)(Navbar)
+// export default withStyles(styles, { withTheme: true })(Navbar);
 
 // export default class Navbar extends Component {
 
