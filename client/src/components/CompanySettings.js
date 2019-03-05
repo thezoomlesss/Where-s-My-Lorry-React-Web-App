@@ -5,9 +5,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { withSnackbar } from 'notistack';
 
 
-export default class CompanySettings extends Component {
+class CompanySettings extends Component {
     constructor(props) {
         super(props);
 
@@ -37,7 +38,7 @@ export default class CompanySettings extends Component {
         if (!isNaN(parseInt(this.state.yearlyGoal))){
             // alert(this.state.yearlyGoal*12);
             var yearly_goal = this.state.yearlyGoal.trim() * 12;
-            fetch('/setYearlyGoal?cid=1&goal='+yearly_goal,{ method: 'PUT'});
+            fetch('/setYearlyGoal?cid=1&goal='+yearly_goal,{ method: 'PUT'}).then(res => res.status === 200? this.props.enqueueSnackbar('Montly goal updated.',{ variant: 'success' }):this.props.enqueueSnackbar('Could not set the new goal',{ variant: 'error' }));
         }
     }
 
@@ -73,3 +74,5 @@ export default class CompanySettings extends Component {
         }
     }
 }
+
+export default withSnackbar(CompanySettings)

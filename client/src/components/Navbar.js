@@ -28,7 +28,7 @@ import { compose } from 'recompose'
 
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
-const paths = ["home", "test1", "test2", "test3"];
+const paths = ["Home", "test1", "test2", "test3"];
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -103,7 +103,8 @@ class Navbar extends Component {
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-
+    
+    this.props.enqueueSnackbar('Welcome back.',{ variant: 'success' });
   }
 
   componentDidMount() { 
@@ -120,11 +121,6 @@ class Navbar extends Component {
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
-    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'default' });
-    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'success' });
-    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'error' });
-    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'warning' });
-    this.props.enqueueSnackbar('Successfully opened the drawer.',{ variant: 'info' });
   };
 
   handleDrawerClose = () => {
@@ -191,7 +187,7 @@ class Navbar extends Component {
               <ListItem
                 button
                 // component={MyLink}
-                component={Link} to={"/" + text}
+                component={Link} to={"/" + text.toLowerCase()}
                 key={text}
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}

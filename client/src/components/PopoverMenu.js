@@ -2,13 +2,21 @@ import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import {  Link  } from "react-router-dom";
+import {  Link, withRouter, Redirect  } from "react-router-dom";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class PopoverMenu extends React.Component {
   state = {
     anchorEl: null,
     open: false,
   };
+  constructor(props){
+    super(props);
+
+    this.logOut = this.logOut.bind(this);
+    // const { history } = this.props.history;
+  }
 
   handleClick = event => {
     this.setState({ open: true, anchorEl: event.currentTarget });
@@ -18,6 +26,11 @@ class PopoverMenu extends React.Component {
     this.setState({ open: false });
   };
 
+  logOut(){
+    this.setState({ open: false});
+    cookies.remove('loginToken');
+    window.location.reload()
+  }
   render() {
     return (
       <div className="NameMenu">
@@ -39,11 +52,11 @@ class PopoverMenu extends React.Component {
           <MenuItem onClick={this.handleRequestClose} component={Link} to={"/profile"}>Profile</MenuItem>
           <MenuItem onClick={this.handleRequestClose} component={Link} to={"/my-account"}>My account</MenuItem>
           <MenuItem onClick={this.handleRequestClose} component={Link} to={"/settings"}>Settings</MenuItem>
-          <MenuItem onClick={this.handleRequestClose} component={Link} to={"/logout"}>Logout</MenuItem>
+          <MenuItem onClick={this.logOut} >Logout</MenuItem>
         </Menu>
       </div>
     );
   }
 }
 
-export default PopoverMenu;
+export default withRouter(PopoverMenu);
