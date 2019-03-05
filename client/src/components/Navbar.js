@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress } from './';
+import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -22,6 +22,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+
 
 
 const drawerWidth = 240;
@@ -104,7 +106,7 @@ class Navbar extends Component {
 
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     fetch('/vehicles?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleTableData: vehicles }));
@@ -198,7 +200,7 @@ class Navbar extends Component {
           <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <HomeIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -240,7 +242,7 @@ class Navbar extends Component {
                       prop: "Last Updated"
                     }
                   ]} />
-
+                <SimpleSnackbar show="true"/>
                 <MonthlyProgress />
                 <Footer />
               </div>

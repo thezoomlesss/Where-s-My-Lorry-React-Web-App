@@ -54,14 +54,14 @@ class MonthlyProgress extends Component {
                         ],
                         datasets: [{
                             // active & not active
-                            data: [data['yearly_goal'], 10],
+                            data: [data['yearly_goal']-96, 96],
                             backgroundColor: [
                                 '#D9D9D9',
-                                '#ffce56'
+                                '#f95454'
                             ],
                             hoverBackgroundColor: [
                                 '#D9D9D9',
-                                '#ffce56'
+                                '#d83c3c'
 
                             ]
                         }],
@@ -76,14 +76,14 @@ class MonthlyProgress extends Component {
                         ],
                         datasets: [{
                             // active & not active
-                            data: [(Math.round(data['yearly_goal'] / 12)), 10],
+                            data: [(Math.round(data['yearly_goal'] / 12)-18), 18],
                             backgroundColor: [
                                 '#D9D9D9',
-                                '#ff0000'
+                                '#4db692'
                             ],
                             hoverBackgroundColor: [
                                 '#D9D9D9',
-                                '#ffce56'
+                                '#4db675'
 
                             ]
                         }],
@@ -106,7 +106,7 @@ class MonthlyProgress extends Component {
                                 options={{
                                     responsive: true,
                                     maintainAspectRatio: true,
-                                    cutoutPercentage: 80,
+                                    cutoutPercentage: 76,
                                     layout: {
                                         padding: {
                                             left: 20,
@@ -134,7 +134,7 @@ class MonthlyProgress extends Component {
                                 options={{
                                     responsive: true,
                                     maintainAspectRatio: true,
-                                    cutoutPercentage: 80,
+                                    cutoutPercentage: 76,
                                     layout: {
                                         padding: {
                                             left: 20,

@@ -259,3 +259,16 @@ a{
 #simple-menu > div.MuiPaper-root-20.MuiMenu-paper-130.MuiPaper-elevation8-30.MuiPaper-rounded-21.MuiPopover-paper-131 > ul > a{
   text-decoration: none;
 }
+.SettingsPaper{
+  padding: 20px;
+}
+.singleSetting{
+  position: relative;
+}
+.inrowSetting{
+  display: inline-block;
+}
+div > div > div > button.settingButton{
+  margin-top: 28px;
+  margin-left: 30px;
+}

@@ -13,11 +13,13 @@ import AddVehicle from './AddVehicle.js';
 import PopoverMenu from './PopoverMenu.js';
 import CompanySettings from './CompanySettings.js';
 import MonthlyProgress from './MonthlyProgress.js';
+import SimpleSnackbar from './SimpleSnackbar.js';
+
 
 
 
 export{
     Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, 
     ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin, AddVehicle,
-    PopoverMenu, CompanySettings, MonthlyProgress
-}
+    PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar
+} 
