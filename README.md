@@ -1,5 +1,5 @@
-# IFMS - An Intuitive Fleet Management System
->**IFMS** is an **Automated Optical Recognition System**, made for **managing a fleet of vehicles**, that implements a low cost solution that is both easy to use and understand, while not losing precious functionalities that could be found in a system made by an industry leading company.
+# Where's my lorry - An Intuitive Fleet Management System
+>**Where's my lorry** is an **Automated Optical Recognition System**, made for **managing a fleet of vehicles**, that implements a low cost solution that is both easy to use and understand, while not losing precious functionalities that could be found in a system made by an industry leading company.
 
 ## Prerequisites
 A **Process Manager** is needed in order to easily run this project, unless you use multiple (so far 2) instances of your cmd/terminal.
@@ -57,4 +57,4 @@ Visit this page in order to view it:
 	http://ServerIP:3001/nameOfPage
 
 ## Example Website
-[Example Website](http://159.69.217.98:3000/)
+[Example Website](https://wheresmylorry.tk/)
