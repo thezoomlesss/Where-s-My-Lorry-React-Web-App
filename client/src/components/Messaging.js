@@ -33,12 +33,12 @@ class Messaging extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            numberPlate: 'Sebastian',
+            numberPlate: 'Mushy',
             message: '',
             list: [],
         };
         this.messageRef = firebase.database().ref().child('messages');
-        this.listenMessages();
+        // this.listenMessages();
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -50,7 +50,10 @@ class Messaging extends Component {
             this.setState({ 'numberPlate': nextProps.user.displayName });
         }
     }
-
+    componentWillMount(){
+        console.log("NOW!");
+        this.listenMessages();
+    }
     handleChange(event) {
         this.setState({ message: event.target.value });
     }
@@ -72,9 +75,12 @@ class Messaging extends Component {
         this.messageRef
             .limitToLast(10)
             .on('value', message => {
-                this.setState({
-                    list: Object.values(message.val()),
-                });
+                // console.log(message);
+                if(message.exists()){
+                    this.setState({
+                        list: Object.values(message.val()),
+                    });
+                }
             });
     }
 
@@ -105,7 +111,7 @@ class Messaging extends Component {
                             className="form__button"
                             onClick={this.handleSend}
                         >
-                            Sign in
+                            Send
                         </Button>
                     </div>
                 </div>

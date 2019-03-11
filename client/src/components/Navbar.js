@@ -26,12 +26,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
+import MyLocation from '@material-ui/icons/MyLocation';
+import Add from '@material-ui/icons/Add';
+import AddBox from '@material-ui/icons/AddBox';
+import Remove from '@material-ui/icons/Remove';
+import AddCircle from '@material-ui/icons/AddCircle';
+import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import { withSnackbar } from 'notistack';
 import { compose } from 'recompose'
 
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
-const paths = ["Home", "test1", "test2", "test3"];
+const paths = ["Home", "Add-new", "Remove", "Map", "Messages"];
+const formatted = paths.map((text, index) => (text.replace('-',' ')));
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -106,6 +113,7 @@ class Navbar extends Component {
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.renderSwitch = this.renderSwitch.bind(this);
 
     this.props.enqueueSnackbar('Welcome back.', { variant: 'success' });
   }
@@ -132,6 +140,22 @@ class Navbar extends Component {
   handleListItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
   };
+  renderSwitch(param) {
+    switch (param) {
+      case 0:
+        return < ListItemIcon > {<HomeIcon />}</ListItemIcon >;
+      case 1:
+        return < ListItemIcon > {<AddCircle />}</ListItemIcon >;
+      case 2:
+        return < ListItemIcon > {<RemoveCircle />}</ListItemIcon >;
+      case 3:
+        return < ListItemIcon > {<MyLocation />}</ListItemIcon >;
+      case 4:
+        return < ListItemIcon > {<MailIcon />}</ListItemIcon >;
+      default:
+        return 'foo';
+    }
+  }
   render() {
     const { classes, theme } = this.props;
 
@@ -195,20 +219,14 @@ class Navbar extends Component {
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}
               >
-                <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+                {this.renderSwitch(index)}
+                <ListItemText primary={formatted[index]} />
               </ListItem>
+
             ))}
           </List>
           <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <HomeIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -258,26 +276,30 @@ class Navbar extends Component {
             } />
 
 
-            <Route exact path="/test1" render={props =>
+            <Route exact path="/add-new" render={props =>
               <div>
                 <AddVehicle />
                 <Footer />
               </div>
             } />
 
-            <Route exact path="/test2" render={props =>
+            <Route exact path="/map" render={props =>
               <div>
                 <GoogleApiWrapper />
                 <Footer />
               </div>
             } />
-            <Route exact path="/test3" render={props =>
+            <Route exact path="/remove" render={props =>
               <div>
-                <Messaging/>
                 <Footer />
               </div>
             } />
-            
+            <Route exact path="/messages" render={props =>
+              <div>
+                <Messaging />
+                <Footer />
+              </div>
+            } />
           </Switch>
 
 

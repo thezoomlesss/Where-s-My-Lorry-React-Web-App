@@ -7,9 +7,9 @@ export default class SingleMessage extends Component {
                 <span className="message__author">
                     {this.props.message.numberPlate}:
                 </span>
-                <snap className="speech-bubble-left">
+                <span className="speech-bubble-left">
                     {this.props.message.message}
-                </snap>
+                </span>
             </div>
         )
     }
