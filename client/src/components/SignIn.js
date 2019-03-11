@@ -8,12 +8,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect, Route } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import { withSnackbar } from 'notistack';
+import { compose } from 'recompose';
+import truckLogo from './../images/truck-logo-40.png';
+import firebase from './../Firebase.js';
 
 var secret = require("./../secret.json");
 var jwt = require('jsonwebtoken');
@@ -39,10 +42,6 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing.unit,
@@ -51,6 +50,10 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -70,8 +73,8 @@ class SignIn extends Component {
     console.log(this.props.auth);
     var proops = this.props;
     cookieLoginToken = cookies.get('loginToken');
-    if(proops.auth !== undefined){
-      if( cookieLoginToken !== undefined && cookieLoginToken !== null){
+    if (proops.auth !== undefined) {
+      if (cookieLoginToken !== undefined && cookieLoginToken !== null) {
         jwt.verify(cookieLoginToken, secret.key, function (err, data) {
           if (err) {
             // error with checking the token
@@ -83,7 +86,7 @@ class SignIn extends Component {
             proops.history.push('/home');
           }
         })
-      }else{
+      } else {
         console.log("Cookie undefined");
       }
     }
@@ -93,13 +96,13 @@ class SignIn extends Component {
       emailError: false,
       passError: false
     });
-    
-    
 
-//  (console.log("Undefined Cookie");
-//       this.props.auth.isAuthenticated === true
-//         ? <Redirect to='/home' />
-//         : 0)
+
+
+    //  (console.log("Undefined Cookie");
+    //       this.props.auth.isAuthenticated === true
+    //         ? <Redirect to='/home' />
+    //         : 0)
 
   }
   onEmailChange(event) {
@@ -124,16 +127,23 @@ class SignIn extends Component {
     if (this.state && this.state.email && this.state.pass) {
       var resMessage, resStatus;
       // add jti  company id
-      fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
-        .then(res => res.status === 200 ? (
-          // this.props.auth.authenticate(),
-          cookies.set('loginToken', jwt.sign({}, secret.key, { expiresIn: '24h' }), { path: '/' }),
-          this.props.history.push('/home'))
-          : console.log("204 NOOOO")).then(
-          );
+      if (validateEmail(this.state.email)) {
+        fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
+          .then(res => res.status === 200 ? (
+            // this.props.auth.authenticate(),
+            cookies.set('loginToken', jwt.sign({}, secret.key, { expiresIn: '24h' }), { path: '/' }),
+            this.props.history.push('/home'))
+            : this.props.enqueueSnackbar('Wrong details.', { variant: 'error' })).then(
+            );
+      } else {
+        this.props.enqueueSnackbar('The email must be valid!', { variant: 'warning' })
+      }
+
 
       // resMessage = res.text().then( res => resStatus = res.status))
       // .then( resMessage => console.log(resMessage+ ' ' ));
+    } else {
+      this.props.enqueueSnackbar('Not enough details.', { variant: 'warning' })
     }
   }
 
@@ -142,27 +152,21 @@ class SignIn extends Component {
       <main className={this.props.classes.main}>
         <CssBaseline />
         <Paper className={this.props.classes.paper}>
-          <Avatar className={this.props.classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <img src={truckLogo} alt="Logo" />
+
           <Typography component="h1" variant="h5">
             Sign in
         </Typography>
           <form className={this.props.classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              {/* error={this.state.emailError} */}
               <Input id="email" name="email" autoComplete="email" required onChange={this.onEmailChange} autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              {/* error={this.state.passError} */}
               <Input name="password" type="password" id="password" required onChange={this.onPassChange} autoComplete="current-password" />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -184,4 +188,8 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+export default compose(
+  withSnackbar,
+  withStyles(styles)
+)(SignIn)
+// export default withStyles(styles)(SignIn);

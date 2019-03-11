@@ -14,6 +14,8 @@ import PopoverMenu from './PopoverMenu.js';
 import CompanySettings from './CompanySettings.js';
 import MonthlyProgress from './MonthlyProgress.js';
 import SimpleSnackbar from './SimpleSnackbar.js';
+import Messaging from './Messaging.js';
+import SingleMessage from './SingleMessage.js';
 
 
 
@@ -21,5 +23,5 @@ import SimpleSnackbar from './SimpleSnackbar.js';
 export{
     Header, Footer, Navbar, Login, VehicleList, GoogleApiWrapper, 
     ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin, AddVehicle,
-    PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar
+    PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, SingleMessage
 } 

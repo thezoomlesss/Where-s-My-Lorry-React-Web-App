@@ -272,3 +272,48 @@ div > div > div > button.settingButton{
   margin-top: 28px;
   margin-left: 30px;
 }
+.form__row{
+  display: block;
+  clear: both;
+}
+/* Single message */
+.singleMessage{
+  position: relative;
+  float: left;
+  min-height: 80px;
+  clear: both;
+  margin-left: 10px;
+}
+.message__author{
+  display: block;
+  position: relative;
+}
+.speech-bubble-left {
+  display: block;
+  box-shadow: 1px 1px #AAAAAA;
+  max-width: 200px;
+  font-size: 14px;
+	position: relative;
+	background: rgba(215, 222, 226, 0.8);
+  border-radius: .4em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 5px 15px;
+}
+
+.speech-bubble-left:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 0;
+	border: 22px solid transparent;
+	border-bottom-color: rgba(215, 222, 226, 0.9);;
+	border-top: 0;
+	border-left: 0;
+	margin-left: 30px;
+	margin-top: -22px;
+}
+
+/* The end of Single message */

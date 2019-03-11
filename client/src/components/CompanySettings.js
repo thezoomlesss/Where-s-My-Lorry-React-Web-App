@@ -38,7 +38,8 @@ class CompanySettings extends Component {
         if (!isNaN(parseInt(this.state.yearlyGoal))){
             // alert(this.state.yearlyGoal*12);
             var yearly_goal = this.state.yearlyGoal.trim() * 12;
-            fetch('/setYearlyGoal?cid=1&goal='+yearly_goal,{ method: 'PUT'}).then(res => res.status === 200? this.props.enqueueSnackbar('Montly goal updated.',{ variant: 'success' }):this.props.enqueueSnackbar('Could not set the new goal',{ variant: 'error' }));
+            fetch('/setYearlyGoal?cid=1&goal='+yearly_goal,{ method: 'PUT'})
+                .then(res => res.status === 200? this.props.enqueueSnackbar('Montly goal updated.',{ variant: 'success' }):this.props.enqueueSnackbar('Could not set the new goal',{ variant: 'error' }));
         }
     }
 

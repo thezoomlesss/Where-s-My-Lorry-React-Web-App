@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './../css/App.css';
 import './../css/bootstrap.css';
-import { GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer, AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar } from './';
+import {
+  GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
+  AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging
+} from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -103,11 +106,11 @@ class Navbar extends Component {
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-    
-    this.props.enqueueSnackbar('Welcome back.',{ variant: 'success' });
+
+    this.props.enqueueSnackbar('Welcome back.', { variant: 'success' });
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     fetch('/vehicles?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleTableData: vehicles }));
@@ -253,11 +256,11 @@ class Navbar extends Component {
                 <CompanySettings />
               </div>
             } />
-            
+
 
             <Route exact path="/test1" render={props =>
               <div>
-                <AddVehicle/>
+                <AddVehicle />
                 <Footer />
               </div>
             } />
@@ -268,6 +271,13 @@ class Navbar extends Component {
                 <Footer />
               </div>
             } />
+            <Route exact path="/test3" render={props =>
+              <div>
+                <Messaging/>
+                <Footer />
+              </div>
+            } />
+            
           </Switch>
 
 

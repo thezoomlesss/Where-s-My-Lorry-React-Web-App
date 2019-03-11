@@ -16,6 +16,7 @@ export default class Footer extends Component {
                         
                         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/thezoomlesss/IFMS">GitHub Project</a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/24115/semi-truck">Semi Truck icon by Icons8</a>
                         </Typography>
                     </footer>
                 </Paper>
