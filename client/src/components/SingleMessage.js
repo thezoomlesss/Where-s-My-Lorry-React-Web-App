@@ -5,7 +5,7 @@ export default class SingleMessage extends Component {
         return (
             <div className="singleMessage">
                 <span className="message__author">
-                    {this.props.message.numberPlate}:
+                    {this.props.message.sender}:
                 </span>
                 <span className="speech-bubble-left">
                     {this.props.message.message}

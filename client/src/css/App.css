@@ -278,20 +278,24 @@ div > div > div > button.settingButton{
 }
 .form__input{
   display: inline-block;
-  width: 70%;
+  width: calc(100% - 115px);
   border-radius: 10px;
   padding: 10px 5px;
   margin: 15px 5px;
   box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
 }
-div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.paper > div > div.form__row > button.form__button{
+div.form__row > button.form__button{
   display: inline-block;
+  float: right;
   max-width: 70px;    
   padding-top: 15px;
   padding-bottom: 15px;
   border-radius: 30px;
   margin-left: .5%;
+  margin-top: 14px;
   margin-right: 2.5%;
+  box-shadow: 1px 1px #000000;
+
   
 }
 /* Single message */
@@ -314,10 +318,12 @@ div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.paper > div > di
 	position: relative;
 	background: rgba(215, 222, 226, 0.8);
   border-radius: .4em;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-bottom: 10px;
   padding: 5px 15px;
 }
+
+/* 
 
 .speech-bubble-left:before {
 	content: '';
@@ -330,8 +336,54 @@ div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.paper > div > di
 	border-bottom-color: rgba(215, 222, 226, 0.9);;
 	border-top: 0;
 	border-left: 0;
-	margin-left: 30px;
+	margin-left: 10px;
 	margin-top: -22px;
 }
-
-/* The end of Single message */
+The end of Single message */
+.paper_inline{
+  display: inline-block;
+}
+.paper_scroll{
+  display: inline-block;
+  float: right;
+  height: 100%;
+  margin-bottom: -50px;
+  text-align: center;
+}
+div.col-9.chat > div{
+  min-height: 800px !important;
+}
+.chat{
+  margin: 0;
+  padding: 5px !important;
+}
+.chat_paper{
+  width: 100%;
+}
+.oneRecipient:before {
+  content: "";
+  position: absolute;
+  z-index:-1;
+  top: 0;  left: 0;  right: 0;  bottom: 0;
+  background: #3f51b5;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform .3s ease-out;
+}
+.oneRecipient:hover:before{
+  transform: scaleX(1);
+}
+.oneRecipient{
+  padding: 10px;
+}
+.oneRecipient:hover{
+  
+  color: #FFF;
+}
+div.col-3.chat > div > div{
+  display:inline-block;
+  width:100%;
+  position:relative;
+  cursor:pointer;
+  z-index:0;
+}

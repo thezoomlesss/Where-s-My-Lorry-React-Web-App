@@ -3,6 +3,8 @@ import firebase from './../Firebase.js';
 import Button from '@material-ui/core/Button';
 import { SingleMessage } from './';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 var secret = require("./../secret.json");
 
@@ -33,38 +35,67 @@ class Messaging extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            numberPlate: 'Mushy',
-            message: '',
             list: [],
+            sent_sender: '14-TM-8356',
+            sent_reciever: 'server',
+            sent_message: '',
+            recieved_sender: '',
+            recieved_reciever: '',
+            recieved_message: '',
+            recipients: [],
         };
         this.messageRef = firebase.database().ref().child('messages');
-        // this.listenMessages();
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSend = this.handleSend.bind(this);
-        
-        
+        this.oneRecipientClick = this.oneRecipientClick.bind(this);
+
+
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.user) {
-            this.setState({ 'numberPlate': nextProps.user.displayName });
+            this.setState({
+                sent_sender: nextProps.user.displayName,
+                recieved_reciever: nextProps.user.displayName
+            });
         }
     }
-    componentWillMount(){
-        console.log("NOW!");
-        this.listenMessages();
+    componentWillMount() {
+        // this.listenMessages();
+
     }
+
+    componentDidMount() {
+        var reciepients_holder = [];
+        if (this.state && this.state != undefined) {
+            var this_self = this;
+            this.messageRef.orderByChild('reciever').equalTo('server').on("value", function (snapshot) {
+                snapshot.forEach(function (data) {
+                    if (!reciepients_holder.includes(data.val()['sender'])) {
+                        reciepients_holder.push(data.val()['sender']);
+                    }
+                });
+                this_self.setState({
+                    recipients: reciepients_holder
+                });
+                this_self.oneRecipientClick( reciepients_holder[0]);
+            });
+            
+        }
+    }
+
     handleChange(event) {
-        this.setState({ message: event.target.value });
+        this.setState({ sent_message: event.target.value });
     }
     handleSend() {
-        if (this.state.message) {
+        if (this.state.sent_message) {
             var newItem = {
-                numberPlate: this.state.numberPlate,
-                message: this.state.message,
+                sender: this.state.sent_sender,
+                reciever: this.state.sent_reciever,
+                message: this.state.sent_message,
             }
             this.messageRef.push(newItem);
-            this.setState({ message: '' });
+            this.setState({ sent_message: '' });
         }
     }
     handleKeyPress(event) {
@@ -75,47 +106,86 @@ class Messaging extends Component {
         this.messageRef
             .limitToLast(10)
             .on('value', message => {
-                // console.log(message);
-                if(message.exists()){
+                if (message.exists()) {
                     this.setState({
                         list: Object.values(message.val()),
                     });
                 }
             });
+        // this.messageRef.orderByChild('sender').equalTo(this.state.recieved_sender).on('value', message => {
+        //     if (message.exists()) {
+        //         this.setState({
+        //             list: Object.values(message.val()),
+        //         });
+        //     }
+        // });
     }
+    oneRecipientClick(str){
+        this.setState({
+            recieved_sender: str
+        });
+        this.messageRef.orderByChild('sender').equalTo(str).on("value", message => {
+            if (message.exists()) {
+                this.setState({
+                    list: Object.values(message.val()),
+                });
+            }
+        });
 
+        
 
+        
+    }
     render() {
         return (
-            <Paper className="paper">
-                <div className="form">
-                    <div className="form__message">
-                        {this.state.list.map((item, index) =>
-                            <SingleMessage key={index} message={item} />
-                        )}
-                    </div>
-                    <div className="form__row">
-                        <input
-                            className="form__input"
-                            type="text"
-                            placeholder="Type message"
-                            value={this.state.message}
-                            onChange={this.handleChange}
-                            onKeyPress={this.handleKeyPress}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className="form__button"
-                            onClick={this.handleSend}
-                        >
-                            Send
+            <div>
+                <div class="container">
+                    <div className="row">
+                        <div className="col-3 chat">
+                            <Paper className="paper_inline paper_scroll">
+                                <Typography variant="h5"> Conversations</Typography>
+                                <Divider/>
+                                {this.state.recipients.map((item, index) =>
+                                    <div>
+                                        <div className="oneRecipient" data-id={item} onClick={() => { this.oneRecipientClick(item) }} key={index} >{item} </div>
+                                        <Divider />
+                                    </div>
+                                )}
+                            </Paper>
+                        </div>
+                        <div className="col-9 chat">
+                            <Paper className="paper_inline chat_paper">
+                                <div className="form">
+                                    <div className="form__message">
+                                        {this.state.list.map((item, index) =>
+                                            <SingleMessage key={index} message={item} />
+                                        )}
+                                    </div>
+                                    <div className="form__row">
+                                        <input
+                                            className="form__input"
+                                            type="text"
+                                            placeholder="Type message"
+                                            value={this.state.sent_message}
+                                            onChange={this.handleChange}
+                                            onKeyPress={this.handleKeyPress}
+                                        />
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            className="form__button"
+                                            onClick={this.handleSend}
+                                        >
+                                            Send
                         </Button>
-                    </div>
-                </div>
-            </Paper>
+                                    </div>
+                                </div>
+                            </Paper>
+                        </div>
+                    </div></div>
+            </div>
         );
     }
 }
