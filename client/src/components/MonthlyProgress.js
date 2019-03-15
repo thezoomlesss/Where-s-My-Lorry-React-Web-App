@@ -54,7 +54,7 @@ class MonthlyProgress extends Component {
                         ],
                         datasets: [{
                             // active & not active
-                            data: [data['yearly_goal']-96, 96],
+                            data: [(data['yearly_goal']-96)<0?0:(data['yearly_goal']-96), 96],
                             backgroundColor: [
                                 '#D9D9D9',
                                 '#f95454'
@@ -76,7 +76,7 @@ class MonthlyProgress extends Component {
                         ],
                         datasets: [{
                             // active & not active
-                            data: [(Math.round(data['yearly_goal'] / 12)-18), 18],
+                            data: [(Math.round(data['yearly_goal'] / 12)-18)<0?0:(Math.round(data['yearly_goal'] / 12)-18), 18],
                             backgroundColor: [
                                 '#D9D9D9',
                                 '#4db692'
@@ -99,7 +99,7 @@ class MonthlyProgress extends Component {
             return (
 
                 <div className="half-page-paper">
-                    <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
+                    <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
                         <Paper className="paper1 half-page-paper" >
                             <Doughnut
                                 data={this.state.progress2}
@@ -127,7 +127,7 @@ class MonthlyProgress extends Component {
                             />
                         </Paper>
                     </Grow>
-                    <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
+                    <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
                         <Paper className="paper2 half-page-paper" >
                             <Doughnut
                                 data={this.state.progress}
@@ -155,7 +155,6 @@ class MonthlyProgress extends Component {
                             />
                         </Paper>
                     </Grow>
-
                 </div>
             );
         }

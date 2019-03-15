@@ -3,7 +3,7 @@ import './../css/App.css';
 import './../css/bootstrap.css';
 import {
   GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
-  AddVehicle, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging
+  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging
 } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -278,7 +278,7 @@ class Navbar extends Component {
 
             <Route exact path="/add-new" render={props =>
               <div>
-                <AddVehicle />
+                <AddPage />
                 <Footer />
               </div>
             } />

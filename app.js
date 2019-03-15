@@ -16,6 +16,8 @@ var getVehicleOrigin = require('./routes/getVehicleOrigin.js');
 var getVehicleBrand = require('./routes/getVehicleBrand.js');
 var getYearlyGoal = require('./routes/getYearlyGoal.js');
 var setYearlyGoal = require('./routes/setYearlyGoal.js');
+var putRegion = require('./routes/putRegion.js');
+var getRegions = require('./routes/getRegions.js');
 
 var app = express();
 
@@ -41,6 +43,8 @@ app.use('/getVehicleOrigin', getVehicleOrigin);
 app.use('/getVehicleBrand', getVehicleBrand);
 app.use('/getYearlyGoal', getYearlyGoal);
 app.use('/setYearlyGoal', setYearlyGoal);
+app.use('/putRegion', putRegion);
+app.use('/getRegions', getRegions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

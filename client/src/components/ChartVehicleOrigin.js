@@ -10,7 +10,7 @@ export default class ChartVehicleOrigin extends Component {
     constructor(props) {
         super(props);
 
-        if(dataLabels.length != 0 && dataValues.length != 0 ){    
+        if(dataLabels.length !== 0 && dataValues.length !== 0 ){    
             dataLabels = [];
             dataValues = [];
         }
@@ -76,7 +76,7 @@ export default class ChartVehicleOrigin extends Component {
         return (
             <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                 <Paper className={"paper " + this.props.size + " " + this.props.pos}>
-                    <BarChart data={chartData} options={chartOptions} width="600" height="250" />
+                    <BarChart data={chartData} options={chartOptions} width={600} height={250} />
                 </Paper>
             </Grow>
         );

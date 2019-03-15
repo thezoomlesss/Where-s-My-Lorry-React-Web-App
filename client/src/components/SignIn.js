@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Redirect, Route } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import { withSnackbar } from 'notistack';
 import { compose } from 'recompose';
 import truckLogo from './../images/truck-logo-40.png';
-import firebase from './../Firebase.js';
+// import firebase from './../Firebase.js';
 
 var secret = require("./../secret.json");
 var jwt = require('jsonwebtoken');
@@ -70,7 +66,6 @@ class SignIn extends Component {
     this.onPassChange = this.onPassChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    console.log(this.props.auth);
     var proops = this.props;
     cookieLoginToken = cookies.get('loginToken');
     if (proops.auth !== undefined) {
@@ -78,10 +73,8 @@ class SignIn extends Component {
         jwt.verify(cookieLoginToken, secret.key, function (err, data) {
           if (err) {
             // error with checking the token
-            console.log("Should Sign out");
             proops.auth.signout();
           } else {
-            console.log("Should Redirect to home");
             proops.auth.authenticate();
             proops.history.push('/home');
           }
@@ -125,7 +118,6 @@ class SignIn extends Component {
       passError: true
     });
     if (this.state && this.state.email && this.state.pass) {
-      var resMessage, resStatus;
       // add jti  company id
       if (validateEmail(this.state.email)) {
         fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
@@ -143,7 +135,7 @@ class SignIn extends Component {
       // resMessage = res.text().then( res => resStatus = res.status))
       // .then( resMessage => console.log(resMessage+ ' ' ));
     } else {
-      this.props.enqueueSnackbar('Not enough details.', { variant: 'warning' })
+      this.props.enqueueSnackbar('Not enough details given.', { variant: 'warning' })
     }
   }
 

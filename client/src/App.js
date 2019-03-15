@@ -29,11 +29,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     cookieLoginToken = cookies.get('loginToken'),
     cookieLoginToken !== undefined && cookieLoginToken !== null ? (jwt.verify(cookieLoginToken, secret.key, function (err, data) {
       if (err) {
-        console.log("err token");
-        console.log(cookieLoginToken);
         Auth.signout();
       } else {
-        console.log("Access granted!");
         Auth.authenticate();
       }
     })) : (console.log("Undefined Cookie")),

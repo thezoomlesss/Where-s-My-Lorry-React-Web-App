@@ -10,7 +10,7 @@ export default class Footer extends Component {
     }
     render() {
         return (
-            <Grow in="true"  {...(true ? { timeout: 1700 } : {})}>
+            <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
                 <Paper>
                     <footer className={"FOOOOTERBOI"}>
 

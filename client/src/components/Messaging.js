@@ -19,9 +19,9 @@ var config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 messaging.requestPermission()
-    .then(function () { console.log("Have Permission"); return (messaging.getToken()) })
-    .then(function (token) { console.log(token) })
-    .catch(function (err) { console.log("error: " + err) });
+    .then(function () {  return (messaging.getToken()) })
+    .then(function (token) {  })
+    .catch(function (err) {  });
 // Handle incoming messages. Called when:
 // - a message is received while the app has focus
 // - the user clicks on an app notification created by a service worker
@@ -78,7 +78,7 @@ class Messaging extends Component {
                 this_self.setState({
                     recipients: reciepients_holder
                 });
-                this_self.oneRecipientClick( reciepients_holder[0]);
+                if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0]);
             });
             
         }

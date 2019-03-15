@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -16,8 +14,6 @@ const styles = theme => ({
 });
 
 const bg = {
-  background: '#000046',  /* fallback for old browsers */
-  background: '-webkit-linear-gradient(to right, #1CB5E0, #000046)',  /* Chrome 10-25, Safari 5.1-6 */
   background: 'linear-gradient(to right, #1CB5E0, #000046)' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 };
 const grid_bg = {

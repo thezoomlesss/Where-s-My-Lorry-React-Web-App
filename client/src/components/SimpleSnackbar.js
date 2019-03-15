@@ -1,41 +1,9 @@
-import React, { Component }  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-
-
-
-
-
-
-
-
-
-
-
-
-// class SimpleSnackbar extends Component{
-//     render(){
-//         return(
-//             <div> Test</div>
-//         );
-//     }
-// }
-
-
-
-
-
-
-
-
-// export default SimpleSnackbar;
-
-
-
 
 
 
@@ -54,9 +22,6 @@ class SimpleSnackbar extends React.Component {
     open: this.props.show,
   };
 
-//   handleClick = () => {
-//     this.setState({ open: true });
-//   };
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -83,9 +48,6 @@ class SimpleSnackbar extends React.Component {
           }}
           message={<span id="message-id">Note archived</span>}
           action={[
-            // <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-            //   UNDO
-            // </Button>,
             <IconButton
               key="close"
               aria-label="Close"

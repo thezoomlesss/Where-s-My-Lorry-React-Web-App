@@ -248,7 +248,12 @@ a{
 }
 .half-page-paper{
   width: 49%;
+  vertical-align: top;
   display: inline-block;
+  margin-bottom: 20px;
+}
+.half-page-right{
+  margin-left: 2%;
 }
 .paper1{
   margin-right: 1%;
@@ -268,7 +273,7 @@ a{
 .inrowSetting{
   display: inline-block;
 }
-div > div > div > button.settingButton{
+button.settingButton{
   margin-top: 28px;
   margin-left: 30px;
 }
@@ -386,4 +391,31 @@ div.col-3.chat > div > div{
   position:relative;
   cursor:pointer;
   z-index:0;
+}
+.inrowField{
+  display: inline-block;
+}
+#root > div > div > main > div > div > div > form > div.inRowInput{
+  margin-right: 10px;
+}
+#root > div > div > main > div > div > div > form > button.addButton{
+  max-width: 200px;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+.addPaper{
+  padding: 25px;
+}
+ div.MuiFormControl-root-174.selectForm{
+  min-width: 100px;
+  margin-top: 16px;
+}
+.mapPaper{
+  height: 80vh;
+  position: relative;
+  display: block;
+}
+.mapGoogle{
+  
+    height: 80vh !important;
 }
