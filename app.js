@@ -18,6 +18,7 @@ var getYearlyGoal = require('./routes/getYearlyGoal.js');
 var setYearlyGoal = require('./routes/setYearlyGoal.js');
 var putRegion = require('./routes/putRegion.js');
 var getRegions = require('./routes/getRegions.js');
+var putWarehouse = require('./routes/putWarehouse.js');
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use('/getYearlyGoal', getYearlyGoal);
 app.use('/setYearlyGoal', setYearlyGoal);
 app.use('/putRegion', putRegion);
 app.use('/getRegions', getRegions);
+app.use('/putWarehouse', putWarehouse);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
