@@ -14,19 +14,18 @@ var connection = mysql.createConnection({
     'debug': false,
     'multipleStatements': true
 });
-
 router.delete('/', function (req, res) {
-    var warehouseID = req.query.warehouseID;
+    var regionID = req.query.regionID;
     var company_id = req.query.cid;
-    let sql_deleteWarehouse = `
-            DELETE w FROM Warehouse w
+    let sql_deleteRegion = `
+            DELETE r FROM Region r
             JOIN Company c USING(companyID)
-            Where w.warehouseID = ? AND c.companyID = ?;   
+            Where r.regionID = ? AND c.companyID = ?;   
     `;
 
-    let data = [warehouseID, company_id];
-    if (company_id && warehouseID) {
-        connection.query(sql_deleteWarehouse, data, function (error, results, fields) {
+    let data = [regionID, company_id];
+    if (company_id && regionID) {
+        connection.query(sql_deleteRegion, data, function (error, results, fields) {
 
             if (error) {
                 if (error.message.includes("a foreign key constraint fails")) {
@@ -42,5 +41,4 @@ router.delete('/', function (req, res) {
         res.status(400).send("No parameters passed");
     }
 })
-
 module.exports = router;

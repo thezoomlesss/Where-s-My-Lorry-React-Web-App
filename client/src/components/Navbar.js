@@ -121,10 +121,7 @@ class Navbar extends Component {
   componentDidMount() {
     var url_split = window.location.href.split('/');
     if (url_split.length == 4) {
-      console.log(url_split[3]);
       for (var index = 0; index < paths.length; index++) {
-        
-        console.log(paths[index]+ " " + url_split[3]);
         if (paths[index].toLowerCase() === url_split[3]) {
           this.setState({ selectedIndex: index });
         }

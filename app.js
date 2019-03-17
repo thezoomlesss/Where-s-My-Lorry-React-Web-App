@@ -21,6 +21,7 @@ var getRegions = require('./routes/getRegions.js');
 var putWarehouse = require('./routes/putWarehouse.js');
 var getWarehouses = require('./routes/getWarehouses.js');
 var deleteWarehouse = require('./routes/deleteWarehouse.js');
+var deleteRegion = require('./routes/deleteRegion.js');
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.use('/putWarehouse/full', getRegions);
 app.use('/putWarehouse', putWarehouse);
 app.use('/getWarehouses', getWarehouses);
 app.use('/deleteWarehouse', deleteWarehouse);
+app.use('/deleteRegion', deleteRegion);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

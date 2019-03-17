@@ -30,7 +30,7 @@ class RemovePage extends Component {
         this.deleteWarehouseClick = this.deleteWarehouseClick.bind(this);
         this.deleteRegionClick = this.deleteRegionClick.bind(this);
         this.responseChecker = this.responseChecker.bind(this);
-        this.removeWarehouseFromState = this.removeWarehouseFromState.bind(this);
+        this.removeFromState = this.removeFromState.bind(this);
 
     }
     componentDidMount() {
@@ -51,36 +51,33 @@ class RemovePage extends Component {
         var self = this;
         fetch('/deleteWarehouse?warehouseID=' + id + '&cid=1', { method: 'DELETE' })
             .then(res => self.responseChecker(res, id));
-        // .then(res => { return res.text() }).then((text)=>{ console.log(text) })
     }
     deleteRegionClick(id) {
-        alert("clicked Region");
+        var self = this;
+        fetch('/deleteRegion?regionID=' + id + '&cid=1', { method: 'DELETE' })
+            .then(res => self.responseChecker(res, id));
     }
     responseChecker(res, id) {
         var self = this;
-        if( res.status === 200){
+        if (res.status === 200) {
             res.text().then(function (data) {
-                return (data.split(' ')) 
-            }).then(function (data_split) { data_split[1] > 0 ? ( self.removeWarehouseFromState(self,id))
-            : self.props.enqueueSnackbar('No modifications made.', { variant: 'warning' }) });
+                return (data.split(' '))
+            }).then(function (data_split) {
+                data_split[1] > 0 ? (self.removeFromState(self, id))
+                    : self.props.enqueueSnackbar('No modifications made.', { variant: 'warning' })
+            });
         } else {
-            console.log("Error from delete warehouse");
+            if (res.status === 409) {
+                self.props.enqueueSnackbar('Can\'t delete an item that is in use!', { variant: 'error' });
+            } else {
+                self.props.enqueueSnackbar('Error while performing the action!', { variant: 'error' });
+            }
         }
-        
-
-
     }
-    removeWarehouseFromState(self, id){
-        // var i;
-        // for(i=0; i < self.state.availableWarehouses.length; i++){
-        //     if( self.state.availableWarehouses[i].warehouseID === id){
-        //         self.state.availableWarehouses.splice(i, 1);
-        //         self.props.enqueueSnackbar('Warehouse deleted.', { variant: 'success' });
-        //         break;
-        //     }
-        // }
+    removeFromState(self, id) {
         self.refreshWarehouses();
-        self.props.enqueueSnackbar('Warehouse deleted.', { variant: 'success' });
+        self.refreshRegions();
+        self.props.enqueueSnackbar('Deleted!', { variant: 'success' });
     }
 
     render() {
