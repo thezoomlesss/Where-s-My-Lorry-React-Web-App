@@ -252,6 +252,12 @@ a{
   display: inline-block;
   margin-bottom: 20px;
 }
+.two-thirds-page-paper{
+  width: 66%;
+  vertical-align: top;
+  display: inline-block;
+  margin-bottom: 20px;
+}
 .third-page-right{
   margin-left: 1%;
 }
@@ -401,7 +407,8 @@ form > div.inRowInput{
 .addPaper{
   padding: 25px;
 }
- div.MuiFormControl-root-174.selectForm{
+form.addVehForm > div.selectForm
+{
   min-width: 100px;
   margin-top: 16px;
 }
@@ -429,4 +436,27 @@ form > div.inRowInput{
 }
 .half-page-paper-holder{
   display: inline-block;
+}
+
+.half-page-paper{
+  width: 49%;
+  display: inline-block;
+}
+table > tbody > tr> td > button.deleteButton{
+  color: #fff;
+  background-color: #e10050;
+  padding: 4px;
+  font-size: 0.8125rem;
+}
+table > tbody > tr> td > button.deleteButton:hover{
+  background-color: #9d0038;
+}
+table.removeWarehouseTable > tbody > tr > th,
+table.removeWarehouseTable > tbody > tr > td,
+table.removeWarehouseTable > thead > tr > th,
+table.removeRegionTable > tbody > tr > th,
+table.removeRegionTable > tbody > tr > td,
+table.removeRegionTable > thead > tr > th{
+  padding: 10px;
+  text-align: center;
 }

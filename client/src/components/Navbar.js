@@ -3,7 +3,7 @@ import './../css/App.css';
 import './../css/bootstrap.css';
 import {
   GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
-  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging
+  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage
 } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -139,6 +139,7 @@ class Navbar extends Component {
   };
   handleListItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
+    window.scrollTo(0, 0);
   };
   renderSwitch(param) {
     switch (param) {
@@ -291,6 +292,7 @@ class Navbar extends Component {
             } />
             <Route exact path="/remove" render={props =>
               <div>
+                <RemovePage />
                 <Footer />
               </div>
             } />
