@@ -38,7 +38,7 @@ import { compose } from 'recompose'
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
 const paths = ["Home", "Add-new", "Remove", "Map", "Messages"];
-const formatted = paths.map((text, index) => (text.replace('-',' ')));
+const formatted = paths.map((text, index) => (text.replace('-', ' ')));
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -119,6 +119,19 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
+    var url_split = window.location.href.split('/');
+    if (url_split.length == 4) {
+      console.log(url_split[3]);
+      for (var index = 0; index < paths.length; index++) {
+        
+        console.log(paths[index]+ " " + url_split[3]);
+        if (paths[index].toLowerCase() === url_split[3]) {
+          this.setState({ selectedIndex: index });
+        }
+      }
+    }
+
+    // selectedIndex
     fetch('/vehicles?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleTableData: vehicles }));
