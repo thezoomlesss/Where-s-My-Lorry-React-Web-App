@@ -9,6 +9,19 @@ import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 
 export default class SimpleTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            logs: null,
+        }
+    }
+
+    componentDidMount() {
+        fetch('/getLoginLog?cid=1')
+            .then(res => res.json())
+            .then(logs => this.setState({ logs: logs }));
+    }
+
     render() {
         return (
             <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
@@ -17,34 +30,37 @@ export default class SimpleTable extends Component {
                         <TableHead>
                             <TableRow>
                                 <TableCell >
-                                    Test 1
+                                    Identifier
                                 </TableCell>
                                 <TableCell >
-                                    Test 2
+                                    Name
                                 </TableCell>
                                 <TableCell >
-                                    Test 3
-                                </TableCell>
-                                <TableCell >
-                                    Test 4
+                                    Time
                                 </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow >
-                                <TableCell component="th" scope="row">
-                                    Test1
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    Test2
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    Test3
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    Test4
-                                </TableCell>
-                            </TableRow>
+                            {this.state && this.state.logs && this.state.logs.map(row => (
+                                <TableRow key={row.loginlogID + " login"}>
+                                    <TableCell component="th" scope="row">{row.loginlogID}</TableCell>
+                                    <TableCell component="th" scope="row">{row.nickname}</TableCell>
+                                    <TableCell component="th" scope="row">
+                                    {row.day_val+'/'} 
+                                    {row.month_val+'/'}
+                                    {row.year_val+' '} 
+                                    {row.hour_val+':'} 
+                                    {row.minute_val+':'} 
+                                    {row.second_val+' '} 
+                                    {row.AM_PM}
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                            }
+
+                            
+
+
                         </TableBody>
                     </Table>
                 </Paper>

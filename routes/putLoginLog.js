@@ -16,6 +16,7 @@ var connection = mysql.createConnection({
 });
 router.put('/', function (req, res, next) {
     var companyID = req.query.cid;
+    res.status(200).send("OKEE");
 });
 
 module.exports = router;

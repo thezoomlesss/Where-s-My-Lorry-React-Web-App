@@ -23,6 +23,7 @@ var getWarehouses = require('./routes/getWarehouses.js');
 var deleteWarehouse = require('./routes/deleteWarehouse.js');
 var deleteRegion = require('./routes/deleteRegion.js');
 var putLoginLog = require('./routes/putLoginLog.js');
+var getLoginLog = require('./routes/getLoginLog.js');
 
 var app = express();
 
@@ -56,6 +57,7 @@ app.use('/getWarehouses', getWarehouses);
 app.use('/deleteWarehouse', deleteWarehouse);
 app.use('/deleteRegion', deleteRegion);
 app.use('/putLoginLog', putLoginLog);
+app.use('/getLoginLog', getLoginLog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
