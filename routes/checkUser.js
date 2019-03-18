@@ -34,7 +34,10 @@ router.post('/', function (req, res, next) {
 
     // console.log("loginEmail: " + loginEmail);
     // console.log("loginPass: " + loginPass);
-    connection.query('SELECT companyID FROM Company WHERE login_email = \'' + loginEmail + '\' AND login_pass = \'' + loginPass + '\';', function (error, results, fields) {
+    connection.query(`
+        SELECT companyID FROM Company c
+        JOIN Company_Login cl USING(companyID)
+        WHERE cl.login_email = \'`+ loginEmail + `\' AND cl.login_pass = \'` + loginPass + `\';`, function (error, results, fields) {
         if (error) {
             res.status(200).send('Error when retrieving login from db');
             throw error;

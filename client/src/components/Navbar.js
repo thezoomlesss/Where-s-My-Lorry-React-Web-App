@@ -3,7 +3,7 @@ import './../css/App.css';
 import './../css/bootstrap.css';
 import {
   GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
-  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage
+  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage, LoginLogs
 } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -33,8 +33,12 @@ import Remove from '@material-ui/icons/Remove';
 import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import { withSnackbar } from 'notistack';
-import { compose } from 'recompose'
-
+import { compose } from 'recompose';
+var moment = require('moment');//  18/03/2019 13:35:42 PM
+var current = moment();
+console.log(current);
+console.log(current.format('DD/MM/YYYY hh:mm:ss A'));
+console.log(current.date());
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
 const paths = ["Home", "Add-new", "Remove", "Map", "Messages"];
@@ -128,7 +132,6 @@ class Navbar extends Component {
       }
     }
 
-    // selectedIndex
     fetch('/vehicles?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleTableData: vehicles }));
@@ -154,15 +157,15 @@ class Navbar extends Component {
   renderSwitch(param) {
     switch (param) {
       case 0:
-        return < ListItemIcon > {<HomeIcon />}</ListItemIcon >;
+        return (< ListItemIcon > {<HomeIcon />}</ListItemIcon >);
       case 1:
-        return < ListItemIcon > {<AddCircle />}</ListItemIcon >;
+        return (< ListItemIcon > {<AddCircle />}</ListItemIcon >);
       case 2:
-        return < ListItemIcon > {<RemoveCircle />}</ListItemIcon >;
+        return (< ListItemIcon > {<RemoveCircle />}</ListItemIcon >);
       case 3:
-        return < ListItemIcon > {<MyLocation />}</ListItemIcon >;
+        return (< ListItemIcon > {<MyLocation />}</ListItemIcon >);
       case 4:
-        return < ListItemIcon > {<MailIcon />}</ListItemIcon >;
+        return (< ListItemIcon > {<MailIcon />}</ListItemIcon >);
       default:
         return 'foo';
     }
@@ -277,6 +280,7 @@ class Navbar extends Component {
                   ]} />
                 {/* <SimpleSnackbar show="true"/> */}
                 <MonthlyProgress />
+                <LoginLogs />
                 <Footer />
               </div>
             } />

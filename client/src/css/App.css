@@ -441,6 +441,11 @@ form.addVehForm > div.selectForm
 .half-page-paper{
   width: 49%;
   display: inline-block;
+  vertical-align: top;
+  margin-bottom: 15px;
+}
+.half-page-paper-right{
+  margin-left: 2%;
 }
 table > tbody > tr> td > button.deleteButton{
   color: #fff;

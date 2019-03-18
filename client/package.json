@@ -6,6 +6,7 @@
     "chart.js": "^2.7.3",
     "firebase": "^5.8.6",
     "google-maps-react": "^2.0.2",
+    "moment": "^2.24.0",
     "react": "^16.6.3",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.3",

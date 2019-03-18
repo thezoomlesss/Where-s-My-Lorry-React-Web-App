@@ -4,7 +4,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 
@@ -16,7 +15,7 @@ export default class SimpleTable extends Component {
   render() {
     return (
       <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-        <Paper className="paper">
+        <Paper className="paper ">
           <Table>
             <TableHead>
               <TableRow>
