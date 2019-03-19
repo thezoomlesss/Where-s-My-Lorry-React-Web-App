@@ -46,19 +46,19 @@ export default class SimpleTable extends Component {
                                     <TableCell component="th" scope="row">{row.loginlogID}</TableCell>
                                     <TableCell component="th" scope="row">{row.nickname}</TableCell>
                                     <TableCell component="th" scope="row">
-                                    {row.day_val+'/'} 
-                                    {row.month_val+'/'}
-                                    {row.year_val+' '} 
-                                    {row.hour_val+':'} 
-                                    {row.minute_val+':'} 
-                                    {row.second_val+' '} 
-                                    {row.AM_PM}
+                                        {row.day_val + '/'}
+                                        {row.month_val + '/'}
+                                        {row.year_val + ' '}
+                                        {row.hour_val + ':'}
+                                        {row.minute_val + ':'}
+                                        {row.second_val + ' '}
+                                        {row.AM_PM}
                                     </TableCell>
                                 </TableRow>
                             ))
                             }
 
-                            
+
 
 
                         </TableBody>

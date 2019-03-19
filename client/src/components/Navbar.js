@@ -34,11 +34,17 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import { withSnackbar } from 'notistack';
 import { compose } from 'recompose';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
 var moment = require('moment');//  18/03/2019 13:35:42 PM
 var current = moment();
 console.log(current);
 console.log(current.format('DD/MM/YYYY hh:mm:ss A'));
 console.log(current.date());
+
+
 const drawerWidth = 240;
 // Paths to appear in the URL and in the navigation menu
 const paths = ["Home", "Add-new", "Remove", "Map", "Messages"];
@@ -141,6 +147,27 @@ class Navbar extends Component {
     fetch('/getVehicleBrand?cid=1')
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleChartBrand: vehicles }));
+
+
+    var cID = cookies.get('cID');
+    var loginID = cookies.get('loginID');
+
+    if (cID === undefined || loginID === undefined) {
+      this.interval = setInterval(() => {
+        cID = cookies.get('cID');
+        loginID = cookies.get('loginID');
+        if (cID !== undefined && loginID !== undefined) {
+          clearInterval(this.interval);
+          fetch('/putLoginlog?cid=' + cID + '&loginid=' + loginID, { method: 'PUT' });
+        }
+      }, 1000);
+    } else {
+      fetch('/putLoginlog?cid=' + cID + '&loginid=' + loginID, { method: 'PUT' });
+    }
+
+
+
+
   }
 
   handleDrawerOpen = () => {

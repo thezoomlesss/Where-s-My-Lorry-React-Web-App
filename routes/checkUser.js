@@ -35,7 +35,7 @@ router.post('/', function (req, res, next) {
     // console.log("loginEmail: " + loginEmail);
     // console.log("loginPass: " + loginPass);
     connection.query(`
-        SELECT companyID FROM Company c
+        SELECT c.companyID, cl.loginID FROM Company c
         JOIN Company_Login cl USING(companyID)
         WHERE cl.login_email = \'`+ loginEmail + `\' AND cl.login_pass = \'` + loginPass + `\';`, function (error, results, fields) {
         if (error) {
@@ -44,7 +44,7 @@ router.post('/', function (req, res, next) {
         }
         if (results.length > 0) {
             if (results) {
-                res.status(200).send("companyID:" + results[0].companyID);
+                res.status(200).send("companyID:" + results[0].companyID + " loginID:"+ results[0].loginID);
             }
         } else {
             res.status(204).send("No match");

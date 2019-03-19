@@ -14,11 +14,14 @@ var cookieLoginToken;
 const Auth = {
   isAuthenticated: false,
   authenticate(cb) {
-    this.isAuthenticated = true
+    this.isAuthenticated = true;
     setTimeout(cb, 10) // fake async
   },
   signout(cb) {
-    this.isAuthenticated = false
+    cookies.remove('loginToken');
+    cookies.remove('cID');
+    cookies.remove('loginID');
+    this.isAuthenticated = false;
     setTimeout(cb, 10) // fake async
   }
 }

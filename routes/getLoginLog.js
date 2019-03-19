@@ -21,11 +21,12 @@ router.get('/', function (req, res, next) {
     var company_id = req.query.cid;
 
     let sql_getLoginLog = `
-    SELECT ll.loginlogID, cl.nickname, td.day_val, td.month_val, td.year_val, td.hour_val, td.minute_val, td.second_val, td.AM_PM FROM Company c
-    JOIN Company_Login cl USING(companyID)
-    JOIN LoginLog ll USING(loginID)
-    JOIN TimeDim td USING(timestampID)
-    WHERE c.companyID = ?;`;
+        SELECT ll.loginlogID, cl.nickname, td.day_val, td.month_val, td.year_val, td.hour_val, td.minute_val, td.second_val, td.AM_PM FROM Company c
+        JOIN Company_Login cl USING(companyID)
+        JOIN LoginLog ll USING(loginID)
+        JOIN TimeDim td USING(timestampID)
+        WHERE c.companyID = ?
+        ORDER by ll.loginlogID desc LIMIT 10;`;
 
     let data = [company_id];
 

@@ -123,14 +123,20 @@ class SignIn extends Component {
         fetch("/checkUser?email=" + this.state.email + "&pass=" + this.state.pass, { method: 'post' })
           .then(res => res.status === 200 ? (
             // this.props.auth.authenticate(),
-            cookies.set('loginToken', jwt.sign({}, secret.key, { expiresIn: '24h' }), { path: '/' }),
-            this.props.history.push('/home'))
-            : this.props.enqueueSnackbar('Wrong details.', { variant: 'error' })).then(
-            );
+            res.text().then(function (data) {
+              var data_split = data.split(' ');
+              // splitting again in one line then pop because we only care about the last value
+              var cID_data = data_split[0].split(':').pop();
+              var loginID_data = data_split[1].split(':').pop();
+              cookies.set('cID', cID_data);
+              cookies.set('loginID', loginID_data);
+            }).then(cookies.set('loginToken', jwt.sign({}, secret.key, { expiresIn: '24h' }), { path: '/' }))
+            .then(this.props.history.push('/home')))
+            : this.props.enqueueSnackbar('Wrong details.', { variant: 'error' }))
       } else {
         this.props.enqueueSnackbar('The email must be valid!', { variant: 'warning' })
       }
-
+      
 
       // resMessage = res.text().then( res => resStatus = res.status))
       // .then( resMessage => console.log(resMessage+ ' ' ));

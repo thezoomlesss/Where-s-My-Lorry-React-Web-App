@@ -29,6 +29,8 @@ class PopoverMenu extends React.Component {
   logOut(){
     this.setState({ open: false});
     cookies.remove('loginToken');
+    cookies.remove('cID');
+    cookies.remove('loginID');
     window.location.reload()
   }
   render() {
