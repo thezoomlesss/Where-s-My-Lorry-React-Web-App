@@ -247,7 +247,7 @@ a{
   text-decoration: none;
 }
 .third-page-paper{
-  width: 33%;
+  width: 32.5%;
   vertical-align: top;
   display: inline-block;
   margin-bottom: 20px;
@@ -259,7 +259,7 @@ a{
   margin-bottom: 20px;
 }
 .third-page-right{
-  margin-left: 1%;
+  margin-left: 1.25%;
 }
 .paper1{
   margin-right: 1%;
@@ -464,4 +464,21 @@ table.removeRegionTable > tbody > tr > td,
 table.removeRegionTable > thead > tr > th{
   padding: 10px;
   text-align: center;
+}
+
+tbody.LoginLogsBody {
+  display:block;
+  height:158px;
+  overflow:auto;
+}
+thead.LoginLogsHead, tbody.LoginLogsBody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+thead.LoginLogsHead {
+  width: calc( 100% - 1em )
+}
+table.LoginLogs {
+  width:100%;
 }

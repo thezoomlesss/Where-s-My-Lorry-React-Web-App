@@ -36,6 +36,9 @@ import { withSnackbar } from 'notistack';
 import { compose } from 'recompose';
 import Cookies from 'universal-cookie';
 
+import Paper from '@material-ui/core/Paper';
+import Grow from '@material-ui/core/Grow';
+
 const cookies = new Cookies();
 
 var moment = require('moment');//  18/03/2019 13:35:42 PM
@@ -276,6 +279,16 @@ class Navbar extends Component {
             <Route exact path="/home" render={props =>
               <div>
                 <ActiveVehChart />
+                {/* <div className="chartContainer">
+                  <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
+                    <Paper className="paper" ></Paper>
+                  </Grow>
+                </div>
+                <div className="chartContainer">
+                  <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
+                    <Paper className="paper" ></Paper>
+                  </Grow>
+                </div> */}
                 <ActiveVehChart />
                 <ActiveVehChart />
                 {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}

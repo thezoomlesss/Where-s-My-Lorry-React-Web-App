@@ -11,7 +11,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withSnackbar } from 'notistack';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
+var cID;
 class AddPage extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +25,7 @@ class AddPage extends Component {
             main_county: '',
             regionSelect: 'none',
             availableRegions: null,
+            availableWarehouses: null,
             firstThirdHeight: 1,
             secondThirdHeight: 1
         };
@@ -29,14 +33,21 @@ class AddPage extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitRegion = this.onSubmitRegion.bind(this);
         this.refreshRegions = this.refreshRegions.bind(this);
+        this.refreshWarehouses = this.refreshWarehouses.bind(this);
+        this.onSubmitWarehouse = this.onSubmitWarehouse.bind(this);
+        
 
     }
     componentDidMount() {
         this.setState({
-            regionSelect: 'none'
+            regionSelect: 'none',
+            warehouseSelect: 'none',
+            
         });
+        cID = cookies.get('cID');
 
         this.refreshRegions();
+        this.refreshWarehouses();
         var firstThirdHeightVal = this.refs.firstThird.clientHeight;
         var secondThirdHeightVal = this.refs.secondThird.clientHeight;
         console.log(firstThirdHeightVal + " " + secondThirdHeightVal)
@@ -45,12 +56,14 @@ class AddPage extends Component {
         } else {
             firstThirdHeightVal = secondThirdHeightVal;
         }
-        this.refs.secondThird.style.Height = firstThirdHeightVal+'px';
-        this.refs.firstThird.style.Height = firstThirdHeightVal+'px';
+        this.refs.secondThird.style.Height = firstThirdHeightVal + 'px';
+        this.refs.firstThird.style.Height = firstThirdHeightVal + 'px';
         this.setState({
             firstThirdHeight: firstThirdHeightVal,
             secondThirdHeight: secondThirdHeightVal,
         });
+
+        
 
     }
     handleChange(event) {
@@ -72,10 +85,19 @@ class AddPage extends Component {
             this.props.enqueueSnackbar('Not enough details given.', { variant: 'warning' })
         }
     }
+    onSubmitWarehouse(event){
+
+    }
     refreshRegions() {
         fetch('/getRegions?cid=1')
             .then(res => res.json())
             .then(regions => this.setState({ availableRegions: regions }));
+    }
+    refreshWarehouses(){
+        
+        fetch('/getwarehouses?cid='+cID)
+            .then(res => res.json())
+            .then(regions => this.setState({ availableWarehouses: regions }));
     }
     render() {
         // if (this.state === null || this.state === undefined) {
@@ -191,6 +213,77 @@ class AddPage extends Component {
                             </Paper>
                         </div>
                     </Grow>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                        <div ref="thirdThird" className="half-page-paper-holder third-page-paper third-page-right">
+                            <Paper className="paper addPaper ">
+                                <Typography component="h1" variant="h5">
+                                    Add a new transport
+                                </Typography>
+                                <form className="addVehForm">
+                                    <FormControl className="inrowField inRowInput" margin="normal" required >
+                                        <InputLabel htmlFor="text">Transport Name</InputLabel>
+                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
+                                    </FormControl>
+                                    <FormControl className="inrowField inRowInput" margin="normal" required >
+                                        <InputLabel htmlFor="text">Country</InputLabel>
+                                        <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
+                                    </FormControl>
+                                    <FormControl className="selectForm">
+                                        <InputLabel  >Region</InputLabel>
+                                        {this.state && this.state.warehouseSelect ? <Select
+                                            value={this.state.warehouseSelect}
+                                            onChange={this.handleChange}
+                                            name="warehouseSelect"
+                                            inputProps={{
+                                                name: 'warehouseSelect',
+                                                id: 'warehouse-simple',
+                                            }}
+                                        >
+                                            {this.state && this.state.availableWarehouses ?
+                                                this.state.availableWarehouses.map((text, index) => (
+                                                    <MenuItem key={index} value={text['warehouse_name']}>{text['warehouse_name']}</MenuItem>
+                                                ))
+                                                : null}
+                                        </Select> : null}
+                                    </FormControl>
+
+                                    <div className="addPageButtonContainer">
+                                        <Button
+                                            className="inrowField addButton"
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.onSubmitWarehouse}
+                                        >
+                                            Add Transport
+                                    </Button>
+                                    </div>
+                                </form>
+                            </Paper>
+                        </div>
+                    </Grow>
+
+
+
+
+
+
+
+
+
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <Paper className="paper addPaper">
                             <Typography component="h1" variant="h5">

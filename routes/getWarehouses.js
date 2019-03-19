@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 router.get('/', function (req, res, next) {
     var company_id = req.query.cid;
     let sql_getRegion = `
-        Select w.warehouseID, w.capacity, w.latitude, w.longitude, w.country_code, w.area_code,
+        Select w.warehouseID,  w.capacity, w.warehouse_name, w.latitude, w.longitude, w.country_code, w.area_code,
                w.phone_num, w.email, r.region_name  
         FROM Warehouse w
         JOIN Company c USING(companyID)

@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
             JOIN Company c USING(companyID)
             WHERE c.companyID = ${1};`, {company_id}, function (error, results, fields) {
                 if (error) {
-                    res.status(404).send('Error when retrieving login from db');
+                    res.status(404).send('Error when retrieving active vehicles from db');
                     throw error;
                 }
                 if (results.length > 0) {
@@ -66,15 +66,12 @@ router.get('/count', function(req, res, next) {
 
      if(company_id){
          connection.query(`
-            SELECT s.state_value, count(s.state_value) as count_state
-            FROM State s
-            JOIN Vehicle v USING(stateID)
+            select count(*) - count(transportID) as Inactive, count(transportID) as Active from Vehicle
             JOIN Company c USING(companyID)
-            WHERE c.companyID = ${1}
-            GROUP BY state_value
-            ORDER BY s.state_value;`, {company_id}, function (error, results, fields) {
+            WHERE c.companyID = ${1};
+         `, {company_id}, function (error, results, fields) {
                  if (error) {
-                     res.status(404).send('Error when retrieving login from db');
+                     res.status(404).send('Error when retrieving count of active vehicles from db');
                      throw error;
                  }
                  if (results.length > 0) {
