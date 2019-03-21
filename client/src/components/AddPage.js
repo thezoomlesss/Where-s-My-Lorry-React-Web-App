@@ -12,7 +12,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withSnackbar } from 'notistack';
 import Cookies from 'universal-cookie';
+import TextField from '@material-ui/core/TextField';
 const cookies = new Cookies();
+
+var moment = require('moment');//  18/03/2019 13:35:42 PM
 
 var cID;
 class AddPage extends Component {
@@ -27,7 +30,15 @@ class AddPage extends Component {
             availableRegions: null,
             availableWarehouses: null,
             firstThirdHeight: 1,
-            secondThirdHeight: 1
+            secondThirdHeight: 1,
+            new_warehouse_name: '',
+            capacity: '',
+            latitude: '',
+            longitude: '',
+            country_code: '',
+            area_code: '',
+            phone_num: '',
+            contact_email: '',
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -35,14 +46,19 @@ class AddPage extends Component {
         this.refreshRegions = this.refreshRegions.bind(this);
         this.refreshWarehouses = this.refreshWarehouses.bind(this);
         this.onSubmitWarehouse = this.onSubmitWarehouse.bind(this);
-        
+        this.onSubmitTransport = this.onSubmitTransport.bind(this);
+
 
     }
     componentDidMount() {
         this.setState({
+
             regionSelect: 'none',
-            warehouseSelect: 'none',
-            
+            SourceWarehouseSelect: 'none',
+            DestWarehouseSelect: 'none',
+            departureTime: 'none',
+            arrivalTime: 'none',
+
         });
         cID = cookies.get('cID');
 
@@ -63,7 +79,7 @@ class AddPage extends Component {
             secondThirdHeight: secondThirdHeightVal,
         });
 
-        
+
 
     }
     handleChange(event) {
@@ -82,20 +98,54 @@ class AddPage extends Component {
 
             }
         } else {
-            this.props.enqueueSnackbar('Not enough details given.', { variant: 'warning' })
+            this.props.enqueueSnackbar('Not enough details given to create a region', { variant: 'warning' });
         }
     }
-    onSubmitWarehouse(event){
-
+    onSubmitWarehouse(event) {
+        event.preventDefault();
+        if (this.state.capacity && this.state.latitude && this.state.longitude &&
+            this.state.country_code && this.state.area_code && this.state.phone_num &&
+            this.state.contact_email && this.state.regionSelect) {
+            if (this.state.capacity.trim() !== "" && this.state.latitude.trim() !== "" && this.state.longitude.trim() !== "" &&
+                this.state.country_code.trim() !== "" && this.state.area_code.trim() !== "" && this.state.phone_num.trim() !== "" &&
+                this.state.contact_email.trim() !== "" && this.state.regionSelect.trim() !== "") {
+                fetch('/putWarehouse?cid=' + cID + '&name=' + this.state.new_warehouse_name + '&cap=' + this.state.capacity +
+                    '&lat=' + this.state.latitude + '&long=' + this.state.longitude +
+                    '&code1=' + this.state.country_code + '&code2=' + this.state.area_code +
+                    '&phone=' + this.state.phone_num + '&email=' + this.state.contact_email + '&region_name=' + this.state.regionSelect
+                    , { method: 'PUT' })
+                    .then(res => res.status === 200 ?
+                        (this.props.enqueueSnackbar('New warehouse created.', { variant: 'success' }),
+                            this.refreshWarehouses())
+                        : this.props.enqueueSnackbar('Could not create a new warehouse', { variant: 'error' }));
+            }
+        } else {
+            this.props.enqueueSnackbar('Not enough details given to create a warehouse.', { variant: 'warning' });
+        }
+    }
+    onSubmitTransport(event) {
+        event.preventDefault();
+        if (this.state && this.state.SourceWarehouseSelect && this.state.DestWarehouseSelect) {
+            if (this.state.SourceWarehouseSelect !== "none" && this.state.DestWarehouseSelect !== "none" && this.state.departureTime !== "none") {
+                if (this.state.SourceWarehouseSelect !== this.state.DestWarehouseSelect) {
+                    alert(this.state.departureTime);
+                } else {
+                    this.props.enqueueSnackbar('The source and destination warehouse can\'t be the same', { variant: 'warning' })
+                }
+            } else {
+                this.props.enqueueSnackbar('You must fill all required fields', { variant: 'warning' })
+            }
+            // alert(this.state.SourceWarehouseSelect + ' ' +this.state.DestWarehouseSelect);
+        }
     }
     refreshRegions() {
         fetch('/getRegions?cid=1')
             .then(res => res.json())
             .then(regions => this.setState({ availableRegions: regions }));
     }
-    refreshWarehouses(){
-        
-        fetch('/getwarehouses?cid='+cID)
+    refreshWarehouses() {
+
+        fetch('/getwarehouses?cid=' + cID)
             .then(res => res.json())
             .then(regions => this.setState({ availableWarehouses: regions }));
     }
@@ -111,36 +161,41 @@ class AddPage extends Component {
                             <Paper className="paper addPaper">
                                 <Typography component="h1" variant="h5">
                                     Add a new warehouse
-                                 </Typography>
+                                </Typography>
 
                                 <form className="addVehForm">
+
+                                    <FormControl className="inrowField inRowInput" margin="normal" required >
+                                        <InputLabel htmlFor="number">Warehouse Name</InputLabel>
+                                        <Input id="new_warehouse_name" name="new_warehouse_name" autoComplete="new_warehouse_name" required onChange={this.handleChange} autoFocus />
+                                    </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="number">Capacity</InputLabel>
-                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
+                                        <Input id="capacity" name="capacity" autoComplete="capacity" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="text">Latitude</InputLabel>
-                                        <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
+                                        <Input id="latitude" name="latitude" autoComplete="latitude" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="text">Longitude</InputLabel>
-                                        <Input id="main_county" name="main_county" autoComplete="main county" required onChange={this.handleChange} autoFocus />
+                                        <Input id="longitude" name="longitude" autoComplete="longitude" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="number">Country Code</InputLabel>
-                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
+                                        <Input id="country_code" name="country_code" autoComplete="country_code" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="text">Area Code</InputLabel>
-                                        <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
+                                        <Input id="area_code" name="area_code" autoComplete="area_code" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="text">Phone Number</InputLabel>
-                                        <Input id="main_county" name="main_county" autoComplete="main county" required onChange={this.handleChange} autoFocus />
+                                        <Input id="phone_num" name="phone_num" autoComplete="phone_num" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="inrowField inRowInput" margin="normal" required >
                                         <InputLabel htmlFor="number">Contact Email</InputLabel>
-                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
+                                        <Input id="contact_email" name="contact_email" autoComplete="contact_email" required onChange={this.handleChange} autoFocus />
                                     </FormControl>
                                     <FormControl className="selectForm">
                                         <InputLabel  >Region</InputLabel>
@@ -167,7 +222,7 @@ class AddPage extends Component {
                                             fullWidth
                                             variant="contained"
                                             color="primary"
-                                            onClick={this.onSubmitRegion}
+                                            onClick={this.onSubmitWarehouse}
                                         >
                                             Add Warehouse
                                     </Button>
@@ -232,22 +287,14 @@ class AddPage extends Component {
                                     Add a new transport
                                 </Typography>
                                 <form className="addVehForm">
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Transport Name</InputLabel>
-                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Country</InputLabel>
-                                        <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="selectForm">
-                                        <InputLabel  >Region</InputLabel>
-                                        {this.state && this.state.warehouseSelect ? <Select
-                                            value={this.state.warehouseSelect}
+                                    <FormControl className="selectForm halfFormControl" required>
+                                        <InputLabel  >Source Warehouse</InputLabel>
+                                        {this.state && this.state.SourceWarehouseSelect ? <Select
+                                            value={this.state.SourceWarehouseSelect}
                                             onChange={this.handleChange}
-                                            name="warehouseSelect"
+                                            name="SourceWarehouseSelect"
                                             inputProps={{
-                                                name: 'warehouseSelect',
+                                                name: 'SourceWarehouseSelect',
                                                 id: 'warehouse-simple',
                                             }}
                                         >
@@ -259,6 +306,46 @@ class AddPage extends Component {
                                         </Select> : null}
                                     </FormControl>
 
+                                    <TextField
+                                        id="datetime-local"
+                                        label="Departure Time *"
+                                        type="datetime-local"
+                                        className="selectForm datePicker halfDatePicker"
+                                        onChange={this.handleChange}
+                                        name="departureTime"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                    <FormControl className="selectForm halfFormControl" required>
+                                        <InputLabel  >Destination Warehouse</InputLabel>
+                                        {this.state && this.state.DestWarehouseSelect ? <Select
+                                            value={this.state.DestWarehouseSelect}
+                                            onChange={this.handleChange}
+                                            name="DestWarehouseSelect"
+                                            inputProps={{
+                                                name: 'DestWarehouseSelect',
+                                                id: 'warehouse-simple',
+                                            }}
+                                        >
+                                            {this.state && this.state.availableWarehouses ?
+                                                this.state.availableWarehouses.map((text, index) => (
+                                                    <MenuItem key={index} value={text['warehouse_name']}>{text['warehouse_name']}</MenuItem>
+                                                ))
+                                                : null}
+                                        </Select> : null}
+                                    </FormControl>
+
+                                    <TextField
+                                        id="datetime-local"
+                                        label="Estimated arrival time"
+                                        type="datetime-local"
+                                        className="selectForm datePicker halfDatePicker"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+
                                     <div className="addPageButtonContainer">
                                         <Button
                                             className="inrowField addButton"
@@ -266,7 +353,7 @@ class AddPage extends Component {
                                             fullWidth
                                             variant="contained"
                                             color="primary"
-                                            onClick={this.onSubmitWarehouse}
+                                            onClick={this.onSubmitTransport}
                                         >
                                             Add Transport
                                     </Button>

@@ -30,6 +30,7 @@ connection.connect(function (error) {
 
 router.put('/', function (req, res, next) {
     var capacity = req.query.cap;
+    var name = req.query.name;
     var latitude = req.query.lat;
     var longitude = req.query.long;
     var country_code = req.query.code1;
@@ -43,7 +44,7 @@ router.put('/', function (req, res, next) {
         SELECT regionID from Region WHERE region_name = ?`;
     let data_findRegion = [region_name];
 
-    if (companyID && region_name && capacity && latitude && longitude && country_code && area_code && phone_num && email) {
+    if (companyID && region_name && name && capacity && latitude && longitude && country_code && area_code && phone_num && email) {
         connection.query(sql_findRegion, data_findRegion, function (error, results, fields) {
 
             if (error) {
@@ -54,10 +55,10 @@ router.put('/', function (req, res, next) {
                 if (results) {
                     var regionID = results[0].regionID;
                     let sql_insertWarehouse = `
-                    INSERT INTO Warehouse (capacity, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+                    INSERT INTO Warehouse (capacity, warehouse_name, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
-                    let data_insertWarehouse = [capacity, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID];
+                    let data_insertWarehouse = [name, capacity, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID];
                     connection.query(sql_insertWarehouse, data_insertWarehouse, function (error, results, fields) {
                         if (error) {
                             res.status(422).send('Error when adding a new warehouse');

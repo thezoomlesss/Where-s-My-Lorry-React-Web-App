@@ -189,6 +189,7 @@ table.table-fill > thead {
 }
 
 .paper{
+  overflow: auto;
   margin-bottom: 15px;
 }
 .chartContainer{
@@ -481,4 +482,16 @@ thead.LoginLogsHead {
 }
 table.LoginLogs {
   width:100%;
+} 
+form.addVehForm > div.datePicker{
+  margin-left: 4%;
+}
+
+form > div.halfFormControl,
+form > div.halfDatePicker{
+  width: 48%;
+}
+h1.TableTitle{
+  margin-top: 15px;
+  margin-left: 15px;  
 }

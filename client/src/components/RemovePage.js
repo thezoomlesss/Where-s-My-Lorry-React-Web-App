@@ -85,6 +85,9 @@ class RemovePage extends Component {
             <div>
                 <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                     <Paper className="paper third-page-paper">
+                        <Typography className="TableTitle" component="h1" variant="h5">
+                            Regions
+                        </Typography>
                         <Table className="removeRegionTable">
                             <TableHead>
                                 <TableRow>
@@ -113,6 +116,9 @@ class RemovePage extends Component {
                 </Grow>
                 <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                     <Paper className="paper two-thirds-page-paper third-page-right">
+                        <Typography className="TableTitle" component="h1" variant="h5">
+                                    Warehouses
+                        </Typography>
                         <Table className="removeWarehouseTable">
                             <TableHead>
                                 <TableRow>
@@ -149,6 +155,65 @@ class RemovePage extends Component {
                         </Table>
                     </Paper>
                 </Grow>
+
+
+
+
+
+
+
+
+
+
+
+                <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                    <Paper className="paper ">
+                        <Typography className="TableTitle" component="h1" variant="h5">
+                                    Transports
+                        </Typography>
+                        <Table className="removeTransportTable">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell key="transport1">Identifier</TableCell>
+                                    <TableCell key="transport2">Capacity</TableCell>
+                                    <TableCell key="transport3">Latitude</TableCell>
+                                    <TableCell key="transport4">Longitude</TableCell>
+                                    <TableCell key="transport5">Country Code</TableCell>
+                                    <TableCell key="transport6">Area Code</TableCell>
+                                    <TableCell key="transport7">Phone Number</TableCell>
+                                    <TableCell key="transport8">Email</TableCell>
+                                    <TableCell key="transport9">Region</TableCell>
+                                    <TableCell key="transport10">Delete</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state && this.state.availableWarehouses && this.state.availableWarehouses.map(row => (
+                                    <TableRow key={row.warehouseID + "warehouse"}>
+                                        <TableCell component="th" scope="row">
+                                            {row.warehouseID}
+                                        </TableCell>
+                                        <TableCell >{row.capacity}</TableCell>
+                                        <TableCell >{row.latitude}</TableCell>
+                                        <TableCell >{row.longitude}</TableCell>
+                                        <TableCell >{row.country_code}</TableCell>
+                                        <TableCell >{row.area_code}</TableCell>
+                                        <TableCell >{row.phone_num}</TableCell>
+                                        <TableCell >{row.email}</TableCell>
+                                        <TableCell >{row.region_name}</TableCell>
+                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteWarehouseClick(row.warehouseID) }}>Delete</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </Grow>
+
+
+
+
+
+
+
             </div>
         );
     }
