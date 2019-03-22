@@ -310,25 +310,51 @@ div.form__row > button.form__button{
 
   
 }
+.singleMessageRow{
+  overflow: auto;
+}
 /* Single message */
 .singleMessage{
   position: relative;
   float: left;
-  min-height: 80px;
+  min-height: 60px;
   clear: both;
   margin-left: 10px;
+}
+.singleMessage-right{
+  position: relative;
+  float: right;
+  min-height: 60px;
+  clear: both;
+  margin-right: 10px;
 }
 .message__author{
   display: block;
   position: relative;
 }
+div.singleMessage-right > span.message__author{
+  text-align: right;
+}
 .speech-bubble-left {
   display: block;
   box-shadow: 1px 1px #AAAAAA;
-  max-width: 200px;
+  max-width: 300px;
   font-size: 14px;
 	position: relative;
 	background: rgba(215, 222, 226, 0.8);
+  border-radius: .4em;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 5px 15px;
+}
+
+.speech-bubble-right {
+  display: block;
+  box-shadow: 1px 1px #AAAAAA;
+  max-width: 300px;
+  font-size: 14px;
+	position: relative;
+	background: rgba(149, 202, 233, 0.8);
   border-radius: .4em;
   margin-top: 5px;
   margin-bottom: 10px;

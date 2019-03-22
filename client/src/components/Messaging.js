@@ -8,6 +8,11 @@ import Typography from '@material-ui/core/Typography';
 
 var secret = require("./../secret.json");
 
+
+var moment = require('moment');//  18/03/2019 13:35:42 PM
+
+
+
 var config = {
     apiKey: secret.firebase_apiKey,
     authDomain: secret.authDomain,
@@ -35,9 +40,9 @@ class Messaging extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [],
-            sent_sender: '14-TM-8356',
-            sent_reciever: 'server',
+            reciever_list: [],
+            sent_sender: 'server',
+            sent_reciever: '',
             sent_message: '',
             recieved_sender: '',
             recieved_reciever: '',
@@ -89,10 +94,16 @@ class Messaging extends Component {
     }
     handleSend() {
         if (this.state.sent_message) {
+            var current = moment();
+            var formatted_current = current.format('DD/MM/YYYY hh:mm:ss A');
+            console.log(current.isBefore(moment("22/03/2019 03:23:32 PM")));
+            console.log(current.isAfter(moment("22/03/2019 03:23:32 PM")));
             var newItem = {
                 sender: this.state.sent_sender,
                 reciever: this.state.sent_reciever,
                 message: this.state.sent_message,
+                conversation: this.state.sent_sender + " " + this.state.sent_reciever,
+                timestamp: formatted_current
             }
             this.messageRef.push(newItem);
             this.setState({ sent_message: '' });
@@ -108,7 +119,7 @@ class Messaging extends Component {
             .on('value', message => {
                 if (message.exists()) {
                     this.setState({
-                        list: Object.values(message.val()),
+                        reciever_list: Object.values(message.val()),
                     });
                 }
             });
@@ -122,17 +133,18 @@ class Messaging extends Component {
     }
     oneRecipientClick(str){
         this.setState({
-            recieved_sender: str
+            recieved_sender: str,
+            sent_reciever : str,
+            reciever_list: []
         });
-        this.messageRef.orderByChild('sender').equalTo(str).on("value", message => {
+        console.log(str);
+        this.messageRef.orderByChild('conversation').equalTo("server "+str).on("value", message => {
             if (message.exists()) {
                 this.setState({
-                    list: Object.values(message.val()),
+                    reciever_list: Object.values(message.val()),
                 });
             }
         });
-
-        
 
         
     }
@@ -157,7 +169,7 @@ class Messaging extends Component {
                             <Paper className="paper_inline chat_paper">
                                 <div className="form">
                                     <div className="form__message">
-                                        {this.state.list.map((item, index) =>
+                                        {this.state.reciever_list.map((item, index) =>
                                             <SingleMessage key={index} message={item} />
                                         )}
                                     </div>
