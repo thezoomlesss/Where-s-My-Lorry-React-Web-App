@@ -27,7 +27,9 @@ class AddPage extends Component {
             country: '',
             main_county: '',
             regionSelect: 'none',
+            vehicleSelect: 'none',
             availableRegions: null,
+            availableVehicles: null,
             availableWarehouses: null,
             firstThirdHeight: 1,
             secondThirdHeight: 1,
@@ -47,6 +49,7 @@ class AddPage extends Component {
         this.refreshWarehouses = this.refreshWarehouses.bind(this);
         this.onSubmitWarehouse = this.onSubmitWarehouse.bind(this);
         this.onSubmitTransport = this.onSubmitTransport.bind(this);
+        this.refreshVehicles = this.refreshVehicles.bind(this);
 
 
     }
@@ -58,12 +61,14 @@ class AddPage extends Component {
             DestWarehouseSelect: 'none',
             departureTime: 'none',
             arrivalTime: 'none',
+            vehicleSelect: 'none',
 
         });
         cID = cookies.get('cID');
 
         this.refreshRegions();
         this.refreshWarehouses();
+        this.refreshVehicles();
         var firstThirdHeightVal = this.refs.firstThird.clientHeight;
         var secondThirdHeightVal = this.refs.secondThird.clientHeight;
         console.log(firstThirdHeightVal + " " + secondThirdHeightVal)
@@ -125,8 +130,8 @@ class AddPage extends Component {
     }
     onSubmitTransport(event) {
         event.preventDefault();
-        if (this.state && this.state.SourceWarehouseSelect && this.state.DestWarehouseSelect) {
-            if (this.state.SourceWarehouseSelect !== "none" && this.state.DestWarehouseSelect !== "none" && this.state.departureTime !== "none") {
+        if (this.state && this.state.vehicleSelect && this.state.SourceWarehouseSelect && this.state.DestWarehouseSelect) {
+            if (this.state.vehicleSelect !=="none" && this.state.SourceWarehouseSelect !== "none" && this.state.DestWarehouseSelect !== "none" && this.state.departureTime !== "none") {
                 if (this.state.SourceWarehouseSelect !== this.state.DestWarehouseSelect) {
                     alert(this.state.departureTime);
                 } else {
@@ -147,7 +152,12 @@ class AddPage extends Component {
 
         fetch('/getwarehouses?cid=' + cID)
             .then(res => res.json())
-            .then(regions => this.setState({ availableWarehouses: regions }));
+            .then(warehouses => this.setState({ availableWarehouses: warehouses }));
+    }
+    refreshVehicles(){
+        fetch('/getTransports/vehicles?cid=' + cID)
+            .then(res => res.json())
+            .then(vehicles => this.setState({ availableVehicles: vehicles }));
     }
     render() {
         // if (this.state === null || this.state === undefined) {
@@ -156,6 +166,7 @@ class AddPage extends Component {
 
             return (
                 <div>
+                    {/* Add Warehouse */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="firstThird" className="half-page-paper-holder third-page-paper">
                             <Paper className="paper addPaper">
@@ -232,6 +243,11 @@ class AddPage extends Component {
 
                         </div>
                     </Grow>
+
+
+
+                    
+                    {/* Add Region */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="secondThird" className="half-page-paper-holder third-page-paper third-page-right">
                             <Paper className="paper addPaper ">
@@ -279,7 +295,8 @@ class AddPage extends Component {
 
 
 
-
+                    
+                    {/* Add Transport */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="thirdThird" className="half-page-paper-holder third-page-paper third-page-right">
                             <Paper className="paper addPaper ">
@@ -287,6 +304,24 @@ class AddPage extends Component {
                                     Add a new transport
                                 </Typography>
                                 <form className="addVehForm">
+                                    <FormControl className="selectForm fullWidth" required>
+                                        <InputLabel  >Vehicle</InputLabel>
+                                        {this.state && this.state.vehicleSelect ? <Select
+                                            value={this.state.vehicleSelect}
+                                            onChange={this.handleChange}
+                                            name="vehicleSelect"
+                                            inputProps={{
+                                                name: 'vehicleSelect',
+                                                id: 'vehicle-simple',
+                                            }}
+                                        >
+                                            {this.state && this.state.availableVehicles ?
+                                                this.state.availableVehicles.map((text, index) => (
+                                                    <MenuItem key={index} value={text['number_plate']}>{ text['number_plate'].substring(0,2) + "-" + text['number_plate'].substring(2,4) + "-" + text['number_plate'].substring(4,8) }</MenuItem>
+                                                ))
+                                                : null}
+                                        </Select> : null}
+                                    </FormControl>
                                     <FormControl className="selectForm halfFormControl" required>
                                         <InputLabel  >Source Warehouse</InputLabel>
                                         {this.state && this.state.SourceWarehouseSelect ? <Select
@@ -370,7 +405,8 @@ class AddPage extends Component {
 
 
 
-
+                    
+                    {/* Add Vehicle */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <Paper className="paper addPaper">
                             <Typography component="h1" variant="h5">

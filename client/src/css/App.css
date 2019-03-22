@@ -495,3 +495,6 @@ h1.TableTitle{
   margin-top: 15px;
   margin-left: 15px;  
 }
+form > div.fullWidth{
+  width: 100%;
+}

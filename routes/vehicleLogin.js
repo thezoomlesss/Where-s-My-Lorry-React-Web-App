@@ -36,23 +36,34 @@ router.get('/', function (req, res, next) {
     var pass = req.query.pass;
 
     if (company_id && plate_num && pass) {
-        connection.query('SELECT lp.plateID,  co.companyID, cr.credentialID, co.cName, st.state_value FROM License_Plate lp JOIN Vehicle v USING (plateID) JOIN Company co USING (companyID) JOIN Credential cr USING (credentialID) JOIN State st USING (stateID) WHERE lp.number_plate = \'' + plate_num + '\' AND co.companyID = \'' + company_id + '\' AND cr.pass = \'' + pass + '\';', function (error, results, fields) {
+        // connection.query('SELECT lp.plateID,  co.companyID, cr.credentialID, co.cName, st.state_value FROM License_Plate lp JOIN Vehicle v USING (plateID) JOIN Company co USING (companyID) JOIN Credential cr USING (credentialID) JOIN State st USING (stateID) WHERE lp.number_plate = \'' + plate_num + '\' AND co.companyID = \'' + company_id + '\' AND cr.pass = \'' + pass + '\';', function (error, results, fields) {
+        connection.query(`  SELECT lp.plateID,  co.companyID, 
+                                CASE
+                                    WHEN transportID IS NULL THEN 'Inactive'
+                                    ELSE 'Active'
+                                END AS transportID
+                                , cr.credentialID, co.cName FROM License_Plate lp 
+                                JOIN Vehicle v USING (plateID)
+                                LEFT JOIN Transport t USING (transportID) 
+                                JOIN Company co USING (companyID) 
+                                JOIN Credential cr USING (credentialID) 
+                                WHERE lp.number_plate = \'` + plate_num + `\' AND co.companyID = \'` + company_id + `\' AND cr.pass = \'` + pass + `\';`, function (error, results, fields) {
 
-            if (error) {
-                res.status(404).send(error);
-                throw error;
-            }
-
-            if (results.length > 0) {
-                if (results) {
-                    // Passing the name of the company and the status
-                    var detailResults = JSON.parse(JSON.stringify(results[0]));
-                    res.status(200).send("200 " + detailResults.cName + " " + detailResults.state_value);
+                if (error) {
+                    res.status(404).send(error);
+                    throw error;
                 }
-            } else {
-                res.status(204).send("No match");
-            }
-        });
+
+                if (results.length > 0) {
+                    if (results) {
+                        // Passing the name of the company and the status
+                        var detailResults = JSON.parse(JSON.stringify(results[0]));
+                        res.status(200).send("200 " + detailResults.cName + " " + detailResults.transportID);//detailResults.state_value);
+                    }
+                } else {
+                    res.status(204).send("No match");
+                }
+            });
 
     } else {
         res.status(400).send("No parameters passed");
