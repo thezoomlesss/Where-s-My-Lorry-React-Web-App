@@ -5,6 +5,8 @@ import { SingleMessage } from './';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import Cookies from 'universal-cookie';
+
 
 var secret = require("./../secret.json");
 
@@ -12,6 +14,8 @@ var secret = require("./../secret.json");
 var moment = require('moment');//  18/03/2019 13:35:42 PM
 
 
+
+const cookies = new Cookies();
 
 var config = {
     apiKey: secret.firebase_apiKey,
@@ -50,6 +54,43 @@ class Messaging extends Component {
             recipients: [],
         };
         this.messageRef = firebase.database().ref().child('messages');
+        this.vehicleRef = firebase.database().ref().child('vehicles');
+        // var newItem1 = {
+        //     companyID: '1',
+        //     vehicle: '02-MH-4247'
+        // }
+        // var newItem2 = {
+        //     companyID: '1',
+        //     vehicle: '07-CL-5357'
+        // }
+        // var newItem3 = {
+        //     companyID: '1',
+        //     vehicle: '13-HH-4845'
+        // }
+        // var newItem4 = {
+        //     companyID: '1',
+        //     vehicle: '18-LK-5425'
+        // }
+        // var newItem5 = {
+        //     companyID: '1',
+        //     vehicle: '06-CC-2342'
+        // }
+        // var newItem6 = {
+        //     companyID: '1',
+        //     vehicle: '18-GH-5235'
+        // }
+        // var newItem7 = {
+        //     companyID: '1',
+        //     vehicle: '01-UR-2522'
+        // }
+        // firebase.database().ref().child('vehicles').push(newItem1);
+        // firebase.database().ref().child('vehicles').push(newItem2);
+        // firebase.database().ref().child('vehicles').push(newItem3);
+        // firebase.database().ref().child('vehicles').push(newItem4);
+        // firebase.database().ref().child('vehicles').push(newItem5);
+        // firebase.database().ref().child('vehicles').push(newItem6);
+        // firebase.database().ref().child('vehicles').push(newItem7);
+
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -72,19 +113,37 @@ class Messaging extends Component {
 
     componentDidMount() {
         var reciepients_holder = [];
+
+        
+        // Getting the list of possible conversations
         if (this.state && this.state != undefined) {
             var this_self = this;
-            this.messageRef.orderByChild('reciever').equalTo('server').on("value", function (snapshot) {
+
+            
+            var cID = cookies.get('cID');
+            this.vehicleRef.orderByChild('companyID').equalTo(cID).on("value", function (snapshot) {
                 snapshot.forEach(function (data) {
-                    if (!reciepients_holder.includes(data.val()['sender'])) {
-                        reciepients_holder.push(data.val()['sender']);
-                    }
+                    //if (!reciepients_holder.includes(data.val()['sender'])) {
+                        reciepients_holder.push(data.val()['vehicle']);
+                    //}
                 });
                 this_self.setState({
                     recipients: reciepients_holder
                 });
                 if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0]);
             });
+
+            // this.messageRef.orderByChild('reciever').equalTo('server').on("value", function (snapshot) {
+            //     snapshot.forEach(function (data) {
+            //         if (!reciepients_holder.includes(data.val()['sender'])) {
+            //             reciepients_holder.push(data.val()['sender']);
+            //         }
+            //     });
+            //     this_self.setState({
+            //         recipients: reciepients_holder
+            //     });
+            //     if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0]);
+            // });
             
         }
     }

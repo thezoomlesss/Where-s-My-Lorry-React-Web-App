@@ -24,9 +24,11 @@ class RemovePage extends Component {
         this.state = {
             availableRegions: null,
             availableWarehouses: null,
+            availableTransports: null,
         };
         this.refreshRegions = this.refreshRegions.bind(this);
         this.refreshWarehouses = this.refreshWarehouses.bind(this);
+        this.refreshTransports = this.refreshTransports.bind(this);
         this.deleteWarehouseClick = this.deleteWarehouseClick.bind(this);
         this.deleteRegionClick = this.deleteRegionClick.bind(this);
         this.responseChecker = this.responseChecker.bind(this);
@@ -36,6 +38,7 @@ class RemovePage extends Component {
     componentDidMount() {
         this.refreshRegions();
         this.refreshWarehouses();
+        this.refreshTransports();
     }
     refreshRegions() {
         fetch('/getRegions/full?cid=1')
@@ -45,7 +48,12 @@ class RemovePage extends Component {
     refreshWarehouses() {
         fetch('/getwarehouses?cid=1')
             .then(res => res.json())
-            .then(regions => this.setState({ availableWarehouses: regions }));
+            .then(warehouses => this.setState({ availableWarehouses: warehouses }));
+    }
+    refreshTransports() {
+        fetch('/getTransports?cid=1')
+            .then(res => res.json())
+            .then(transports => this.setState({ availableTransports: transports }));
     }
     deleteWarehouseClick(id) {
         var self = this;
@@ -117,7 +125,7 @@ class RemovePage extends Component {
                 <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                     <Paper className="paper two-thirds-page-paper third-page-right">
                         <Typography className="TableTitle" component="h1" variant="h5">
-                                    Warehouses
+                            Warehouses
                         </Typography>
                         <Table className="removeWarehouseTable">
                             <TableHead>
@@ -169,38 +177,49 @@ class RemovePage extends Component {
                 <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                     <Paper className="paper ">
                         <Typography className="TableTitle" component="h1" variant="h5">
-                                    Transports
+                            Transports
                         </Typography>
                         <Table className="removeTransportTable">
                             <TableHead>
                                 <TableRow>
                                     <TableCell key="transport1">Identifier</TableCell>
-                                    <TableCell key="transport2">Capacity</TableCell>
-                                    <TableCell key="transport3">Latitude</TableCell>
-                                    <TableCell key="transport4">Longitude</TableCell>
-                                    <TableCell key="transport5">Country Code</TableCell>
-                                    <TableCell key="transport6">Area Code</TableCell>
-                                    <TableCell key="transport7">Phone Number</TableCell>
-                                    <TableCell key="transport8">Email</TableCell>
-                                    <TableCell key="transport9">Region</TableCell>
+                                    <TableCell key="transport2">Source Warehouse</TableCell>
+                                    <TableCell key="transport3">Destination Warehouse</TableCell>
+                                    <TableCell key="transport4">Departure Date</TableCell>
+                                    <TableCell key="transport5">Arrival Date</TableCell>
+                                    <TableCell key="transport7">Date Created</TableCell>
+                                    <TableCell key="transport6">Status</TableCell>
                                     <TableCell key="transport10">Delete</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state && this.state.availableWarehouses && this.state.availableWarehouses.map(row => (
-                                    <TableRow key={row.warehouseID + "warehouse"}>
+                                {this.state && this.state.availableTransports && this.state.availableTransports.map(row => (
+                                    <TableRow key={row.transportID + "transport"}>
                                         <TableCell component="th" scope="row">
-                                            {row.warehouseID}
+                                            {row.transportID}
                                         </TableCell>
-                                        <TableCell >{row.capacity}</TableCell>
-                                        <TableCell >{row.latitude}</TableCell>
-                                        <TableCell >{row.longitude}</TableCell>
+                                        <TableCell >{row.source_warehouse}</TableCell>
+                                        <TableCell >{row.dest_warehouse}</TableCell>
+                                        <TableCell >
+                                            {row.source_day_val + "/" + row.source_month_val + "/" + row.source_year_val + " " + row.source_hour_val
+                                                + ":" + row.source_minute_val + ":" + row.source_second_val + " " + row.source_AM_PM}
+                                        </TableCell>
+                                        {row.day_val !== null ?
+                                            <TableCell >
+                                                {row.day_val + "/" + row.month_val + "/" + row.year_val + " " + row.hour_val
+                                                    + ":" + row.minute_val + ":" + row.second_val + " " + row.AM_PM}
+                                            </TableCell>
+                                            : <TableCell> Not Specified</TableCell>
+                                        }
+                                        <TableCell>{row.date_updated}</TableCell>
+                                        <TableCell className={row.state_value === 'Active'?"green-text":"normal-text"}>{row.state_value}</TableCell>
+                                        {/* <TableCell >{row.longitude}</TableCell>
                                         <TableCell >{row.country_code}</TableCell>
                                         <TableCell >{row.area_code}</TableCell>
                                         <TableCell >{row.phone_num}</TableCell>
                                         <TableCell >{row.email}</TableCell>
-                                        <TableCell >{row.region_name}</TableCell>
-                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteWarehouseClick(row.warehouseID) }}>Delete</Button></TableCell>
+                                        <TableCell >{row.region_name}</TableCell> */}
+                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteWarehouseClick(row.transportID) }}>Delete</Button></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

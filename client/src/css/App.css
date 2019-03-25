@@ -524,3 +524,6 @@ h1.TableTitle{
 form > div.fullWidth{
   width: 100%;
 }
+table > tbody > tr > td.green-text{
+  color: #008000;
+}
