@@ -52,6 +52,7 @@ class Messaging extends Component {
             recieved_reciever: '',
             recieved_message: '',
             recipients: [],
+            selectedIndex: null,
         };
         this.messageRef = firebase.database().ref().child('messages');
         this.vehicleRef = firebase.database().ref().child('vehicles');
@@ -130,7 +131,7 @@ class Messaging extends Component {
                 this_self.setState({
                     recipients: reciepients_holder
                 });
-                if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0]);
+                if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0], 0);
             });
 
             // this.messageRef.orderByChild('reciever').equalTo('server').on("value", function (snapshot) {
@@ -190,11 +191,12 @@ class Messaging extends Component {
         //     }
         // });
     }
-    oneRecipientClick(str){
+    oneRecipientClick(str, index){
         this.setState({
             recieved_sender: str,
             sent_reciever : str,
-            reciever_list: []
+            reciever_list: [],
+            selectedIndex : index
         });
         console.log(str);
         this.messageRef.orderByChild('conversation').equalTo("server "+str).on("value", message => {
@@ -218,7 +220,7 @@ class Messaging extends Component {
                                 <Divider/>
                                 {this.state.recipients.map((item, index) =>
                                     <div>
-                                        <div className="oneRecipient" data-id={item} onClick={() => { this.oneRecipientClick(item) }} key={index} >{item} </div>
+                                        <div className={this.state.selectedIndex === index ? "selected oneRecipient" : "oneRecipient"} data-id={item} onClick={() => { this.oneRecipientClick(item, index) }} key={index} >{item} </div>
                                         <Divider />
                                     </div>
                                 )}

@@ -71,24 +71,33 @@ class AddPage extends Component {
         this.refreshVehicles();
         var firstThirdHeightVal = this.refs.firstThird.clientHeight;
         var secondThirdHeightVal = this.refs.secondThird.clientHeight;
-        console.log(firstThirdHeightVal + " " + secondThirdHeightVal)
+        // console.log(firstThirdHeightVal + " " + secondThirdHeightVal)
         if (firstThirdHeightVal > secondThirdHeightVal) {
             secondThirdHeightVal = firstThirdHeightVal;
         } else {
             firstThirdHeightVal = secondThirdHeightVal;
         }
-        this.refs.secondThird.style.Height = firstThirdHeightVal + 'px';
-        this.refs.firstThird.style.Height = firstThirdHeightVal + 'px';
+        // this.refs.secondThird.style.Height = firstThirdHeightVal + 'px';
+        // this.refs.firstThird.style.Height = firstThirdHeightVal + 'px';
         this.setState({
             firstThirdHeight: firstThirdHeightVal,
             secondThirdHeight: secondThirdHeightVal,
+            heightSet: firstThirdHeightVal + 50,
         });
+
+
 
 
 
     }
     handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
+        if (event.target.name === "arrivalTime" || event.target.name === "departureTime") {
+            var event_value = event.target.value.replace("T", " ");
+            this.setState({ [event.target.name]: event_value });
+        } else {
+            this.setState({ [event.target.name]: event.target.value });
+
+        }
     }
     onSubmitRegion(event) {
         event.preventDefault();
@@ -131,16 +140,29 @@ class AddPage extends Component {
     onSubmitTransport(event) {
         event.preventDefault();
         if (this.state && this.state.vehicleSelect && this.state.SourceWarehouseSelect && this.state.DestWarehouseSelect) {
-            if (this.state.vehicleSelect !=="none" && this.state.SourceWarehouseSelect !== "none" && this.state.DestWarehouseSelect !== "none" && this.state.departureTime !== "none") {
+            if (this.state.vehicleSelect !== "none" && this.state.SourceWarehouseSelect !== "none" && this.state.DestWarehouseSelect !== "none" && this.state.departureTime !== "none") {
                 if (this.state.SourceWarehouseSelect !== this.state.DestWarehouseSelect) {
-                    alert(this.state.departureTime);
+
+                    if (moment(this.state.departureTime).isBefore(this.state.arrivalTime)) {
+
+                        fetch('/putTransport?cid=' + cID + '&vehID=' + this.state.vehicleSelect + '&w1=' + this.state.SourceWarehouseSelect +
+                            '&w2=' + this.state.DestWarehouseSelect + '&dep_time=' + this.state.departureTime + '&arv_time=' + this.state.arrivalTime, { method: 'PUT' })
+                            .then(res => res.status === 200 ?
+                                this.props.enqueueSnackbar('New Transport added.', { variant: 'success' })
+                                : this.props.enqueueSnackbar('Could not create a new warehouse', { variant: 'error' }));
+
+
+                        // console.log("Vehicle: " + this.state.vehicleSelect + " soruce warehouse: " + this.state.SourceWarehouseSelect + " destination warehouse: " +
+                        //     this.state.DestWarehouseSelect + " departure time: " + this.state.departureTime + " estimated arrival time: " + this.state.arrivalTime);
+                    } else {
+                        this.props.enqueueSnackbar('A transport can\'t arrive before it leaves!', { variant: 'warning' })
+                    }
                 } else {
                     this.props.enqueueSnackbar('The source and destination warehouse can\'t be the same', { variant: 'warning' })
                 }
             } else {
                 this.props.enqueueSnackbar('You must fill all required fields', { variant: 'warning' })
             }
-            // alert(this.state.SourceWarehouseSelect + ' ' +this.state.DestWarehouseSelect);
         }
     }
     refreshRegions() {
@@ -154,7 +176,7 @@ class AddPage extends Component {
             .then(res => res.json())
             .then(warehouses => this.setState({ availableWarehouses: warehouses }));
     }
-    refreshVehicles(){
+    refreshVehicles() {
         fetch('/getTransports/vehicles?cid=' + cID)
             .then(res => res.json())
             .then(vehicles => this.setState({ availableVehicles: vehicles }));
@@ -163,13 +185,15 @@ class AddPage extends Component {
         // if (this.state === null || this.state === undefined) {
         // return null;
         {
-
+            const divStyle = {
+                height: this.state.heightSet + 'px',
+            };
             return (
                 <div>
                     {/* Add Warehouse */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="firstThird" className="half-page-paper-holder third-page-paper">
-                            <Paper className="paper addPaper">
+                            <Paper style={divStyle} className="paper addPaper">
                                 <Typography component="h1" variant="h5">
                                     Add a new warehouse
                                 </Typography>
@@ -246,11 +270,11 @@ class AddPage extends Component {
 
 
 
-                    
+
                     {/* Add Region */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="secondThird" className="half-page-paper-holder third-page-paper third-page-right">
-                            <Paper className="paper addPaper ">
+                            <Paper style={divStyle} className="paper addPaper ">
                                 <Typography component="h1" variant="h5">
                                     Add a new region
                         </Typography>
@@ -295,11 +319,12 @@ class AddPage extends Component {
 
 
 
-                    
+
                     {/* Add Transport */}
+
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="thirdThird" className="half-page-paper-holder third-page-paper third-page-right">
-                            <Paper className="paper addPaper ">
+                            <Paper style={divStyle} className="paper addPaper ">
                                 <Typography component="h1" variant="h5">
                                     Add a new transport
                                 </Typography>
@@ -317,7 +342,7 @@ class AddPage extends Component {
                                         >
                                             {this.state && this.state.availableVehicles ?
                                                 this.state.availableVehicles.map((text, index) => (
-                                                    <MenuItem key={index} value={text['number_plate']}>{ text['number_plate'].substring(0,2) + "-" + text['number_plate'].substring(2,4) + "-" + text['number_plate'].substring(4,8) }</MenuItem>
+                                                    <MenuItem key={index} value={text['vehicleID']}>{text['number_plate'].substring(0, 2) + "-" + text['number_plate'].substring(2, 4) + "-" + text['number_plate'].substring(4, 8)}</MenuItem>
                                                 ))
                                                 : null}
                                         </Select> : null}
@@ -335,7 +360,7 @@ class AddPage extends Component {
                                         >
                                             {this.state && this.state.availableWarehouses ?
                                                 this.state.availableWarehouses.map((text, index) => (
-                                                    <MenuItem key={index} value={text['warehouse_name']}>{text['warehouse_name']}</MenuItem>
+                                                    <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
                                                 ))
                                                 : null}
                                         </Select> : null}
@@ -365,7 +390,7 @@ class AddPage extends Component {
                                         >
                                             {this.state && this.state.availableWarehouses ?
                                                 this.state.availableWarehouses.map((text, index) => (
-                                                    <MenuItem key={index} value={text['warehouse_name']}>{text['warehouse_name']}</MenuItem>
+                                                    <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
                                                 ))
                                                 : null}
                                         </Select> : null}
@@ -375,7 +400,9 @@ class AddPage extends Component {
                                         id="datetime-local"
                                         label="Estimated arrival time"
                                         type="datetime-local"
+                                        name="arrivalTime"
                                         className="selectForm datePicker halfDatePicker"
+                                        onChange={this.handleChange}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
@@ -405,7 +432,7 @@ class AddPage extends Component {
 
 
 
-                    
+
                     {/* Add Vehicle */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <Paper className="paper addPaper">
@@ -433,7 +460,7 @@ class AddPage extends Component {
                                     <InputLabel htmlFor="email">Email Address</InputLabel>
                                     <Input id="email" name="email" autoComplete="email" required autoFocus />
                                 </FormControl>
-                                <div className="addPageButtonContainer">
+                                <div className="addPageButtonContainer2">
                                     <Button
                                         className="inrowField addButton"
                                         type="submit"

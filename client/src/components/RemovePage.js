@@ -31,9 +31,10 @@ class RemovePage extends Component {
         this.refreshTransports = this.refreshTransports.bind(this);
         this.deleteWarehouseClick = this.deleteWarehouseClick.bind(this);
         this.deleteRegionClick = this.deleteRegionClick.bind(this);
+        this.deleteTransportClick = this.deleteTransportClick.bind(this);
         this.responseChecker = this.responseChecker.bind(this);
         this.removeFromState = this.removeFromState.bind(this);
-
+        
     }
     componentDidMount() {
         this.refreshRegions();
@@ -64,6 +65,9 @@ class RemovePage extends Component {
         var self = this;
         fetch('/deleteRegion?regionID=' + id + '&cid=1', { method: 'DELETE' })
             .then(res => self.responseChecker(res, id));
+    }
+    deleteTransportClick(id) {
+        
     }
     responseChecker(res, id) {
         var self = this;
@@ -186,7 +190,7 @@ class RemovePage extends Component {
                                     <TableCell key="transport2">Source Warehouse</TableCell>
                                     <TableCell key="transport3">Destination Warehouse</TableCell>
                                     <TableCell key="transport4">Departure Date</TableCell>
-                                    <TableCell key="transport5">Arrival Date</TableCell>
+                                    <TableCell key="transport5">Estimated Arrival Date</TableCell>
                                     <TableCell key="transport7">Date Created</TableCell>
                                     <TableCell key="transport6">Status</TableCell>
                                     <TableCell key="transport10">Delete</TableCell>
@@ -211,15 +215,16 @@ class RemovePage extends Component {
                                             </TableCell>
                                             : <TableCell> Not Specified</TableCell>
                                         }
-                                        <TableCell>{row.date_updated}</TableCell>
+                                        
+                                        {row.updated_day_val !== null ?
+                                            <TableCell >
+                                                {row.updated_day_val + "/" + row.updated_month_val + "/" + row.updated_year_val + " " + row.updated_hour_val
+                                                    + ":" + row.updated_minute_val + ":" + row.updated_second_val + " " + row.updated_AM_PM}
+                                            </TableCell>
+                                            : <TableCell> Not Specified</TableCell>
+                                        }
                                         <TableCell className={row.state_value === 'Active'?"green-text":"normal-text"}>{row.state_value}</TableCell>
-                                        {/* <TableCell >{row.longitude}</TableCell>
-                                        <TableCell >{row.country_code}</TableCell>
-                                        <TableCell >{row.area_code}</TableCell>
-                                        <TableCell >{row.phone_num}</TableCell>
-                                        <TableCell >{row.email}</TableCell>
-                                        <TableCell >{row.region_name}</TableCell> */}
-                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteWarehouseClick(row.transportID) }}>Delete</Button></TableCell>
+                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteTransportClick(row.transportID) }}>Delete</Button></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

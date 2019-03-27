@@ -29,7 +29,7 @@ export default class SimpleTable extends Component {
     render() {
         return (
             <Grow in={true} {...(true ? { timeout: 2700 } : {})}>
-                <Paper className="paper half-page-paper half-page-paper-right">
+                <Paper className="paper half-page-paper half-page-paper-right logLoginPaper">
                     <div className="LoginLogsHolder">
                         <Table className="LoginLogs">
                             <TableHead className="LoginLogsHead">

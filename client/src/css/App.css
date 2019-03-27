@@ -187,9 +187,10 @@ table.table-fill > thead {
 #root > div > div.App > div > main > div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.SimpleTable-root-144 > table > tbody > tr:hover{
   background: #eeeeee;
 }
-
-.paper{
+.logLoginPaper{
   overflow: auto;
+}
+.paper{
   margin-bottom: 15px;
 }
 .chartContainer{
@@ -403,7 +404,7 @@ div.col-9.chat > div{
   position: absolute;
   z-index:-1;
   top: 0;  left: 0;  right: 0;  bottom: 0;
-  background: #3f51b5;
+  background: #8e99f3;
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform .3s ease-out;
@@ -413,10 +414,15 @@ div.col-9.chat > div{
 }
 .oneRecipient{
   padding: 10px;
+  transition: background-color 0.5s ease;
 }
 .oneRecipient:hover{
-  
   color: #FFF;
+}
+div.oneRecipient.selected {
+  color: #FFF;
+  transition: background-color 0.5s ease;
+  background: #3f51b5;
 }
 div.col-3.chat > div > div{
   display:inline-block;
@@ -456,7 +462,9 @@ form.addVehForm > div.selectForm
   right: 5px;
 }
 .addPageButtonContainer{
-  position: relative;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
   display: block;
   margin-top: 5px;
   height: 40px;
