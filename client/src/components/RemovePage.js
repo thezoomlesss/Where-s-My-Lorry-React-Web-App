@@ -67,7 +67,9 @@ class RemovePage extends Component {
             .then(res => self.responseChecker(res, id));
     }
     deleteTransportClick(id) {
-        
+        var self = this;
+        fetch('/deleteTransport?tID=' + id + '&cid=1', { method: 'DELETE' })
+            .then(res => self.responseChecker(res, id));
     }
     responseChecker(res, id) {
         var self = this;
@@ -89,6 +91,7 @@ class RemovePage extends Component {
     removeFromState(self, id) {
         self.refreshWarehouses();
         self.refreshRegions();
+        self.refreshTransports();
         self.props.enqueueSnackbar('Deleted!', { variant: 'success' });
     }
 

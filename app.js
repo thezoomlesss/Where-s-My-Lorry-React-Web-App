@@ -26,6 +26,7 @@ var putLoginLog = require('./routes/putLoginLog.js');
 var getLoginLog = require('./routes/getLoginLog.js');
 var getTransports = require('./routes/getTransports.js');
 var putTransport = require('./routes/putTransport.js');
+var deleteTransport = require('./routes/deleteTransport.js');
 
 var app = express();
 
@@ -63,6 +64,7 @@ app.use('/getLoginLog', getLoginLog);
 app.use('/getTransports', getTransports);
 app.use('/getTransports/vehicles', getTransports);
 app.use('/putTransport', putTransport);
+app.use('/deleteTransport', deleteTransport);
 
 
 
