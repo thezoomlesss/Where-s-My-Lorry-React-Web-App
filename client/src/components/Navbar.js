@@ -122,7 +122,9 @@ class Navbar extends Component {
       vehicleChartBrand: null,
       vehicleChartOrigin: null,
       open: false,
-      selectedIndex: 0
+      selectedIndex: 0,
+      company_name: null,
+      login_nickname: null,
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -151,10 +153,10 @@ class Navbar extends Component {
       .then(res => res.json())
       .then(vehicles => this.setState({ vehicleChartBrand: vehicles }));
 
-
     var cID = cookies.get('cID');
     var loginID = cookies.get('loginID');
 
+    var self_state = this;
     if (cID === undefined || loginID === undefined) {
       this.interval = setInterval(() => {
         cID = cookies.get('cID');
@@ -162,10 +164,30 @@ class Navbar extends Component {
         if (cID !== undefined && loginID !== undefined) {
           clearInterval(this.interval);
           fetch('/putLoginlog?cid=' + cID + '&loginid=' + loginID, { method: 'PUT' });
+
+          fetch('/getCompanyName?cid=' + cID + '&lid=' + loginID)
+            .then(res => res.text().then(function (data) {
+              return (data.split('-'))
+            }).then(function (data_split) {
+              self_state.setState({
+                company_name: data_split[0],
+                login_nickname: data_split[1],
+              });
+            }));
+
         }
       }, 1000);
     } else {
       fetch('/putLoginlog?cid=' + cID + '&loginid=' + loginID, { method: 'PUT' });
+      fetch('/getCompanyName?cid=' + cID + '&lid=' + loginID)
+        .then(res => res.text().then(function (data) {
+          return (data.split('-'))
+        }).then(function (data_split) {
+          self_state.setState({
+            company_name: data_split[0],
+            login_nickname: data_split[1],
+          });
+        }));
     }
 
 
@@ -225,7 +247,8 @@ class Navbar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Hi Test
+              {this.state && this.state.company_name && this.state.login_nickname?<div className="nameholder-div"> Hi {this.state.login_nickname} <span className='span-in-title'> from</span>  {this.state.company_name}</div>: console.log("NOOO")}
+              {/* <div className='test'> from</div> */}
             </Typography>
             <PopoverMenu />
           </Toolbar>

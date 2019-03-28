@@ -199,68 +199,90 @@ class AddPage extends Component {
                                 </Typography>
 
                                 <form className="addVehForm">
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="number">Warehouse Name</InputLabel>
+                                                <Input id="new_warehouse_name" name="new_warehouse_name" autoComplete="new_warehouse_name" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="number">Capacity</InputLabel>
+                                                <Input id="capacity" name="capacity" autoComplete="capacity" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
 
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="number">Warehouse Name</InputLabel>
-                                        <Input id="new_warehouse_name" name="new_warehouse_name" autoComplete="new_warehouse_name" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="number">Capacity</InputLabel>
-                                        <Input id="capacity" name="capacity" autoComplete="capacity" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Latitude</InputLabel>
-                                        <Input id="latitude" name="latitude" autoComplete="latitude" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Longitude</InputLabel>
-                                        <Input id="longitude" name="longitude" autoComplete="longitude" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="number">Country Code</InputLabel>
-                                        <Input id="country_code" name="country_code" autoComplete="country_code" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Area Code</InputLabel>
-                                        <Input id="area_code" name="area_code" autoComplete="area_code" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Phone Number</InputLabel>
-                                        <Input id="phone_num" name="phone_num" autoComplete="phone_num" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="number">Contact Email</InputLabel>
-                                        <Input id="contact_email" name="contact_email" autoComplete="contact_email" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="selectForm">
-                                        <InputLabel  >Region</InputLabel>
-                                        {this.state && this.state.regionSelect ? <Select
-                                            value={this.state.regionSelect}
-                                            onChange={this.handleChange}
-                                            name="regionSelect"
-                                            inputProps={{
-                                                name: 'regionSelect',
-                                                id: 'region-simple',
-                                            }}
-                                        >
-                                            {this.state && this.state.availableRegions ?
-                                                this.state.availableRegions.map((text, index) => (
-                                                    <MenuItem key={index} value={text['region_name']}>{text['region_name']}</MenuItem>
-                                                ))
-                                                : null}
-                                        </Select> : null}
-                                    </FormControl>
-                                    <div className="addPageButtonContainer">
-                                        <Button
-                                            className="inrowField addButton"
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.onSubmitWarehouse}
-                                        >
-                                            Add Warehouse
-                                    </Button>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="text">Latitude</InputLabel>
+                                                <Input id="latitude" name="latitude" autoComplete="latitude" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="text">Longitude</InputLabel>
+                                                <Input id="longitude" name="longitude" autoComplete="longitude" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="number">Country Code</InputLabel>
+                                                <Input id="country_code" name="country_code" autoComplete="country_code" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="text">Area Code</InputLabel>
+                                                <Input id="area_code" name="area_code" autoComplete="area_code" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="text">Phone Number</InputLabel>
+                                                <Input id="phone_num" name="phone_num" autoComplete="phone_num" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                <InputLabel htmlFor="number">Contact Email</InputLabel>
+                                                <Input id="contact_email" name="contact_email" autoComplete="contact_email" required onChange={this.handleChange} autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-12">
+                                            <FormControl className="selectForm">
+                                                <InputLabel  >Region</InputLabel>
+                                                {this.state && this.state.regionSelect ? <Select
+                                                    value={this.state.regionSelect}
+                                                    onChange={this.handleChange}
+                                                    name="regionSelect"
+                                                    inputProps={{
+                                                        name: 'regionSelect',
+                                                        id: 'region-simple',
+                                                    }}
+                                                >
+                                                    {this.state && this.state.availableRegions ?
+                                                        this.state.availableRegions.map((text, index) => (
+                                                            <MenuItem key={index} value={text['region_name']}>{text['region_name']}</MenuItem>
+                                                        ))
+                                                        : null}
+                                                </Select> : null}
+                                            </FormControl>
+                                        </div>
+                                        <div className="addPageButtonContainer">
+                                            <Button
+                                                className="inrowField addButton"
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.onSubmitWarehouse}
+                                            >
+                                                Add Warehouse
+                                            </Button>
+                                        </div>
                                     </div>
                                 </form>
                             </Paper>
@@ -268,46 +290,57 @@ class AddPage extends Component {
                         </div>
                     </Grow>
 
-
-
-
-                    {/* Add Region */}
+                    {/* Add Vehicle */}
                     <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                         <div ref="secondThird" className="half-page-paper-holder third-page-paper third-page-right">
-                            <Paper style={divStyle} className="paper addPaper ">
+                            <Paper style={divStyle} className="paper addPaper">
                                 <Typography component="h1" variant="h5">
-                                    Add a new region
-                        </Typography>
+                                    Add a new vehicle
+                                </Typography>
                                 <form className="addVehForm">
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Region Name</InputLabel>
-                                        <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Country</InputLabel>
-                                        <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-                                    <FormControl className="inrowField inRowInput" margin="normal" required >
-                                        <InputLabel htmlFor="text">Main County</InputLabel>
-                                        <Input id="main_county" name="main_county" autoComplete="main county" required onChange={this.handleChange} autoFocus />
-                                    </FormControl>
-
-                                    <div className="addPageButtonContainer">
-                                        <Button
-                                            className="inrowField addButton"
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.onSubmitRegion}
-                                        >
-                                            Add Region
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                <InputLabel htmlFor="email">Warehouse</InputLabel>
+                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inRowInput inrowField" margin="normal" required helperText="Please select your currency">
+                                                <InputLabel htmlFor="email" >Number Plate</InputLabel>
+                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                <InputLabel htmlFor="email">Vehicle Brand</InputLabel>
+                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                <InputLabel htmlFor="email">Vehicle Login Password</InputLabel>
+                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                            </FormControl>
+                                        </div>
+                                        <div className="addPageButtonContainer">
+                                            <Button
+                                                className="inrowField addButton"
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.onSubmitRegion}
+                                            >
+                                                Add Vehicle
                                     </Button>
+                                        </div>
                                     </div>
                                 </form>
                             </Paper>
                         </div>
                     </Grow>
+
 
 
 
@@ -429,52 +462,48 @@ class AddPage extends Component {
 
 
 
+                    {/* Add Region */}
+                    <div className="row">
+                        <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                            <div className="col-lg-4 col-md-6 col-sm-12">
+                                <Paper className="paper addPaper ">
+                                    <Typography component="h1" variant="h5">
+                                        Add a new region
+                                    </Typography>
+                                    <form className="addVehForm">
+                                        <FormControl className="inrowField inRowInput" margin="normal" required >
+                                            <InputLabel htmlFor="text">Region Name</InputLabel>
+                                            <Input id="region_name" name="region_name" autoComplete="region name" required onChange={this.handleChange} autoFocus />
+                                        </FormControl>
+                                        <FormControl className="inrowField inRowInput" margin="normal" required >
+                                            <InputLabel htmlFor="text">Country</InputLabel>
+                                            <Input id="country" name="country" autoComplete="country" required onChange={this.handleChange} autoFocus />
+                                        </FormControl>
+                                        <FormControl className="inrowField inRowInput" margin="normal" required >
+                                            <InputLabel htmlFor="text">Main County</InputLabel>
+                                            <Input id="main_county" name="main_county" autoComplete="main county" required onChange={this.handleChange} autoFocus />
+                                        </FormControl>
 
-
-
-
-                    {/* Add Vehicle */}
-                    <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-                        <Paper className="paper addPaper">
-                            <Typography component="h1" variant="h5">
-                                Add a new vehicle
-                                </Typography>
-                            <form className="addVehForm">
-                                <FormControl className="inRowInput" margin="normal" required >
-                                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                </FormControl>
-                                <FormControl className="inRowInput" margin="normal" required >
-                                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                </FormControl>
-                                <FormControl className="inRowInput" margin="normal" required >
-                                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                </FormControl>
-                                <FormControl className="inRowInput" margin="normal" required >
-                                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                </FormControl>
-                                <FormControl className="inRowInput" margin="normal" required >
-                                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                </FormControl>
-                                <div className="addPageButtonContainer2">
-                                    <Button
-                                        className="inrowField addButton"
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={this.onSubmitRegion}
-                                    >
-                                        Add Vehicle
+                                        <div className="addPageButtonContainer">
+                                            <Button
+                                                className="inrowField addButton"
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.onSubmitRegion}
+                                            >
+                                                Add Region
                                     </Button>
-                                </div>
-                            </form>
-                        </Paper>
-                    </Grow>
+                                        </div>
+                                    </form>
+                                </Paper>
+                            </div>
+                        </Grow>
+                    </div>
+
+
+
                 </div>
             );
 

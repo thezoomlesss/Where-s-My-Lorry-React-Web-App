@@ -389,9 +389,6 @@ The end of Single message */
   margin-bottom: -50px;
   text-align: center;
 }
-div.col-9.chat > div{
-  min-height: 800px !important;
-}
 .chat{
   margin: 0;
   padding: 5px !important;
@@ -443,6 +440,10 @@ form > div.inRowInput{
 form.addVehForm > div.selectForm
 {
   min-width: 100px;
+  margin-top: 16px;
+}
+form.addVehForm > div.row > div.col-12 > div.selectForm{
+  min-width: 50%;
   margin-top: 16px;
 }
 .mapPaper{
@@ -534,4 +535,35 @@ form > div.fullWidth{
 }
 table > tbody > tr > td.green-text{
   color: #008000;
+}
+form.addVehForm > div.row > div.col-lg-6 > div.inrowField{
+  width: 100%;
+}
+#root > div > div > main > div:nth-child(2) > div:nth-child(1) > div.MuiPaper-root-20.MuiPaper-elevation2-24.MuiPaper-rounded-21.paper.two-thirds-page-paper.third-page-right{
+  overflow-x: auto;
+}
+.messaging_row{
+  max-height: 80vh;
+}
+div > div > div > div.messaging_row > div > div.paper_inline.chat_paper{
+  height: 80vh;
+}
+div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.form{
+  height: 80vh;
+}
+div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.form > div.form__message{
+  overflow-y: scroll;
+  height: 90%;
+}
+div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.form > div.form__row{
+  height: 10%;
+}
+div > div.container-messaging{
+  margin-bottom: 30px;
+}
+#root > div > div > header > div > h6 > div > span.span-in-title{
+  font-size: 0.9rem;
+}
+div.nameholder-div{
+  font-size: 1.25rem;
 }

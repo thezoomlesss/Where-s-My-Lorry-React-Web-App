@@ -212,8 +212,8 @@ class Messaging extends Component {
     render() {
         return (
             <div>
-                <div class="container">
-                    <div className="row">
+                <div class="container container-messaging">
+                    <div className="row messaging_row">
                         <div className="col-3 chat">
                             <Paper className="paper_inline paper_scroll">
                                 <Typography variant="h5"> Conversations</Typography>

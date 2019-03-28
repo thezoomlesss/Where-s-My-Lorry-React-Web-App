@@ -11,9 +11,9 @@ var scale = 1.4;
 
 // Depending on the height of the viewPort, we decide what scale we should use for our numbers inside the chart
 if (vHeight > 700) {
-    scale = 1.8;
+    scale = 1.6;
 } else {
-    scale = 1.7;
+    scale = 1.5;
 }
 
 class ActiveVehChart extends Component {
@@ -135,6 +135,10 @@ class ActiveVehChart extends Component {
                                     },
                                     legend: {
                                         reverse: true
+                                    },
+                                    title: {
+                                        display: "Number of Currently Active Vehicles",
+                                        text: "Number of Currently Active Vehicles"
                                     }
 
                                 }}
