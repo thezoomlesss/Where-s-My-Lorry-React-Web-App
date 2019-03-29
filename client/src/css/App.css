@@ -192,6 +192,7 @@ table.table-fill > thead {
 }
 .paper{
   margin-bottom: 15px;
+  overflow-x: auto;
 }
 .chartContainer{
   display: inline-block;
@@ -442,8 +443,8 @@ form.addVehForm > div.selectForm
   min-width: 100px;
   margin-top: 16px;
 }
-form.addVehForm > div.row > div.col-12 > div.selectForm{
-  min-width: 50%;
+form.addVehForm > div.row > div > div.selectForm{
+  min-width: 70%;
   margin-top: 16px;
 }
 .mapPaper{
@@ -566,4 +567,7 @@ div > div.container-messaging{
 }
 div.nameholder-div{
   font-size: 1.25rem;
+} 
+div.row > div > div.warehouseTable{
+  overflow-x: auto;
 }

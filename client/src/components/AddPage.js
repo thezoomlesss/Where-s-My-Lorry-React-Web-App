@@ -191,138 +191,257 @@ class AddPage extends Component {
             return (
                 <div>
                     {/* Add Warehouse */}
-                    <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-                        <div ref="firstThird" className="half-page-paper-holder third-page-paper">
-                            <Paper style={divStyle} className="paper addPaper">
-                                <Typography component="h1" variant="h5">
-                                    Add a new warehouse
-                                </Typography>
+                    <div className="row">
+                        <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                            <div ref="firstThird" className="col-sm-12 col-xl-4">
+                                <Paper style={divStyle} className="paper addPaper">
+                                    <Typography component="h1" variant="h5">
+                                        Add a new warehouse
+                                    </Typography>
 
-                                <form className="addVehForm">
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="number">Warehouse Name</InputLabel>
-                                                <Input id="new_warehouse_name" name="new_warehouse_name" autoComplete="new_warehouse_name" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="number">Capacity</InputLabel>
-                                                <Input id="capacity" name="capacity" autoComplete="capacity" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
+                                    <form className="addVehForm">
+                                        <div className="row">
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="number">Warehouse Name</InputLabel>
+                                                    <Input id="new_warehouse_name" name="new_warehouse_name" autoComplete="new_warehouse_name" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="number">Capacity</InputLabel>
+                                                    <Input id="capacity" name="capacity" autoComplete="capacity" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
 
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="text">Latitude</InputLabel>
-                                                <Input id="latitude" name="latitude" autoComplete="latitude" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="text">Longitude</InputLabel>
-                                                <Input id="longitude" name="longitude" autoComplete="longitude" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="text">Latitude</InputLabel>
+                                                    <Input id="latitude" name="latitude" autoComplete="latitude" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="text">Longitude</InputLabel>
+                                                    <Input id="longitude" name="longitude" autoComplete="longitude" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
 
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="number">Country Code</InputLabel>
-                                                <Input id="country_code" name="country_code" autoComplete="country_code" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="text">Area Code</InputLabel>
-                                                <Input id="area_code" name="area_code" autoComplete="area_code" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="number">Country Code</InputLabel>
+                                                    <Input id="country_code" name="country_code" autoComplete="country_code" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="text">Area Code</InputLabel>
+                                                    <Input id="area_code" name="area_code" autoComplete="area_code" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
 
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="text">Phone Number</InputLabel>
-                                                <Input id="phone_num" name="phone_num" autoComplete="phone_num" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inrowField inRowInput" margin="normal" required >
-                                                <InputLabel htmlFor="number">Contact Email</InputLabel>
-                                                <Input id="contact_email" name="contact_email" autoComplete="contact_email" required onChange={this.handleChange} autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-12">
-                                            <FormControl className="selectForm">
-                                                <InputLabel  >Region</InputLabel>
-                                                {this.state && this.state.regionSelect ? <Select
-                                                    value={this.state.regionSelect}
-                                                    onChange={this.handleChange}
-                                                    name="regionSelect"
-                                                    inputProps={{
-                                                        name: 'regionSelect',
-                                                        id: 'region-simple',
-                                                    }}
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="text">Phone Number</InputLabel>
+                                                    <Input id="phone_num" name="phone_num" autoComplete="phone_num" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inrowField inRowInput" margin="normal" required >
+                                                    <InputLabel htmlFor="number">Contact Email</InputLabel>
+                                                    <Input id="contact_email" name="contact_email" autoComplete="contact_email" required onChange={this.handleChange} autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="selectForm">
+                                                    <InputLabel  >Region</InputLabel>
+                                                    {this.state && this.state.regionSelect ? <Select
+                                                        value={this.state.regionSelect}
+                                                        onChange={this.handleChange}
+                                                        name="regionSelect"
+                                                        inputProps={{
+                                                            name: 'regionSelect',
+                                                            id: 'region-simple',
+                                                        }}
+                                                    >
+                                                        {this.state && this.state.availableRegions ?
+                                                            this.state.availableRegions.map((text, index) => (
+                                                                <MenuItem key={index} value={text['region_name']}>{text['region_name']}</MenuItem>
+                                                            ))
+                                                            : null}
+                                                    </Select> : null}
+                                                </FormControl>
+                                            </div>
+                                            <div className="addPageButtonContainer">
+                                                <Button
+                                                    className="inrowField addButton"
+                                                    type="submit"
+                                                    fullWidth
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.onSubmitWarehouse}
                                                 >
-                                                    {this.state && this.state.availableRegions ?
-                                                        this.state.availableRegions.map((text, index) => (
-                                                            <MenuItem key={index} value={text['region_name']}>{text['region_name']}</MenuItem>
-                                                        ))
-                                                        : null}
-                                                </Select> : null}
-                                            </FormControl>
-                                        </div>
-                                        <div className="addPageButtonContainer">
-                                            <Button
-                                                className="inrowField addButton"
-                                                type="submit"
-                                                fullWidth
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={this.onSubmitWarehouse}
-                                            >
-                                                Add Warehouse
+                                                    Add Warehouse
                                             </Button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </Paper>
+                                    </form>
+                                </Paper>
 
-                        </div>
-                    </Grow>
+                            </div>
+                        </Grow>
 
-                    {/* Add Vehicle */}
-                    <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-                        <div ref="secondThird" className="half-page-paper-holder third-page-paper third-page-right">
-                            <Paper style={divStyle} className="paper addPaper">
-                                <Typography component="h1" variant="h5">
-                                    Add a new vehicle
-                                </Typography>
-                                <form className="addVehForm">
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                <InputLabel htmlFor="email">Warehouse</InputLabel>
-                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                            </FormControl>
+                        {/* Add Vehicle */}
+                        <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                            <div ref="secondThird" className="col-sm-12 col-xl-4">
+                                <Paper style={divStyle} className="paper addPaper">
+                                    <Typography component="h1" variant="h5">
+                                        Add a new vehicle
+                                    </Typography>
+                                    <form className="addVehForm">
+                                        <div className="row">
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                    <InputLabel htmlFor="email">Warehouse</InputLabel>
+                                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inRowInput inrowField" margin="normal" required helperText="Please select your currency">
+                                                    <InputLabel htmlFor="email" >Number Plate</InputLabel>
+                                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                    <InputLabel htmlFor="email">Vehicle Brand</InputLabel>
+                                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="col-sm-4 col-xl-6">
+                                                <FormControl className="inRowInput inrowField" margin="normal" required >
+                                                    <InputLabel htmlFor="email">Vehicle Login Password</InputLabel>
+                                                    <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                </FormControl>
+                                            </div>
+                                            <div className="addPageButtonContainer">
+                                                <Button
+                                                    className="inrowField addButton"
+                                                    type="submit"
+                                                    fullWidth
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.onSubmitRegion}
+                                                >
+                                                    Add Vehicle
+                                    </Button>
+                                            </div>
                                         </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inRowInput inrowField" margin="normal" required helperText="Please select your currency">
-                                                <InputLabel htmlFor="email" >Number Plate</InputLabel>
-                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                <InputLabel htmlFor="email">Vehicle Brand</InputLabel>
-                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                            </FormControl>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                <InputLabel htmlFor="email">Vehicle Login Password</InputLabel>
-                                                <Input id="email" name="email" autoComplete="email" required autoFocus />
-                                            </FormControl>
-                                        </div>
+                                    </form>
+                                </Paper>
+                            </div>
+                        </Grow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {/* Add Transport */}
+
+                        <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
+                            <div ref="thirdThird" className="col-sm-12 col-xl-4">
+                                <Paper style={divStyle} className="paper addPaper ">
+                                    <Typography component="h1" variant="h5">
+                                        Add a new transport
+                                    </Typography>
+                                    <form className="addVehForm">
+                                        <FormControl className="selectForm fullWidth" required>
+                                            <InputLabel  >Vehicle</InputLabel>
+                                            {this.state && this.state.vehicleSelect ? <Select
+                                                value={this.state.vehicleSelect}
+                                                onChange={this.handleChange}
+                                                name="vehicleSelect"
+                                                inputProps={{
+                                                    name: 'vehicleSelect',
+                                                    id: 'vehicle-simple',
+                                                }}
+                                            >
+                                                {this.state && this.state.availableVehicles ?
+                                                    this.state.availableVehicles.map((text, index) => (
+                                                        <MenuItem key={index} value={text['vehicleID']}>{text['number_plate'].substring(0, 2) + "-" + text['number_plate'].substring(2, 4) + "-" + text['number_plate'].substring(4, 8)}</MenuItem>
+                                                    ))
+                                                    : null}
+                                            </Select> : null}
+                                        </FormControl>
+                                        <FormControl className="selectForm halfFormControl" required>
+                                            <InputLabel  >Source Warehouse</InputLabel>
+                                            {this.state && this.state.SourceWarehouseSelect ? <Select
+                                                value={this.state.SourceWarehouseSelect}
+                                                onChange={this.handleChange}
+                                                name="SourceWarehouseSelect"
+                                                inputProps={{
+                                                    name: 'SourceWarehouseSelect',
+                                                    id: 'warehouse-simple',
+                                                }}
+                                            >
+                                                {this.state && this.state.availableWarehouses ?
+                                                    this.state.availableWarehouses.map((text, index) => (
+                                                        <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
+                                                    ))
+                                                    : null}
+                                            </Select> : null}
+                                        </FormControl>
+
+                                        <TextField
+                                            id="datetime-local"
+                                            label="Departure Time *"
+                                            type="datetime-local"
+                                            className="selectForm datePicker halfDatePicker"
+                                            onChange={this.handleChange}
+                                            name="departureTime"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                        <FormControl className="selectForm halfFormControl" required>
+                                            <InputLabel  >Destination Warehouse</InputLabel>
+                                            {this.state && this.state.DestWarehouseSelect ? <Select
+                                                value={this.state.DestWarehouseSelect}
+                                                onChange={this.handleChange}
+                                                name="DestWarehouseSelect"
+                                                inputProps={{
+                                                    name: 'DestWarehouseSelect',
+                                                    id: 'warehouse-simple',
+                                                }}
+                                            >
+                                                {this.state && this.state.availableWarehouses ?
+                                                    this.state.availableWarehouses.map((text, index) => (
+                                                        <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
+                                                    ))
+                                                    : null}
+                                            </Select> : null}
+                                        </FormControl>
+
+                                        <TextField
+                                            id="datetime-local"
+                                            label="Estimated arrival time"
+                                            type="datetime-local"
+                                            name="arrivalTime"
+                                            className="selectForm datePicker halfDatePicker"
+                                            onChange={this.handleChange}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+
                                         <div className="addPageButtonContainer">
                                             <Button
                                                 className="inrowField addButton"
@@ -330,134 +449,16 @@ class AddPage extends Component {
                                                 fullWidth
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={this.onSubmitRegion}
+                                                onClick={this.onSubmitTransport}
                                             >
-                                                Add Vehicle
+                                                Add Transport
                                     </Button>
                                         </div>
-                                    </div>
-                                </form>
-                            </Paper>
-                        </div>
-                    </Grow>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    {/* Add Transport */}
-
-                    <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-                        <div ref="thirdThird" className="half-page-paper-holder third-page-paper third-page-right">
-                            <Paper style={divStyle} className="paper addPaper ">
-                                <Typography component="h1" variant="h5">
-                                    Add a new transport
-                                </Typography>
-                                <form className="addVehForm">
-                                    <FormControl className="selectForm fullWidth" required>
-                                        <InputLabel  >Vehicle</InputLabel>
-                                        {this.state && this.state.vehicleSelect ? <Select
-                                            value={this.state.vehicleSelect}
-                                            onChange={this.handleChange}
-                                            name="vehicleSelect"
-                                            inputProps={{
-                                                name: 'vehicleSelect',
-                                                id: 'vehicle-simple',
-                                            }}
-                                        >
-                                            {this.state && this.state.availableVehicles ?
-                                                this.state.availableVehicles.map((text, index) => (
-                                                    <MenuItem key={index} value={text['vehicleID']}>{text['number_plate'].substring(0, 2) + "-" + text['number_plate'].substring(2, 4) + "-" + text['number_plate'].substring(4, 8)}</MenuItem>
-                                                ))
-                                                : null}
-                                        </Select> : null}
-                                    </FormControl>
-                                    <FormControl className="selectForm halfFormControl" required>
-                                        <InputLabel  >Source Warehouse</InputLabel>
-                                        {this.state && this.state.SourceWarehouseSelect ? <Select
-                                            value={this.state.SourceWarehouseSelect}
-                                            onChange={this.handleChange}
-                                            name="SourceWarehouseSelect"
-                                            inputProps={{
-                                                name: 'SourceWarehouseSelect',
-                                                id: 'warehouse-simple',
-                                            }}
-                                        >
-                                            {this.state && this.state.availableWarehouses ?
-                                                this.state.availableWarehouses.map((text, index) => (
-                                                    <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
-                                                ))
-                                                : null}
-                                        </Select> : null}
-                                    </FormControl>
-
-                                    <TextField
-                                        id="datetime-local"
-                                        label="Departure Time *"
-                                        type="datetime-local"
-                                        className="selectForm datePicker halfDatePicker"
-                                        onChange={this.handleChange}
-                                        name="departureTime"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                    <FormControl className="selectForm halfFormControl" required>
-                                        <InputLabel  >Destination Warehouse</InputLabel>
-                                        {this.state && this.state.DestWarehouseSelect ? <Select
-                                            value={this.state.DestWarehouseSelect}
-                                            onChange={this.handleChange}
-                                            name="DestWarehouseSelect"
-                                            inputProps={{
-                                                name: 'DestWarehouseSelect',
-                                                id: 'warehouse-simple',
-                                            }}
-                                        >
-                                            {this.state && this.state.availableWarehouses ?
-                                                this.state.availableWarehouses.map((text, index) => (
-                                                    <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
-                                                ))
-                                                : null}
-                                        </Select> : null}
-                                    </FormControl>
-
-                                    <TextField
-                                        id="datetime-local"
-                                        label="Estimated arrival time"
-                                        type="datetime-local"
-                                        name="arrivalTime"
-                                        className="selectForm datePicker halfDatePicker"
-                                        onChange={this.handleChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-
-                                    <div className="addPageButtonContainer">
-                                        <Button
-                                            className="inrowField addButton"
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.onSubmitTransport}
-                                        >
-                                            Add Transport
-                                    </Button>
-                                    </div>
-                                </form>
-                            </Paper>
-                        </div>
-                    </Grow>
-
+                                    </form>
+                                </Paper>
+                            </div>
+                        </Grow>
+                    </div>
 
 
 
@@ -465,7 +466,7 @@ class AddPage extends Component {
                     {/* Add Region */}
                     <div className="row">
                         <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
-                            <div className="col-lg-4 col-md-6 col-sm-12">
+                            <div className="col-xl-4 col-lg-6 col-sm-12">
                                 <Paper className="paper addPaper ">
                                     <Typography component="h1" variant="h5">
                                         Add a new region

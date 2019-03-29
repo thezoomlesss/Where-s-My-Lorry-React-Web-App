@@ -247,7 +247,7 @@ class Navbar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              {this.state && this.state.company_name && this.state.login_nickname?<div className="nameholder-div"> Hi {this.state.login_nickname} <span className='span-in-title'> from</span>  {this.state.company_name}</div>: console.log("NOOO")}
+              {this.state && this.state.company_name && this.state.login_nickname?<div className="nameholder-div"> Hi {this.state.login_nickname} <span className='span-in-title'> from</span>  {this.state.company_name}</div>: console.log()}
               {/* <div className='test'> from</div> */}
             </Typography>
             <PopoverMenu />
