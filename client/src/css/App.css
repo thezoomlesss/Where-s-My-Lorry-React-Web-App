@@ -537,6 +537,9 @@ form > div.fullWidth{
 table > tbody > tr > td.green-text{
   color: #008000;
 }
+table > tbody > tr > td.red-text{
+  color: #b70c0c;
+}
 form.addVehForm > div.row > div.col-lg-6 > div.inrowField{
   width: 100%;
 }
