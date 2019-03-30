@@ -540,6 +540,9 @@ table > tbody > tr > td.green-text{
 table > tbody > tr > td.red-text{
   color: #b70c0c;
 }
+table > tbody > tr > td.blue-text{
+  color: #0036b5;
+}
 form.addVehForm > div.row > div.col-lg-6 > div.inrowField{
   width: 100%;
 }

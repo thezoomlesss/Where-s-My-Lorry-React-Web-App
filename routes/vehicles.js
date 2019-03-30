@@ -31,10 +31,12 @@ router.get('/', function(req, res, next) {
     var company_id = req.query.cid;
     if(company_id){
         connection.query(`
-        SELECT v.vehicleID,lp.number_plate,  l.latitude, l.longitude, l.last_date, v.transportID FROM Vehicle AS v 
+        SELECT v.vehicleID, lp.number_plate,  l.latitude, l.longitude, l.last_date, v.transportID, s.state_value FROM Vehicle AS v 
         JOIN Company as c Using(companyID)
         INNER JOIN License_Plate AS lp ON v.plateID = lp.plateID 
         INNER JOIN Location AS l ON v.locationID = l.locationID 
+        LEFT JOIN Transport t USING(transportID)
+        LEFT JOIN State s USING (stateID)
         WHERE c.companyID = ${1}
         GROUP BY v.vehicleID;`, {company_id}, function (error, results, fields) {
             if (error) {

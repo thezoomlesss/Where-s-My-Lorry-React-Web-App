@@ -81,7 +81,7 @@ export class MapContainer extends Component {
                 <Paper className="paper mapPaper">
                     <div className="MapContainer" >
                         {/* {console.log(vehiclePos)} */}
-                        <Map className="mapGoogle" google={this.props.google} zoom={12} center={{ lat: 50.5202338, lng: 16.9446649 }} >
+                        <Map className="mapGoogle" google={this.props.google} zoom={4} center={{ lat: 38.5202338, lng: 16.9446649 }} >
                             {this.state && this.state.vehiclePos && this.state.vehiclePos.map(item =>
                                 <Marker key={item.vehicleID}
                                     onClick={this.onMarkerClick}

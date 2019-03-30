@@ -41,7 +41,7 @@ class RemovePage extends Component {
 
         this.responseChecker = this.responseChecker.bind(this);
         this.removeFromState = this.removeFromState.bind(this);
-        
+
 
     }
     componentDidMount() {
@@ -87,7 +87,7 @@ class RemovePage extends Component {
     }
     deleteVehicleClick(id) {
         var self = this;
-        fetch('/deleteVehicle?cID=1&vID='+ id, { method: 'DELETE' })
+        fetch('/deleteVehicle?cID=1&vID=' + id, { method: 'DELETE' })
             .then(res => self.responseChecker(res, id));
     }
     responseChecker(res, id) {
@@ -227,8 +227,18 @@ class RemovePage extends Component {
                                         <TableCell >{row.latitude}</TableCell>
                                         <TableCell >{row.longitude}</TableCell>
                                         <TableCell >{row.last_date}</TableCell>
-                                        {row.transportID !== null?<TableCell className="green-text">Active</TableCell>:<TableCell className="red-text">Inactive</TableCell>}
- 
+
+
+
+                                        {row.state_value === null ?
+                                            <TableCell className="default-text">Not Assigned</TableCell>:
+                                            row.state_value === "Active" ?
+                                            <TableCell className="blue-text">Active</TableCell> : 
+                                            row.state_value === "Completed" ?
+                                            <TableCell className="green-text">Completed</TableCell> : 
+                                            <TableCell className="red-text">Inactive Transport</TableCell> }
+                                        {/* <TableCell className={row.state_value === 'Completed' ? "green-text" : row.state_value === 'Active'? "blue-text" : "red-text"}>{row.state_value}</TableCell> */}
+
                                         <TableCell ><Button className="deleteButton" onClick={() => { this.deleteVehicleClick(row.vehicleID) }}>Delete</Button></TableCell>
                                     </TableRow>
                                 )) : console.log()}
@@ -287,7 +297,7 @@ class RemovePage extends Component {
                                                     </TableCell>
                                                     : <TableCell> Not Specified</TableCell>
                                                 }
-                                                <TableCell className={row.state_value === 'Active' ? "green-text" : "red-text"}>{row.state_value}</TableCell>
+                                                <TableCell className={row.state_value === 'Completed' ? "green-text" : row.state_value === 'Active' ? "blue-text" : "red-text"}>{row.state_value}</TableCell>
                                                 <TableCell ><Button className="deleteButton" onClick={() => { this.deleteTransportClick(row.transportID) }}>Delete</Button></TableCell>
                                             </TableRow>
                                         ))}

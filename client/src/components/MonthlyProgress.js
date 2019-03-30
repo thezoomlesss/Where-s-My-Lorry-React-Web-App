@@ -118,10 +118,10 @@ class MonthlyProgress extends Component {
                                     legend: {
                                         reverse: true
                                     },
-                                    // title: {
-                                    //     display: '% of the Yearly Goal',
-                                    //     text: '% of the Yearly Goal'
-                                    // }
+                                    title: {
+                                        display: 'Progress on the Monthly Goal',
+                                        text: 'Progress on the Monthly Goal'
+                                    }
 
                                 }}
                             />
@@ -146,10 +146,10 @@ class MonthlyProgress extends Component {
                                     legend: {
                                         reverse: true
                                     },
-                                    // title: {
-                                    //     display: '% of the Yearly Goal',
-                                    //     text: '% of the Yearly Goal'
-                                    // }
+                                    title: {
+                                        display: 'Progress on the Yearly Goal',
+                                        text: 'Progress on the Yearly Goal'
+                                    }
 
                                 }}
                             />

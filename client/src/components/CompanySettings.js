@@ -21,9 +21,14 @@ class CompanySettings extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            yearlyGoal: 15
-        });
+
+        fetch('/getYearlyGoal/?cid=1')
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    yearlyGoal: Math.round(data['yearly_goal'] / 12)
+                })
+            });
     }
 
     onValueChange(event) {
@@ -32,6 +37,7 @@ class CompanySettings extends Component {
         }, () => {
         });
     }
+
 
     onSubmit(event) {
         // pareseInt to extract the integer and isNaN to double check if it's an int or if it isn't anything at all (e.g. empty or space)
