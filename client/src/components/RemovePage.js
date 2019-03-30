@@ -227,18 +227,14 @@ class RemovePage extends Component {
                                         <TableCell >{row.latitude}</TableCell>
                                         <TableCell >{row.longitude}</TableCell>
                                         <TableCell >{row.last_date}</TableCell>
-
-
-
                                         {row.state_value === null ?
-                                            <TableCell className="default-text">Not Assigned</TableCell>:
+                                            <TableCell className="default-text">Not Assigned</TableCell> :
                                             row.state_value === "Active" ?
-                                            <TableCell className="blue-text">Active</TableCell> : 
-                                            row.state_value === "Completed" ?
-                                            <TableCell className="green-text">Completed</TableCell> : 
-                                            <TableCell className="red-text">Inactive Transport</TableCell> }
-                                        {/* <TableCell className={row.state_value === 'Completed' ? "green-text" : row.state_value === 'Active'? "blue-text" : "red-text"}>{row.state_value}</TableCell> */}
-
+                                                <TableCell className="blue-text">Active</TableCell> :
+                                                row.state_value === "Completed" ?
+                                                    <TableCell className="green-text">Completed</TableCell> :
+                                                    <TableCell className="red-text">Inactive Transport</TableCell>
+                                        }
                                         <TableCell ><Button className="deleteButton" onClick={() => { this.deleteVehicleClick(row.vehicleID) }}>Delete</Button></TableCell>
                                     </TableRow>
                                 )) : console.log()}

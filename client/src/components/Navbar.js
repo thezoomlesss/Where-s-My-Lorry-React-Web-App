@@ -3,7 +3,8 @@ import './../css/App.css';
 import './../css/bootstrap.css';
 import {
   GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
-  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage, LoginLogs
+  AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage, LoginLogs,
+  YearlyProgress, TransportChart
 } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -134,6 +135,7 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
+    
     var url_split = window.location.href.split('/');
     if (url_split.length == 4) {
       for (var index = 0; index < paths.length; index++) {
@@ -247,7 +249,7 @@ class Navbar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              {this.state && this.state.company_name && this.state.login_nickname?<div className="nameholder-div"> Hi {this.state.login_nickname} <span className='span-in-title'> from</span>  {this.state.company_name}</div>: console.log()}
+              {this.state && this.state.company_name && this.state.login_nickname ? <div className="nameholder-div"> Hi {this.state.login_nickname} <span className='span-in-title'> from</span>  {this.state.company_name}</div> : console.log()}
               {/* <div className='test'> from</div> */}
             </Typography>
             <PopoverMenu />
@@ -312,7 +314,7 @@ class Navbar extends Component {
                     <Paper className="paper" ></Paper>
                   </Grow>
                 </div> */}
-                <ActiveVehChart />
+                <TransportChart />
                 <ActiveVehChart />
                 {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}
                 {/* <ChartVehicleBy  size="half-page-paper" pos="paper1" /> */}
@@ -342,8 +344,18 @@ class Navbar extends Component {
                     }
                   ]} />
                 {/* <SimpleSnackbar show="true"/> */}
-                <MonthlyProgress />
-                <LoginLogs />
+
+                <div className="row">
+                  <div className="col-6 col-sm-3">
+                    <MonthlyProgress />
+                  </div>
+                  <div className="col-6 col-sm-3">
+                    <YearlyProgress />
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <LoginLogs />
+                  </div>
+                </div>
                 <Footer />
               </div>
             } />

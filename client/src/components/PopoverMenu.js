@@ -51,8 +51,6 @@ class PopoverMenu extends React.Component {
           open={this.state.open}
           onClose={this.handleRequestClose}
         >
-          <MenuItem onClick={this.handleRequestClose} component={Link} to={"/profile"}>Profile</MenuItem>
-          <MenuItem onClick={this.handleRequestClose} component={Link} to={"/my-account"}>My account</MenuItem>
           <MenuItem onClick={this.handleRequestClose} component={Link} to={"/settings"}>Settings</MenuItem>
           <MenuItem onClick={this.logOut} >Logout</MenuItem>
         </Menu>

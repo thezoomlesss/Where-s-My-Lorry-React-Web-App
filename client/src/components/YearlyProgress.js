@@ -4,9 +4,8 @@ import { Doughnut, Chart } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 
-var moment = require('moment-timezone');//  18/03/2019 13:35:42 PM
 
-class MonthlyProgress extends Component {
+class YearlyProgress extends Component {
     constructor() {
         super();
         this.state = {
@@ -14,57 +13,48 @@ class MonthlyProgress extends Component {
         };
     }
     componentDidMount() {
-        fetch('/getYearlyGoal/progress/transports/all/?cid=1')
+        let data_val=[];
+        fetch('/getYearlyGoal/progress/?cid=1')
             .then(res => res.json())
             .then(data => {
-                let data_val= 0;
-                // moment('05-17-2018 23:40 AM', 'MM-DD-YYYY hh:mm A')
-                // format('DD/MM/YYYY hh:mm:ss A')
-                
-                let current = moment().tz('Europe/Dublin');
                 data.map((row, index) => (
-                    row['state_value'] === "Completed"? ( 
-                        moment(moment(row['day_val']+'/'+row['month_val']+'/'+row['year_val']+' '+row['hour_val']+':'+row['minute_val']+':'+row['second_val']+' '+row['AM_PM'], 'DD/MM/YYYY hh:mm:ss A')).isSame(new Date(), 'month')?
-                        (data_val++)
-                        : false
-                    ) : false
+                    row['state_value'] === "Completed"? ( data_val.push(row['yearly_goal']), data_val.push(row['COUNT(*)']) ) : false
                 ));
-                let data_monthly_total = Math.round(data[data.length-1]['yearly_goal']/ 12);
-                console.log(data_monthly_total);
                 this.setState({
-                    progress2:
+                    progress:
                     {
                         labels: [
-                            'Not done',
+                            'Total',
                             'Achieved'
                         ],
                         datasets: [{
                             // active & not active
-                            data: [(data_monthly_total - data_val) < 0 ? 0 : (data_monthly_total - data_val), data_val],
+                            data: [ Math.max(0, data_val[0]-data_val[1]), data_val[1] ],
                             backgroundColor: [
                                 '#D9D9D9',
-                                '#4db692'
+                                '#f95454'
                             ],
                             hoverBackgroundColor: [
                                 '#D9D9D9',
-                                '#4db675'
+                                '#d83c3c'
 
                             ]
                         }],
                         // Achieved / total
-                        text: data_val + '/' + data_monthly_total
+                        text: data_val[1] + '/' + data_val[0]
                     }
                 });
             });
     }
+    
     render() {
-        if (!this.state.progress2) { return null }
+        if (!this.state.progress) { return null }
         else {
             return (
                 <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
                     <Paper className="paper" >
                         <Doughnut
-                            data={this.state.progress2}
+                            data={this.state.progress}
                             options={{
                                 responsive: true,
                                 maintainAspectRatio: true,
@@ -81,15 +71,14 @@ class MonthlyProgress extends Component {
                                     reverse: true
                                 },
                                 title: {
-                                    display: 'Progress on the Monthly Goal',
-                                    text: 'Progress on the Monthly Goal'
+                                    display: 'Progress on the Yearly Goal',
+                                    text: 'Progress on the Yearly Goal'
                                 }
 
                             }}
                         />
                     </Paper>
                 </Grow>
-
             );
         }
 
@@ -97,4 +86,4 @@ class MonthlyProgress extends Component {
 }
 
 // const Home = AnimatedWrapper();
-export default MonthlyProgress;
+export default YearlyProgress;

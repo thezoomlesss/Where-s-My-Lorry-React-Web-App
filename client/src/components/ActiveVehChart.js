@@ -35,40 +35,42 @@ class ActiveVehChart extends Component {
                 var ctx = chart.ctx;
                 var width = chart.width;
                 var height = chart.height;
+                if(chart.config.data.text !== null && chart.config.data.text !== undefined ){
+                    var text = chart.config.data.text;
+                    var text_check = text.split('/');
+                    var text_total_char = text_check[0].length + text_check[1].length;
+                    var fontSize = 0;
 
-                var text = chart.config.data.text;
-                var text_check = text.split('/');
-                var text_total_char = text_check[0].length + text_check[1].length;
-                var fontSize = 0;
+                    switch (text_total_char) {
+                        case 2:
+                            fontSize = (height / 114).toFixed(2); // original value 114
+                            break;
+                        case 3:
+                            fontSize = (height / 124).toFixed(2); // original value 114
+                            break;
+                        case 4:
+                            fontSize = (height / 134).toFixed(2); // original value 114
+                            break;
+                        case 5:
+                            fontSize = (height / 160).toFixed(2); // original value 114
+                            break;
+                        case 6:
+                            fontSize = (height / 170).toFixed(2); // original value 114
+                            break;
+                        default:
+                            fontSize = (height / 124).toFixed(2);
+                            break;
+                    }
 
-                switch (text_total_char) {
-                    case 2:
-                        fontSize = (height / 114).toFixed(2); // original value 114
-                        break;
-                    case 3:
-                        fontSize = (height / 124).toFixed(2); // original value 114
-                        break;
-                    case 4:
-                        fontSize = (height / 134).toFixed(2); // original value 114
-                        break;
-                    case 5:
-                        fontSize = (height / 160).toFixed(2); // original value 114
-                        break;
-                    case 6:
-                        fontSize = (height / 170).toFixed(2); // original value 114
-                        break;
-                    default:
-                        fontSize = (height / 124).toFixed(2);
-                        break;
-                }
+                    ctx.font = fontSize + "em Verdana";
+                    ctx.textBaseline = "middle";
 
-                ctx.font = fontSize + "em Verdana";
-                ctx.textBaseline = "middle";
+                    var textX = Math.round((width - ctx.measureText(text).width) / 2),
+                        textY = height / scale; //original value 2
 
-                var textX = Math.round((width - ctx.measureText(text).width) / 2),
-                    textY = height / scale; //original value 2
-
-                ctx.fillText(text, textX, textY);
+                    ctx.fillText(text, textX, textY);
+                } 
+                    
             }
         });
     }
@@ -127,10 +129,10 @@ class ActiveVehChart extends Component {
                                     maintainAspectRatio: true,
                                     layout: {
                                         padding: {
-                                            left: 20,
-                                            right: 20,
-                                            top: 20,
-                                            bottom: 20
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0
                                         }
                                     },
                                     legend: {
