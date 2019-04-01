@@ -93,11 +93,11 @@ class ActiveVehChart extends Component {
                             // active & not active
                             data: [data[0]['Inactive'], data[0]['Active']],
                             backgroundColor: [
-                                '#D9D9D9',
+                                '#bfbdbd',
                                 '#1B9CD6'
                             ],
                             hoverBackgroundColor: [
-                                '#D9D9D9',
+                                '#c6c6c6',
                                 '#27b8f9'
 
                             ]

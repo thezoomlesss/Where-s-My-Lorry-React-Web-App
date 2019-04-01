@@ -5,6 +5,7 @@ import VehicleList from './VehicleList';
 import GoogleApiWrapper from './MapView';
 import ActiveVehChart from './ActiveVehChart.js';
 import TransportChart from './TransportChart.js';
+import TransportMonthlyChart from './TransportMonthlyChart.js';
 import SimpleTable from './SimpleTable.js';
 import SignIn from './SignIn.js';
 import ChartVehicleBrand from './ChartVehicleBrand.js';
@@ -27,5 +28,5 @@ export{
     Header, Footer, Navbar, VehicleList, GoogleApiWrapper, 
     ActiveVehChart, SimpleTable, SignIn, ChartVehicleBrand, ChartVehicleOrigin, AddPage,
     PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, SingleMessage, 
-    RemovePage, LoginLogs, YearlyProgress, TransportChart
+    RemovePage, LoginLogs, YearlyProgress, TransportChart, TransportMonthlyChart
 } 

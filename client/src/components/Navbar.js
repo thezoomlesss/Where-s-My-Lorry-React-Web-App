@@ -4,7 +4,7 @@ import './../css/bootstrap.css';
 import {
   GoogleApiWrapper, ActiveVehChart, SimpleTable, ChartVehicleBrand, ChartVehicleOrigin, Footer,
   AddPage, PopoverMenu, CompanySettings, MonthlyProgress, SimpleSnackbar, Messaging, RemovePage, LoginLogs,
-  YearlyProgress, TransportChart
+  YearlyProgress, TransportChart, TransportMonthlyChart
 } from './';
 import { Router, BrowserRouter, Link, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -315,7 +315,7 @@ class Navbar extends Component {
                   </Grow>
                 </div> */}
                 <TransportChart />
-                <ActiveVehChart />
+                <TransportMonthlyChart />
                 {this.state.vehicleChartOrigin ? <ChartVehicleOrigin vehData={this.state.vehicleChartOrigin} labelName="Number of Vehicles by Origin" size="half-page-paper" pos="paper1" /> : console.log()}
                 {/* <ChartVehicleBy  size="half-page-paper" pos="paper1" /> */}
                 {this.state.vehicleChartBrand ? <ChartVehicleBrand vehData={this.state.vehicleChartBrand} labelName="Number of Vehicles by Brand" size="half-page-paper" pos="paper2" /> : console.log()}
