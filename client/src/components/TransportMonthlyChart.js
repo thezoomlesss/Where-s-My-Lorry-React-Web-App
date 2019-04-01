@@ -59,8 +59,8 @@ class TransportMonthlyChart extends Component {
                     ) : false
                 ));
 
-                let data_val=[inactive_count, active_count, completed_count];
-                let labels=["Inactive", "Active", "Completed"];
+                let data_val=[active_count, completed_count, inactive_count];
+                let labels=[ "Active","Completed", "Inactive"];
                 
                 console.log(data_val);
                 console.log(labels);

@@ -41,6 +41,9 @@ class AddPage extends Component {
             area_code: '',
             phone_num: '',
             contact_email: '',
+            vehPassword: '',
+            country_code: '',
+            warehouse_location: '',
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -49,6 +52,7 @@ class AddPage extends Component {
         this.refreshWarehouses = this.refreshWarehouses.bind(this);
         this.onSubmitWarehouse = this.onSubmitWarehouse.bind(this);
         this.onSubmitTransport = this.onSubmitTransport.bind(this);
+        this.onSubmitVehicle = this.onSubmitVehicle.bind(this);
         this.refreshVehicles = this.refreshVehicles.bind(this);
 
 
@@ -62,7 +66,7 @@ class AddPage extends Component {
             departureTime: 'none',
             arrivalTime: 'none',
             vehicleSelect: 'none',
-
+            WarehouseSelectVehicle: 'none',
         });
         cID = cookies.get('cID');
 
@@ -92,13 +96,13 @@ class AddPage extends Component {
                 // 1st highest
                 if (firstThirdHeightVal >= thirdThirdHeightVal) {
                     this.setState({
-                        heightSet : firstThirdHeightVal + 50
+                        heightSet: firstThirdHeightVal + 50
                     });
                     // secondThirdHeightVal = firstThirdHeightVal;
                     // thirdThirdHeightVal = firstThirdHeightVal;
                 } else {
                     this.setState({
-                        heightSet : thirdThirdHeightVal + 50
+                        heightSet: thirdThirdHeightVal + 50
                     });
                     // firstThirdHeightVal = thirdThirdHeightVal;
                     // secondThirdHeightVal = thirdThirdHeightVal;
@@ -106,13 +110,13 @@ class AddPage extends Component {
             } else {
                 if (secondThirdHeightVal >= thirdThirdHeightVal) {
                     this.setState({
-                        heightSet : secondThirdHeightVal + 50
+                        heightSet: secondThirdHeightVal + 50
                     });
                     // firstThirdHeightVal = secondThirdHeightVal;
                     // thirdThirdHeightVal = secondThirdHeightVal;
                 } else {
                     this.setState({
-                        heightSet : thirdThirdHeightVal + 50
+                        heightSet: thirdThirdHeightVal + 50
                     });
                     // firstThirdHeightVal = thirdThirdHeightVal;
                     // secondThirdHeightVal = thirdThirdHeightVal;
@@ -121,14 +125,7 @@ class AddPage extends Component {
             }
 
             console.log(firstThirdHeightVal + " " + secondThirdHeightVal + " " + thirdThirdHeightVal);
-            // this.refs.secondThird.style.Height = firstThirdHeightVal + 'px';
-            // this.refs.firstThird.style.Height = firstThirdHeightVal + 'px';
-            // this.setState({
-            //     firstThirdHeight: firstThirdHeightVal + 50,
-            //     secondThirdHeight: secondThirdHeightVal + 50,
-            //     thirdThirdHeight: thirdThirdHeightVal + 50,
-            //     heightSet: firstThirdHeightVal + 50,
-            // });
+
         }
 
 
@@ -157,6 +154,8 @@ class AddPage extends Component {
                             this.refreshRegions())
                         : this.props.enqueueSnackbar('Could not create a new region', { variant: 'error' }));
 
+            } else {
+                this.props.enqueueSnackbar('Not enough details given to create a region.', { variant: 'warning' });
             }
         } else {
             this.props.enqueueSnackbar('Not enough details given to create a region', { variant: 'warning' });
@@ -179,9 +178,31 @@ class AddPage extends Component {
                         (this.props.enqueueSnackbar('New warehouse created.', { variant: 'success' }),
                             this.refreshWarehouses())
                         : this.props.enqueueSnackbar('Could not create a new warehouse', { variant: 'error' }));
+            } else {
+                this.props.enqueueSnackbar('Not enough details given to create a warehouse.', { variant: 'warning' });
             }
         } else {
             this.props.enqueueSnackbar('Not enough details given to create a warehouse.', { variant: 'warning' });
+        }
+    }
+    onSubmitVehicle(event) {
+        event.preventDefault();
+
+        if (this.state.vehPassword && this.state.WarehouseSelectVehicle && this.state.numberPlate && this.state.country_code && this.state.brand) {
+            if (this.state.vehPassword.trim() !== "" && this.state.WarehouseSelectVehicle !== "none" && this.state.numberPlate.trim() !== "" &&
+                this.state.country_code.trim() !== "" && this.state.brand.trim() !== "") {
+                fetch('/putVehicle?cid=' + cID + "&wid=" + this.state.WarehouseSelectVehicle + "&number_plate=" + this.state.numberPlate + "&brand=" +
+                    this.state.brand + "&pass=" + this.state.vehPassword + "&country_code=" + this.state.country_code, { method: 'PUT' })
+                    .then(res => res.status === 200 ?
+                        (this.props.enqueueSnackbar('New vehicle created.', { variant: 'success' }),
+                            this.refreshWarehouses())
+                        : this.props.enqueueSnackbar('Could not create a new vehicle', { variant: 'error' }));
+            } else {
+                this.props.enqueueSnackbar('Not enough details given to create a vehicle.', { variant: 'warning' });
+            }
+            //if(this.state.SourceWarehouseSelect !== "none")
+        } else {
+            this.props.enqueueSnackbar('Not enough details given to create a vehicle.', { variant: 'warning' });
         }
     }
     onSubmitTransport(event) {
@@ -196,7 +217,7 @@ class AddPage extends Component {
                             '&w2=' + this.state.DestWarehouseSelect + '&dep_time=' + this.state.departureTime + '&arv_time=' + this.state.arrivalTime, { method: 'PUT' })
                             .then(res => res.status === 200 ?
                                 this.props.enqueueSnackbar('New Transport added.', { variant: 'success' })
-                                : this.props.enqueueSnackbar('Could not create a new warehouse', { variant: 'error' }));
+                                : this.props.enqueueSnackbar('Could not create a new transport', { variant: 'error' }));
 
 
                         // console.log("Vehicle: " + this.state.vehicleSelect + " soruce warehouse: " + this.state.SourceWarehouseSelect + " destination warehouse: " +
@@ -232,13 +253,13 @@ class AddPage extends Component {
         // if (this.state === null || this.state === undefined) {
         // return null;
         {
-            
-            
-            
+
+
+
             if (this.state) {
                 console.log(this.state.heightSet)
                 let divStyle4;
-                if(typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1){
+                if (typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1) {
                     divStyle4 = {
                         padding: '25px 25px 65px 25px',
                     };
@@ -362,27 +383,47 @@ class AddPage extends Component {
                                             <form className="addVehForm">
                                                 <div className="row">
                                                     <div className="col-sm-4 col-xl-6">
-                                                        <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                            <InputLabel htmlFor="email">Warehouse</InputLabel>
-                                                            <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                        <FormControl className="selectForm  fullwidth" required>
+                                                            <InputLabel  >Starting Warehouse</InputLabel>
+                                                            {this.state && this.state.WarehouseSelectVehicle ? <Select
+                                                                value={this.state.WarehouseSelectVehicle}
+                                                                onChange={this.handleChange}
+                                                                name="WarehouseSelectVehicle"
+                                                                inputProps={{
+                                                                    name: 'WarehouseSelectVehicle',
+                                                                    id: 'warehouse-simple',
+                                                                }}
+                                                            >
+                                                                {this.state && this.state.availableWarehouses ?
+                                                                    this.state.availableWarehouses.map((text, index) => (
+                                                                        <MenuItem key={index} value={text['warehouseID']}>{text['warehouse_name']}</MenuItem>
+                                                                    ))
+                                                                    : null}
+                                                            </Select> : null}
                                                         </FormControl>
                                                     </div>
                                                     <div className="col-sm-4 col-xl-6">
                                                         <FormControl className="inRowInput inrowField" margin="normal" required helperText="Please select your currency">
-                                                            <InputLabel htmlFor="email" >Number Plate</InputLabel>
-                                                            <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                            <InputLabel htmlFor="text" >Number Plate</InputLabel>
+                                                            <Input id="numberPlate" name="numberPlate" autoComplete="numberPlate" onChange={this.handleChange} required autoFocus />
+                                                        </FormControl>
+                                                    </div>
+                                                    <div className="col-sm-4 col-xl-6">
+                                                        <FormControl className="inRowInput inrowField" margin="normal" required helperText="Please select your currency">
+                                                            <InputLabel htmlFor="text" >Country ISO Code</InputLabel>
+                                                            <Input id="country_code" name="country_code" autoComplete="country_code" onChange={this.handleChange} required autoFocus />
                                                         </FormControl>
                                                     </div>
                                                     <div className="col-sm-4 col-xl-6">
                                                         <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                            <InputLabel htmlFor="email">Vehicle Brand</InputLabel>
-                                                            <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                            <InputLabel htmlFor="text">Vehicle Brand</InputLabel>
+                                                            <Input id="brand" name="brand" autoComplete="brand" onChange={this.handleChange} required autoFocus />
                                                         </FormControl>
                                                     </div>
                                                     <div className="col-sm-4 col-xl-6">
                                                         <FormControl className="inRowInput inrowField" margin="normal" required >
-                                                            <InputLabel htmlFor="email">Vehicle Login Password</InputLabel>
-                                                            <Input id="email" name="email" autoComplete="email" required autoFocus />
+                                                            <InputLabel htmlFor="password">Vehicle Login Password</InputLabel>
+                                                            <Input id="veh_password" name="vehPassword" autoComplete="vehPassword" onChange={this.handleChange} required autoFocus />
                                                         </FormControl>
                                                     </div>
                                                     <div className="addPageButtonContainer">
@@ -392,7 +433,7 @@ class AddPage extends Component {
                                                             fullWidth
                                                             variant="contained"
                                                             color="primary"
-                                                            onClick={this.onSubmitRegion}
+                                                            onClick={this.onSubmitVehicle}
                                                         >
                                                             Add Vehicle
                                                     </Button>
@@ -531,7 +572,7 @@ class AddPage extends Component {
                         <div className="row">
                             <Grow in={true} {...(true ? { timeout: 1700 } : {})}>
                                 <div className="col-xl-4 col-lg-6 col-sm-12">
-                                    <Paper style={divStyle4}className="paper addPaper ">
+                                    <Paper style={divStyle4} className="paper addPaper ">
                                         <Typography component="h1" variant="h5">
                                             Add a new region
                                     </Typography>

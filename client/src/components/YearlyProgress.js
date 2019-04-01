@@ -52,7 +52,7 @@ class YearlyProgress extends Component {
         else {
             return (
                 <Grow in={true}  {...(true ? { timeout: 1700 } : {})}>
-                    <Paper className="paper" >
+                    <Paper className="paper progress" >
                         <Doughnut
                             data={this.state.progress}
                             options={{

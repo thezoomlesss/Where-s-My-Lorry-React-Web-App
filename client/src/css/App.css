@@ -577,3 +577,10 @@ div.nameholder-div{
 div.row > div > div.warehouseTable{
   overflow-x: auto;
 }
+div.fullwidth{
+  width: 100%;
+}
+div.row > div > div.paper.progress,
+main > div > div.chartContainer > div.paper{
+  padding-bottom: 20px;
+}
