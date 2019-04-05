@@ -5,6 +5,7 @@ import { SingleMessage } from './';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import * as ReactDOM from 'react-dom';
 import Cookies from 'universal-cookie';
 
 
@@ -28,9 +29,9 @@ var config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 messaging.requestPermission()
-    .then(function () {  return (messaging.getToken()) })
-    .then(function (token) {  })
-    .catch(function (err) {  });
+    .then(function () { return (messaging.getToken()) })
+    .then(function (token) { })
+    .catch(function (err) { });
 // Handle incoming messages. Called when:
 // - a message is received while the app has focus
 // - the user clicks on an app notification created by a service worker
@@ -96,6 +97,7 @@ class Messaging extends Component {
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSend = this.handleSend.bind(this);
         this.oneRecipientClick = this.oneRecipientClick.bind(this);
+        this.scrollToBottom = this.scrollToBottom.bind(this);
 
 
     }
@@ -115,23 +117,23 @@ class Messaging extends Component {
     componentDidMount() {
         var reciepients_holder = [];
 
-        
+
         // Getting the list of possible conversations
         if (this.state && this.state != undefined) {
             var this_self = this;
 
-            
+
             var cID = cookies.get('cID');
             this.vehicleRef.orderByChild('companyID').equalTo(cID).on("value", function (snapshot) {
                 snapshot.forEach(function (data) {
                     //if (!reciepients_holder.includes(data.val()['sender'])) {
-                        reciepients_holder.push(data.val()['vehicle']);
+                    reciepients_holder.push(data.val()['vehicle']);
                     //}
                 });
                 this_self.setState({
                     recipients: reciepients_holder
                 });
-                if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0], 0);
+                if (reciepients_holder.length > 0) this_self.oneRecipientClick(reciepients_holder[0], 0);
             });
 
             // this.messageRef.orderByChild('reciever').equalTo('server').on("value", function (snapshot) {
@@ -145,10 +147,17 @@ class Messaging extends Component {
             //     });
             //     if(reciepients_holder.length > 0) this_self.oneRecipientClick( reciepients_holder[0]);
             // });
-            
-        }
-    }
 
+        }
+
+        this.scrollToBottom();
+    }
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
     handleChange(event) {
         this.setState({ sent_message: event.target.value });
     }
@@ -191,15 +200,15 @@ class Messaging extends Component {
         //     }
         // });
     }
-    oneRecipientClick(str, index){
+    oneRecipientClick(str, index) {
         this.setState({
             recieved_sender: str,
-            sent_reciever : str,
+            sent_reciever: str,
             reciever_list: [],
-            selectedIndex : index
+            selectedIndex: index
         });
         console.log(str);
-        this.messageRef.orderByChild('conversation').equalTo("server "+str).on("value", message => {
+        this.messageRef.orderByChild('conversation').equalTo("server " + str).on("value", message => {
             if (message.exists()) {
                 this.setState({
                     reciever_list: Object.values(message.val()),
@@ -207,7 +216,7 @@ class Messaging extends Component {
             }
         });
 
-        
+
     }
     render() {
         return (
@@ -217,7 +226,7 @@ class Messaging extends Component {
                         <div className="col-3 chat">
                             <Paper className="paper_inline paper_scroll">
                                 <Typography variant="h5"> Conversations</Typography>
-                                <Divider/>
+                                <Divider />
                                 {this.state.recipients.map((item, index) =>
                                     <div>
                                         <div className={this.state.selectedIndex === index ? "selected oneRecipient" : "oneRecipient"} data-id={item} onClick={() => { this.oneRecipientClick(item, index) }} key={index} >{item} </div>
@@ -233,6 +242,10 @@ class Messaging extends Component {
                                         {this.state.reciever_list.map((item, index) =>
                                             <SingleMessage key={index} message={item} />
                                         )}
+
+                                        <div style={{ float: "left", clear: "both" }}
+                                            ref={(el) => { this.messagesEnd = el; }}>
+                                        </div>
                                     </div>
                                     <div className="form__row">
                                         <input
@@ -252,7 +265,7 @@ class Messaging extends Component {
                                             onClick={this.handleSend}
                                         >
                                             Send
-                        </Button>
+                                        </Button>
                                     </div>
                                 </div>
                             </Paper>
