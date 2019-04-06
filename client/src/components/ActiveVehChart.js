@@ -91,7 +91,7 @@ class ActiveVehChart extends Component {
                         ],
                         datasets: [{
                             // active & not active
-                            data: [data[0]['Inactive'], data[0]['Active']],
+                            data: [data[0]['total'] - data[0]['active'], data[0]['active']],
                             backgroundColor: [
                                 '#bfbdbd',
                                 '#1B9CD6'
@@ -103,7 +103,7 @@ class ActiveVehChart extends Component {
                             ]
                         }],
                         // available / total
-                        text: data[0]['Active'] + '/' + (data[0]['Active'] + data[0]['Inactive'])
+                        text: data[0]['active'] + '/' + data[0]['total']
                     }
                 });
             }).then(function () {

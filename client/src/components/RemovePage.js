@@ -17,8 +17,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withSnackbar } from 'notistack';
+import firebase from './../Firebase.js';
 
 
+var secret = require("./../secret.json");
 
 class RemovePage extends Component {
     constructor(props) {
@@ -85,8 +87,41 @@ class RemovePage extends Component {
         fetch('/deleteTransport?tID=' + id + '&cid=1', { method: 'DELETE' })
             .then(res => self.responseChecker(res, id));
     }
-    deleteVehicleClick(id) {
+    deleteVehicleClick(id, number_plate) {
+        var config = {
+            apiKey: secret.firebase_apiKey,
+            authDomain: secret.authDomain,
+            databaseURL: secret.databaseURL,
+            storageBucket: secret.storageBucket,
+            messagingSenderId: secret.messagingSenderId
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(config);
+        }
+        this.vehicleRef = firebase.database().ref().child('vehicles');
+        this.messageRef = firebase.database().ref().child('messages');
+        var numberPlate_formatted = number_plate;
+        numberPlate_formatted = numberPlate_formatted.slice(0, 2) + "-" + numberPlate_formatted.slice(2, 4) + "-" + numberPlate_formatted.slice(4, 8);
+        numberPlate_formatted = numberPlate_formatted.toUpperCase();
+
         var self = this;
+        this.vehicleRef
+            .orderByChild('vehicle')
+            .equalTo(numberPlate_formatted)
+            .on('child_added', function (snapshot) {
+                var vehicle = snapshot.val();
+                if (vehicle.companyID == 1) {
+                    self.vehicleRef.child(snapshot.key).remove();
+                }
+            });
+        this.messageRef
+            .orderByChild('conversation')
+            .equalTo('server '+numberPlate_formatted)
+            .on('child_added', function (snapshot) {
+                self.messageRef.child(snapshot.key).remove();
+            });
+
+
         fetch('/deleteVehicle?cID=1&vID=' + id, { method: 'DELETE' })
             .then(res => self.responseChecker(res, id));
     }
@@ -235,7 +270,7 @@ class RemovePage extends Component {
                                                     <TableCell className="green-text">Completed</TableCell> :
                                                     <TableCell className="red-text">Inactive Transport</TableCell>
                                         }
-                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteVehicleClick(row.vehicleID) }}>Delete</Button></TableCell>
+                                        <TableCell ><Button className="deleteButton" onClick={() => { this.deleteVehicleClick(row.vehicleID, row.number_plate) }}>Delete</Button></TableCell>
                                     </TableRow>
                                 )) : console.log()}
                             </TableBody>

@@ -8,12 +8,14 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
+import firebase from './../Firebase.js';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withSnackbar } from 'notistack';
 import Cookies from 'universal-cookie';
 import TextField from '@material-ui/core/TextField';
 const cookies = new Cookies();
+var secret = require("./../secret.json");
 
 var moment = require('moment');//  18/03/2019 13:35:42 PM
 
@@ -54,7 +56,7 @@ class AddPage extends Component {
         this.onSubmitTransport = this.onSubmitTransport.bind(this);
         this.onSubmitVehicle = this.onSubmitVehicle.bind(this);
         this.refreshVehicles = this.refreshVehicles.bind(this);
-
+        this.addVehFirebase = this.addVehFirebase.bind(this);
 
     }
     componentDidMount() {
@@ -191,11 +193,17 @@ class AddPage extends Component {
         if (this.state.vehPassword && this.state.WarehouseSelectVehicle && this.state.numberPlate && this.state.country_code && this.state.brand) {
             if (this.state.vehPassword.trim() !== "" && this.state.WarehouseSelectVehicle !== "none" && this.state.numberPlate.trim() !== "" &&
                 this.state.country_code.trim() !== "" && this.state.brand.trim() !== "") {
+                var numberPlate_formatted = this.state.numberPlate.replace(new RegExp('-', 'g'), ''); // Removing all - 
+                numberPlate_formatted = numberPlate_formatted.slice(0, 2) + "-" + numberPlate_formatted.slice(2, 4) + "-" + numberPlate_formatted.slice(4, 8);
+                numberPlate_formatted = numberPlate_formatted.toUpperCase();
                 fetch('/putVehicle?cid=' + cID + "&wid=" + this.state.WarehouseSelectVehicle + "&number_plate=" + this.state.numberPlate + "&brand=" +
                     this.state.brand + "&pass=" + this.state.vehPassword + "&country_code=" + this.state.country_code, { method: 'PUT' })
                     .then(res => res.status === 200 ?
                         (this.props.enqueueSnackbar('New vehicle created.', { variant: 'success' }),
-                            this.refreshWarehouses())
+                            this.refreshWarehouses(),
+                            this.addVehFirebase(cID, numberPlate_formatted))
+                            
+                            
                         : this.props.enqueueSnackbar('Could not create a new vehicle', { variant: 'error' }));
             } else {
                 this.props.enqueueSnackbar('Not enough details given to create a vehicle.', { variant: 'warning' });
@@ -248,6 +256,25 @@ class AddPage extends Component {
         fetch('/getTransports/vehicles?cid=' + cID)
             .then(res => res.json())
             .then(vehicles => this.setState({ availableVehicles: vehicles }));
+    }
+    addVehFirebase(cID, number_plate){
+        var newItem = {
+            companyID: cID,
+            vehicle: number_plate
+        };
+        
+        var config = {
+            apiKey: secret.firebase_apiKey,
+            authDomain: secret.authDomain,
+            databaseURL: secret.databaseURL,
+            storageBucket: secret.storageBucket,
+            messagingSenderId: secret.messagingSenderId
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(config);
+        }
+        this.vehicleRef = firebase.database().ref().child('vehicles');
+        this.vehicleRef.push(newItem);
     }
     render() {
         // if (this.state === null || this.state === undefined) {

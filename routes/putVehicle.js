@@ -74,6 +74,7 @@ router.put('/', function (req, res, next) {
     let sql_add_vehicle = `INSERT INTO Vehicle (locationID, companyID, plateID, credentialID, brandID) VALUES (?, ?, ?, ?, ?);`;
     if (companyID && warehouseID && numberPlate && country_code && brand && vehPass) {
         var numberPlate_formatted = numberPlate.replace(new RegExp('-', 'g'), ''); // Removing all - 
+        numberPlate_formatted = numberPlate_formatted.toUpperCase();
         connection.query(sql_warehouse_loc, sql_warehouse_loc_data, function (error, results, fields) {
             if (error) {
                 res.status(422).send('Error when retrieving the latitude and longitude of the warehouse');
