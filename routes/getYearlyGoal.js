@@ -88,6 +88,40 @@ router.get('/progress', function (req, res, next) {
         res.status(400).send("No parameters passed");
     }
 });
+
+
+router.get('/progress2', function (req, res, next) {
+    var company_id = req.query.cid;
+    if (company_id) {
+        let sql_progress = `   
+            SELECT COUNT(*), state_value FROM State
+            JOIN Transport using(stateID)
+            Group By state_value
+            Order By state_value;
+ `;
+        let sql_progress_data = [company_id];
+        connection.query(sql_progress, function (error, results, fields) {
+
+                if (error) {
+                    res.status(404).send(error);
+                    throw error;
+                }
+
+                if (results.length > 0) {
+                    if (results) {
+                        // Passing the name of the company and the status
+                        // var detailResults = JSON.parse(JSON.stringify(results[0]));
+                        res.json(results);
+                    }
+                } else {
+                    res.status(204).send("No match");
+                }
+            });
+
+    } else {
+        res.status(400).send("No parameters passed");
+    }
+});
 router.get('/progress/transports', function (req, res, next) {
     var company_id = req.query.cid;
     if (company_id) {

@@ -30,6 +30,7 @@ var deleteTransport = require('./routes/deleteTransport.js');
 var getCompanyName = require('./routes/getCompanyName.js');
 var deleteVehicle = require('./routes/deleteVehicle.js');
 var putVehicle = require('./routes/putVehicle.js');
+var updateVehicleStatus = require('./routes/updateVehicleStatus.js');
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use('/getVehicleOrigin', getVehicleOrigin);
 app.use('/getVehicleBrand', getVehicleBrand);
 app.use('/getYearlyGoal', getYearlyGoal);
 app.use('/getYearlyGoal/progress', getYearlyGoal);
+app.use('/getYearlyGoal/progress2', getYearlyGoal);
 app.use('/getYearlyGoal/progress/transports', getYearlyGoal);
 app.use('/getYearlyGoal/progress/transports/all', getYearlyGoal);
 app.use('/setYearlyGoal', setYearlyGoal);
@@ -74,6 +76,9 @@ app.use('/deleteTransport', deleteTransport);
 app.use('/getCompanyName', getCompanyName);
 app.use('/deleteVehicle', deleteVehicle);
 app.use('/putVehicle', putVehicle);
+app.use('/updateVehicleStatus', updateVehicleStatus);
+app.use('/updateVehicleStatus/active', updateVehicleStatus);
+app.use('/updateVehicleStatus/complete', updateVehicleStatus);
 
 
 

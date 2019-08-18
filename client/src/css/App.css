@@ -295,7 +295,7 @@ button.settingButton{
   width: calc(100% - 115px);
   border-radius: 10px;
   padding: 10px 5px;
-  margin: 15px 5px;
+  margin: 0px 5px 15px 5px;
   box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
 }
 div.form__row > button.form__button{
@@ -306,7 +306,7 @@ div.form__row > button.form__button{
   padding-bottom: 15px;
   border-radius: 30px;
   margin-left: .5%;
-  margin-top: 14px;
+  margin-top: -5px;
   margin-right: 2.5%;
   box-shadow: 1px 1px #000000;
 
@@ -560,7 +560,8 @@ div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.fo
 }
 div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.form > div.form__message{
   overflow-y: scroll;
-  height: 90%;
+  height: 89%;
+  margin-bottom: 5px;
 }
 div > div > div > div.messaging_row > div > div.paper_inline.chat_paper > div.form > div.form__row{
   height: 10%;

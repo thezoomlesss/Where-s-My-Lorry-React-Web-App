@@ -27,11 +27,11 @@ class TransportChart extends Component {
 
 
     componentDidMount() {
-        fetch('/getYearlyGoal/progress/transports?cid=1')
+        fetch('/getYearlyGoal/progress2?cid=1')
             .then(res => res.json())
             .then(data => {
                 data.map((row, index) => (
-                    console.log(row['state_value'] + ' ' + row['count'])
+                    console.log(row['state_value'] + ' ' + row['COUNT(*)'])
                 ))
                 // console.log(data[0]);
                 // console.log(data[0]['vehicleID']);
@@ -42,7 +42,7 @@ class TransportChart extends Component {
                     labels.push(row['state_value'])
                 ));
                 data.map((row, index) => (
-                    data_val.push(row['count'])
+                    data_val.push(row['COUNT(*)'])
                 ))
 
                 this.setState({

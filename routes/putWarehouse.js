@@ -55,9 +55,9 @@ router.put('/', function (req, res, next) {
                 if (results) {
                     var regionID = results[0].regionID;
                     let sql_insertWarehouse = `
-                    INSERT INTO Warehouse (capacity, warehouse_name, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID) 
+                    INSERT INTO Warehouse (warehouse_name, capacity, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-
+                    // res.status(200).send("200 " + regionID);
                     let data_insertWarehouse = [name, capacity, latitude, longitude, country_code, area_code, phone_num, email, regionID, companyID];
                     connection.query(sql_insertWarehouse, data_insertWarehouse, function (error, results, fields) {
                         if (error) {

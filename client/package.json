@@ -6,11 +6,17 @@
     "chart.js": "^2.7.3",
     "firebase": "^5.8.6",
     "google-maps-react": "^2.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
+    "notistack": "^0.6.1",
     "react": "^16.6.3",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.1",
+    "recompose": "^0.30.0",
+    "universal-cookie": "^3.1.0"
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",

@@ -71,11 +71,19 @@ router.get('/', function (req, res, next) {
 // used to get the vehicles available for new transports
 router.get('/vehicles', function (req, res, next) {
     var companyID = req.query.cid;
+    // let sql_availableVehicles = `
+    //     SELECT v.vehicleID, lp.number_plate FROM License_Plate lp
+    //     JOIN Vehicle v USING(plateID)
+    //     JOIN Company c USING(companyID)
+    //     WHERE c.companyID = ? AND v.transportID is NULL;`;
+
     let sql_availableVehicles = `
         SELECT v.vehicleID, lp.number_plate FROM License_Plate lp
         JOIN Vehicle v USING(plateID)
         JOIN Company c USING(companyID)
-        WHERE c.companyID = ? AND v.transportID is NULL;`;
+        LEFT JOIN Transport t USING(transportID)
+        LEFT JOIN State s USING(stateID)
+        WHERE c.companyID = 1 AND (v.transportID is NULL OR s.state_value = "Completed");`;
     let data_findVeh = [companyID];
 
     if (companyID) {

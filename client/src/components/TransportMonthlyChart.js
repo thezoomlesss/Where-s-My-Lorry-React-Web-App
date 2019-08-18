@@ -70,6 +70,7 @@ class TransportMonthlyChart extends Component {
                         labels: labels,
                         datasets: [{
                             data: data_val,
+                            
                             backgroundColor: [
                                 '#1B9CD6',
                                 'rgb(123, 211, 110)',

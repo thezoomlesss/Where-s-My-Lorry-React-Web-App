@@ -13,7 +13,7 @@ var scale = 1.4;
 if (vHeight > 700) {
     scale = 1.6;
 } else {
-    scale = 1.5;
+    scale = 1.45;
 }
 
 class ActiveVehChart extends Component {
